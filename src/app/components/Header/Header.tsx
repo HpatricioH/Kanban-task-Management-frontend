@@ -14,7 +14,7 @@ export default function Header () {
           height={0}
           className='h-[1.60rem] w-[1.25rem]'
         />
-          <p className='capitalize'>platform launch</p>
+          <p className='capitalize font-semibold'>platform launch</p>
           <Image
             src='./icons/icon-chevron-down.svg'
             alt='chevron down icon'
@@ -24,9 +24,10 @@ export default function Header () {
           />
         </div>
         <div className='flex justify-center items-center gap-4'>
+        {/* TODO: remove opacity-25 when we have a board active. */}
           <Button
             icon='./icons/icon-add-task-mobile.svg'
-            buttonStyle='bg-[#635FC7] w-10 h-7 flex justify-center items-center rounded-xl'/>
+            buttonStyle='bg-[#635FC7] opacity-25 w-10 h-7 flex justify-center items-center rounded-xl'/>
           <Image
             src='./icons/icon-vertical-ellipsis.svg'
             alt='ellipsis icon'

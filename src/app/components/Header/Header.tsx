@@ -1,8 +1,17 @@
+'use client'
+
 import { Button } from '@/app/core/utils/Button'
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
+import BoardsMenu from '../BoardsMenu/BoardsMenu'
 
 export default function Header () {
+  const [showModal, setShowModal] = useState(false)
+
+  const handleClick = () => {
+    !showModal ? setShowModal(true) : setShowModal(false)
+  }
+
   return (
     <header>
       <nav className='bg-[#2B2C37] p-4 flex justify-between'>
@@ -16,11 +25,12 @@ export default function Header () {
         />
           <p className='capitalize font-semibold'>platform launch</p>
           <Image
-            src='./icons/icon-chevron-down.svg'
+            src={`${showModal ? './icons/icon-chevron-up.svg' : './icons/icon-chevron-down.svg'}`}
             alt='chevron down icon'
             width={0}
             height={0}
             className='h-[0.65rem] w-[0.65rem]'
+            onClick={handleClick}
           />
         </div>
         <div className='flex justify-center items-center gap-4'>
@@ -37,6 +47,7 @@ export default function Header () {
           />
         </div>
       </nav>
+      {showModal ? <BoardsMenu setShowModal={setShowModal} /> : null}
     </header>
   )
 }

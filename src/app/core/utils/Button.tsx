@@ -3,7 +3,7 @@ import Image from 'next/image'
 interface ButtonType {
   children?: React.ReactNode
   icon: string
-  buttonStyle: string
+  buttonStyle?: string
 }
 
 export const Button = ({ children, icon, buttonStyle }: ButtonType) => {

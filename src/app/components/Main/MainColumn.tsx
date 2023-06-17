@@ -8,8 +8,9 @@ export default function MainColumn () {
       </p>
       <Button
         icon='./icons/icon-add-task-mobile.svg'
-        buttonStyle='bg-[#635FC7] flex flex-row-reverse justify-center items-center gap-2 w-[10.875rem] h-[3rem] rounded-[5rem]'>
-        Add New Column</Button>
+        buttonStyle='bg-[#635FC7] flex flex-row-reverse justify-center items-center gap-2 w-[10.875rem] h-[3rem] rounded-[5rem] text-[#FFF] font-bold'>
+        Add New Column
+      </Button>
     </section>
   )
 }

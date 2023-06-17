@@ -2,31 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 244, 247, 253;
-  --background-end-rgb: 244, 247, 253;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 32, 33, 44;
-    --background-end-rgb: 32, 33, 44;
-  }
-}
-
-
-body {
-  color: rgb(var(--foreground-rgb));
-  /* background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb)); */
-}
-
 @font-face {
   font-family: 'Plus Jakarta Sans';
   src: url('../../public/fonts/PlusJakartaSans-Regular.woff2') format('woff2'),

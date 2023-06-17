@@ -14,7 +14,7 @@ export default function Header () {
 
   return (
     <header>
-      <nav className='bg-[#2B2C37] p-4 flex justify-between'>
+      <nav className='bg-[#FFF] dark:bg-[#2B2C37] p-4 flex justify-between'>
         <div className='flex items-center gap-2'>
         <Image
           src='./logos/logo-mobile.svg'
@@ -23,15 +23,10 @@ export default function Header () {
           height={0}
           className='h-[1.60rem] w-[1.25rem]'
         />
-          <p className='capitalize font-semibold'>platform launch</p>
-          <Image
-            src={`${showModal ? './icons/icon-chevron-up.svg' : './icons/icon-chevron-down.svg'}`}
-            alt='chevron down icon'
-            width={0}
-            height={0}
-            className='h-[0.65rem] w-[0.65rem]'
+          <Button
+            icon={`${showModal ? './icons/icon-chevron-up.svg' : './icons/icon-chevron-down.svg'}`}
             onClick={handleClick}
-          />
+            buttonStyle='flex justify-center items-center gap-2 font-bold capitalize'>platform launch</Button>
         </div>
         <div className='flex justify-center items-center gap-4'>
         {/* TODO: remove opacity-25 when we have a board active. */}

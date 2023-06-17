@@ -1,15 +1,15 @@
 import Image from 'next/image'
-import { useState } from 'react'
+import { useTheme } from 'next-themes'
 
 export const ThemeToggle = () => {
-  const [isDarkTheme, setIsDarkTheme] = useState(false)
+  const { theme, setTheme } = useTheme()
 
   const handleToggle = () => {
-    setIsDarkTheme(!isDarkTheme)
+    setTheme(theme === 'light' ? 'dark' : 'light')
   }
 
   return (
-    <div className='flex bg-[#20212C] m-4 p-4 rounded-md justify-center items-center gap-6'>
+    <div className='flex bg-[#F4F7FD] dark:bg-[#20212C] m-4 p-4 rounded-md justify-center items-center gap-6'>
       <Image
         src='./icons/icon-light-theme.svg'
         alt='board icon'
@@ -22,14 +22,13 @@ export const ThemeToggle = () => {
             type="checkbox"
             id="toggleFour"
             className="sr-only"
-            checked={isDarkTheme}
             onChange={handleToggle}
           />
           <div
             className={'box bg-[#635FC7] block h-6 w-12 rounded-full transition '}
           ></div>
           <div
-            className={`dot absolute ${isDarkTheme ? 'left-1' : 'right-1'
+            className={`dot absolute ${theme === 'light' ? 'left-1' : 'right-1'
               } top-[0.25rem] flex h-[1.05rem] w-[1.05rem] items-center justify-center rounded-full bg-white transition`}
           ></div>
         </div>

@@ -17,11 +17,9 @@ export default function RootLayout ({
     <html lang="en">
       <body className='font-plusJakarta'>
         <Providers>
-
           <Header />
           {children}
         </Providers>
-
       </body>
     </html>
   )

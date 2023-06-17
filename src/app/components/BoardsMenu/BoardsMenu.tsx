@@ -34,13 +34,12 @@ export default function BoardsMenu ({ setShowModal }: ShowModal) {
   }
 
   return (
-
     <div
       className='bg-[#20212C] p-4 z-20 fixed inset-0 bg-opacity-60 flex justify-center items-center transition duration-700 ease-in-out'
       id='modal'
       onClick={(e) => { handleClose(e) }}>
 
-      <div className='bg-[#2B2C37] rounded-md flex flex-col gap-4 shadow-lg shadow-[#364e7e40]/25 absolute w-[18rem] top-[4.7rem]'>
+      <div className='bg-[#FFF] dark:bg-[#2B2C37] rounded-md flex flex-col gap-4 shadow-lg shadow-[#364e7e40]/25 absolute w-[18rem] top-[4.7rem]'>
 
         <h1 className='uppercase px-4 pt-4 text-[#828FA3] font-bold text-xs tracking-[0.15rem] leading-[0.938rem]'>
           All Boards {`(${boards.length})`}

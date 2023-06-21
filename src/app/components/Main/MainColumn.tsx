@@ -1,6 +1,13 @@
+'use client'
+
 import { Button } from '@/app/core/utils/Button'
+import { boardData } from '@/app/lib/store/boardData'
 
 export default function MainColumn () {
+  const { board } = boardData()
+
+  console.log(board)
+
   return (
     <section className='h-auto flex flex-col justify-evenly items-center gap-6'>
       <p className='text-center font-bold text-[#828FA3] text-[1.125rem] leading-[1.438rem]'>

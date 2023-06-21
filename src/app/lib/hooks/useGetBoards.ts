@@ -5,16 +5,39 @@ import { getBoards } from '../../core/services/getBoards'
 interface Board {
   id: string
   name: string
-  columns: []
+  columns: [
+    {
+      id: string
+      name: string
+      boardId: string
+      tasks: [
+        {
+          id: string
+          title: string
+          description: string
+          status: string
+          columnId: string
+          subTasks: [
+            {
+              id: string
+              title: string
+              isCompleted: boolean
+              taskId: string
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
 
 export interface BoardsTypes {
-  boardsData: Board[]
+  boardsData: Board[] | null
   loading: boolean
 }
 
 export function useGetBoards () {
-  const [boardsData, setBoardsData] = useState<BoardsTypes>()
+  const [boardsData, setBoardsData] = useState<BoardsTypes | null>(null)
   const [loading, setLoading] = useState(false)
 
   // TODO: make the api call only once and when the the board menu is open dont make the call again

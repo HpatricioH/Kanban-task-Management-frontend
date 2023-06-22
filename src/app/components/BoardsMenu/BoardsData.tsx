@@ -9,15 +9,17 @@ export function BoardsData () {
   const { boardsData, loading } = useGetBoards() as BoardsTypes
   const [boardSelected, setBoardSelected] = useState<number | null>(null)
 
-  const handleClick = (index: number, board: object) => {
+  const handleClick = (index: number, board: object, boardId: string) => {
     setBoardSelected(index)
     localStorage.setItem('selectedBoardIndex', index.toString())
+    localStorage.setItem('selectedBoard', boardId)
     setBoard(board as [])
 
     // remove selected board
     if (boardSelected === index) {
       setBoardSelected(null)
       localStorage.removeItem('selectedBoardIndex')
+      localStorage.removeItem('selectedBoard')
       setBoard([])
     }
   }
@@ -44,7 +46,7 @@ export function BoardsData () {
             key={board.id}
             className={`w-[15rem] rounded-r-3xl  font-semibold  text-[0.938rem] leading-[1.188rem] 
         ${boardSelected === index ? 'text-[#FFFFFF] bg-[#635FC7]' : 'text-[#828FA3]'}`}
-            onClick={() => { handleClick(index, board) }}
+            onClick={() => { handleClick(index, board, board.id) }}
           >
             <div className='flex pl-4 gap-3 py-4'>
               <IconBoard fill={`${boardSelected === index ? '#FFF' : '#828FA3'}`} />

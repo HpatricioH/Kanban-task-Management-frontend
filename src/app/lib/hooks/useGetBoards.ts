@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import { getBoards } from '../../core/services/getBoards'
 
-interface Board {
+export interface Board {
   id: string
   name: string
   columns: [

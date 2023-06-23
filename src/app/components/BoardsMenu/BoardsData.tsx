@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useGetBoards, type BoardsTypes } from '@/app/lib/hooks/useGetBoards'
+import { useGetBoards, type BoardsTypes, type Board } from '@/app/lib/hooks/useGetBoards'
 import IconBoard from '@/app/core/utils/svgIcons'
 import { Spinner } from '@/app/core/utils/Spinner'
 import { boardData } from '@/app/lib/store/boardData'
@@ -9,17 +9,20 @@ export function BoardsData () {
   const { boardsData, loading } = useGetBoards() as BoardsTypes
   const [boardSelected, setBoardSelected] = useState<number | null>(null)
 
-  const handleClick = (index: number, board: object, boardId: string) => {
+  const handleClick = (index: number, board: Board) => {
+    const columnId = board.columns
+    console.log(columnId)
     setBoardSelected(index)
     localStorage.setItem('selectedBoardIndex', index.toString())
-    localStorage.setItem('selectedBoard', boardId)
-    setBoard(board as [])
+    localStorage.setItem('selectedBoardColumn', JSON.stringify(columnId))
+    setBoard(board as any)
 
     // remove selected board
     if (boardSelected === index) {
       setBoardSelected(null)
       localStorage.removeItem('selectedBoardIndex')
-      localStorage.removeItem('selectedBoard')
+      localStorage.removeItem('selectedBoardColumn')
+      localStorage.removeItem('selectedColumn')
       setBoard([])
     }
   }
@@ -46,7 +49,7 @@ export function BoardsData () {
             key={board.id}
             className={`w-[15rem] rounded-r-3xl  font-semibold  text-[0.938rem] leading-[1.188rem] 
         ${boardSelected === index ? 'text-[#FFFFFF] bg-[#635FC7]' : 'text-[#828FA3]'}`}
-            onClick={() => { handleClick(index, board, board.id) }}
+            onClick={() => { handleClick(index, board) }}
           >
             <div className='flex pl-4 gap-3 py-4'>
               <IconBoard fill={`${boardSelected === index ? '#FFF' : '#828FA3'}`} />

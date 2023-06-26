@@ -1,61 +1,57 @@
-
 import { useState, useEffect } from 'react'
 import { getBoards } from '../../core/services/getBoards'
+
+export interface SubTask {
+  id: string
+  title: string
+  isCompleted: boolean
+  taskId: string
+}
+
+export interface Task {
+  id: string
+  title: string
+  description: string
+  status: string
+  columnId: string
+  subTasks: SubTask[]
+}
+
+export interface Column {
+  id: string
+  name: string
+  boardId: string
+  tasks: Task[]
+}
 
 export interface Board {
   id: string
   name: string
-  columns: [
-    {
-      id: string
-      name: string
-      boardId: string
-      tasks: [
-        {
-          id: string
-          title: string
-          description: string
-          status: string
-          columnId: string
-          subTasks: [
-            {
-              id: string
-              title: string
-              isCompleted: boolean
-              taskId: string
-            }
-          ]
-        }
-      ]
-    }
-  ]
+  columns?: Column[]
 }
 
-export interface BoardsTypes {
-  boardsData: Board[] | null
+export interface BoardsData {
+  boards: Board[] | null
   loading: boolean
 }
 
-export function useGetBoards () {
-  const [boardsData, setBoardsData] = useState<BoardsTypes | null>(null)
-  const [loading, setLoading] = useState(false)
+export function useGetBoards (): BoardsData {
+  const [boardsData, setBoardsData] = useState<BoardsData>({ boards: null, loading: false })
 
-  // TODO: make the api call only once and when the the board menu is open dont make the call again
-  const getData = async () => {
-    try {
-      setLoading(true)
-      const boards = await getBoards()
-      setBoardsData(boards)
-    } catch (error: any) {
-      throw new Error(error.message)
-    } finally {
-      setLoading(false)
-    }
-  }
-
+  // TODO: make the api call only once and when the board menu is open, don't make the call again
   useEffect(() => {
-    getData()
+    const fetchData = async () => {
+      setBoardsData((prevData) => ({ ...prevData, loading: true }))
+      try {
+        const boards = await getBoards()
+        setBoardsData({ boards, loading: false })
+      } catch (error: any) {
+        throw new Error(error.message)
+      }
+    }
+
+    fetchData()
   }, [])
 
-  return { boardsData, loading }
+  return boardsData
 }

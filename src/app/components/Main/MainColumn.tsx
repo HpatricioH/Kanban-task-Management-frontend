@@ -7,14 +7,12 @@ import { boardData } from '@/app/lib/store/boardData'
 export default function MainColumn () {
   const board = boardData() as any
   const column = board?.board[0]?.columns
-  const getStorageIndex = localStorage.getItem('selectedBoardId')
-  const selectedBoard = board.board?.find((board: []) => board.id === getStorageIndex)
 
   // TODO: add a button to create a new board if the board is not selected or the board is empty
 
   return (
     <section className='h-auto flex flex-col justify-evenly items-center gap-6'>
-      {!getStorageIndex || column?.length === 0
+      {column?.length === 0 || board.board.length === 0
         ? (
           <>
             <p className='text-center font-bold text-[#828FA3] text-[1.125rem] leading-[1.438rem]'>

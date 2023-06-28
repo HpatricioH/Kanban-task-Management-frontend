@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useGetBoards } from '@/app/lib/hooks/useGetBoards'
 import IconBoard from '@/app/core/utils/svgIcons'
 import { Spinner } from '@/app/core/utils/Spinner'
@@ -18,10 +18,15 @@ export function BoardsData () {
     } else {
       setBoardSelected(boardId)
       localStorage.setItem('selectedBoardId', boardId)
-      const selectedBoard = boardsData.boards?.find((board) => board.id === boardId)
-      setBoard(selectedBoard ? [selectedBoard] : [])
     }
   }
+
+  useEffect(() => {
+    if (boardSelected) {
+      const selectedBoard = boardsData.boards?.find((board) => board.id === boardSelected)
+      setBoard(selectedBoard ? [selectedBoard] : [])
+    }
+  }, [boardSelected, setBoard, boardsData.boards])
 
   return (
     <>

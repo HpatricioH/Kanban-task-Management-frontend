@@ -1,11 +1,16 @@
 import { create } from 'zustand'
 
-interface BoardData {
-  board: []
-  setBoard: (board: []) => void
+interface Board {
+  id: string
+  name: string
 }
 
-export const boardData = create<BoardData>((set) => ({
+interface BoardDataStore {
+  board: Board[]
+  setBoard: (board: Board[]) => void
+}
+
+export const boardData = create<BoardDataStore>((set) => ({
   board: [],
   setBoard: (board) => { set({ board }) }
 }))

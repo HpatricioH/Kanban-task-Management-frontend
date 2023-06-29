@@ -15,7 +15,7 @@ export default function Header () {
 
   return (
     <header>
-      <nav className='bg-[#FFF] dark:bg-[#2B2C37] p-4 flex justify-between'>
+      <nav className='bg-[#FFF] dark:bg-[#2B2C37] p-4 flex justify-between static'>
         <div className='flex items-center gap-2'>
         <Image
           src='./logos/logo-mobile.svg'

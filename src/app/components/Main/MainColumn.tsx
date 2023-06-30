@@ -11,7 +11,7 @@ export default function MainColumn () {
   // TODO: add a button to create a new board if the board is not selected or the board is empty
 
   return (
-    <section className='h-auto flex justify-around gap-6 w-full'>
+    <section className='h-[440px] flex relative gap-6 w-[237vw]'>
       {column?.length === 0 || board.board.length === 0
         ? (
           <div className='flex flex-col justify-evenly items-center gap-6'>

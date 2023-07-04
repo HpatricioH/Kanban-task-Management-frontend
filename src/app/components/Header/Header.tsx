@@ -7,6 +7,7 @@ import BoardsMenu from '../BoardsMenu/BoardsMenu'
 
 export default function Header () {
   const [showModal, setShowModal] = useState(false)
+  const getSelectedBoardId = localStorage.getItem('selectedBoardId')
 
   const handleClick = () => {
     !showModal ? setShowModal(true) : setShowModal(false)
@@ -14,7 +15,7 @@ export default function Header () {
 
   return (
     <header>
-      <nav className='bg-[#FFF] dark:bg-[#2B2C37] p-4 flex justify-between'>
+      <nav className='bg-[#FFF] dark:bg-[#2B2C37] p-4 flex justify-between static'>
         <div className='flex items-center gap-2'>
         <Image
           src='./logos/logo-mobile.svg'
@@ -32,7 +33,7 @@ export default function Header () {
         {/* TODO: remove opacity-25 when we have a board active. */}
           <Button
             icon='./icons/icon-add-task-mobile.svg'
-            buttonStyle='bg-[#635FC7] opacity-25 w-10 h-7 flex justify-center items-center rounded-xl'/>
+            buttonStyle={`bg-[#635FC7] w-10 h-7 flex justify-center items-center rounded-xl ${!getSelectedBoardId ? 'opacity-25' : 'opacity-100'}`}/>
           <Image
             src='./icons/icon-vertical-ellipsis.svg'
             alt='ellipsis icon'

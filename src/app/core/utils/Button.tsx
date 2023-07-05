@@ -4,10 +4,12 @@ interface ButtonType {
   children?: React.ReactNode
   icon: string
   buttonStyle?: string
+  imageClassName?: string
   onClick?: () => void
 }
 
-export const Button = ({ children, icon, buttonStyle, onClick }: ButtonType) => {
+export const Button = ({ children, icon, buttonStyle, onClick, imageClassName }: ButtonType) => {
+  console.log(imageClassName)
   return (
     <button className={buttonStyle} onClick={onClick}>{children}
       <Image
@@ -15,6 +17,7 @@ export const Button = ({ children, icon, buttonStyle, onClick }: ButtonType) => 
         alt="button icon"
         width={12}
         height={12}
+        className={imageClassName}
       />
     </button>
   )

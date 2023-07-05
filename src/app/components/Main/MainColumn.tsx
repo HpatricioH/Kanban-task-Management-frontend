@@ -1,8 +1,8 @@
 'use client'
 
 import { boardData } from '@/app/lib/store/boardData'
-import { Columns } from './ccolumns/Columns'
-import AddNewColumn from './ccolumns/AddNewColumn'
+import { Columns } from './columns/Columns'
+import AddNewColumn from './columns/AddNewColumn'
 
 export default function MainColumn () {
   const board = boardData() as any

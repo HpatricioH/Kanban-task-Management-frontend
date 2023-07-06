@@ -9,9 +9,8 @@ interface ButtonType {
 }
 
 export const Button = ({ children, icon, buttonStyle, onClick, imageClassName }: ButtonType) => {
-  console.log(imageClassName)
   return (
-    <button className={buttonStyle} onClick={onClick}>{children}
+    <button className={buttonStyle} onClick={onClick} type='button'>{children}
       <Image
         src={icon}
         alt="button icon"

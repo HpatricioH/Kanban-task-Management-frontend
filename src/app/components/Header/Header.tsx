@@ -5,11 +5,13 @@ import Image from 'next/image'
 import React, { useState } from 'react'
 import BoardsMenu from '../BoardsMenu/BoardsMenu'
 import AddNewTask from '../AddNewTask/AddNewTask'
+import { usePathname } from 'next/navigation'
 
 export default function Header () {
   const [showBoardModal, setShowBoardModal] = useState(false)
   const [showAddTaskModal, setShowAddTaskModal] = useState(false)
-  const getSelectedBoardId = localStorage.getItem('selectedBoardId')
+  const id = usePathname().slice(1)
+  const getSelectedBoardId = id
 
   const handleClick = () => {
     !showBoardModal ? setShowBoardModal(true) : setShowBoardModal(false)

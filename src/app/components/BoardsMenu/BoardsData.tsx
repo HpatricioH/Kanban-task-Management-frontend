@@ -3,12 +3,15 @@ import { useGetBoards } from '@/app/lib/hooks/useGetBoards'
 import IconBoard from '@/app/core/utils/svgIcons'
 import { Spinner } from '@/app/core/utils/Spinner'
 import { boardData } from '@/app/lib/store/boardData'
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
 
 export function BoardsData () {
   const { setBoard } = boardData()
   const boardsData = useGetBoards()
   const loading = boardsData?.loading
   const [boardSelected, setBoardSelected] = useState<string | null>(localStorage.getItem('selectedBoardId') ?? null)
+  const pathname = usePathname()
 
   const handleClick = (boardId: string) => {
     if (boardSelected === boardId) {
@@ -40,19 +43,23 @@ export function BoardsData () {
         </div>
           )
         : (
-            boardsData.boards?.map((board) => (
+            boardsData.boards?.map((board) => {
+              const isActive = pathname.startsWith(`/${board.id}`)
+
+              return (
           <div
             key={board.id}
             className={`w-[15rem] rounded-r-3xl  font-semibold  text-[0.938rem] leading-[1.188rem] 
-        ${boardSelected === board.id ? 'text-[#FFFFFF] bg-[#635FC7]' : 'text-[#828FA3]'}`}
+        ${isActive ? 'text-[#FFFFFF] bg-[#635FC7]' : 'text-[#828FA3]'}`}
             onClick={() => { handleClick(board.id) }}
           >
             <div className='flex pl-4 gap-3 py-4'>
-              <IconBoard fill={boardSelected === board.id ? '#FFF' : '#828FA3'} />
-              <p>{board.name}</p>
+              <IconBoard fill={isActive ? '#FFF' : '#828FA3'} />
+              <Link href={`/${board.id}`}>{board.name}</Link>
             </div>
           </div>
-            ))
+              )
+            })
           )}
     </>
   )

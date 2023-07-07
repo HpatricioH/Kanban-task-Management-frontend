@@ -1,32 +1,21 @@
-import React, { useEffect, useState } from 'react'
 import { useGetBoards } from '@/app/lib/hooks/useGetBoards'
 import IconBoard from '@/app/core/utils/svgIcons'
 import { Spinner } from '@/app/core/utils/Spinner'
-import { boardData } from '@/app/lib/store/boardData'
+import { usePathname, useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 export function BoardsData () {
-  const { setBoard } = boardData()
   const boardsData = useGetBoards()
   const loading = boardsData?.loading
-  const [boardSelected, setBoardSelected] = useState<string | null>(localStorage.getItem('selectedBoardId') ?? null)
+  const pathname = usePathname()
+  const router = useRouter()
+  const id = pathname.slice(1)
 
   const handleClick = (boardId: string) => {
-    if (boardSelected === boardId) {
-      setBoardSelected(null)
-      localStorage.removeItem('selectedBoardId')
-      setBoard([])
-    } else {
-      setBoardSelected(boardId)
-      localStorage.setItem('selectedBoardId', boardId)
+    if (id === boardId) {
+      router.push('/')
     }
   }
-
-  useEffect(() => {
-    if (boardSelected) {
-      const selectedBoard = boardsData.boards?.find((board) => board.id === boardSelected)
-      setBoard(selectedBoard ? [selectedBoard] : [])
-    }
-  }, [boardSelected, setBoard, boardsData.boards])
 
   return (
     <>
@@ -35,24 +24,30 @@ export function BoardsData () {
       </h1>
       {loading
         ? (
-        <div className='flex justify-center items-center pt-3'>
-          <Spinner />
-        </div>
+          <div className='flex justify-center items-center pt-3'>
+            <Spinner />
+          </div>
           )
         : (
-            boardsData.boards?.map((board) => (
-          <div
-            key={board.id}
-            className={`w-[15rem] rounded-r-3xl  font-semibold  text-[0.938rem] leading-[1.188rem] 
-        ${boardSelected === board.id ? 'text-[#FFFFFF] bg-[#635FC7]' : 'text-[#828FA3]'}`}
-            onClick={() => { handleClick(board.id) }}
-          >
-            <div className='flex pl-4 gap-3 py-4'>
-              <IconBoard fill={boardSelected === board.id ? '#FFF' : '#828FA3'} />
-              <p>{board.name}</p>
-            </div>
-          </div>
-            ))
+            boardsData.boards?.map((board) => {
+              const isActive = pathname.startsWith(`/${board.id}`)
+
+              return (
+              <div
+                key={board.id}
+                className={`w-[15rem] rounded-r-3xl  font-semibold  text-[0.938rem] leading-[1.188rem] 
+                ${isActive
+                  ? 'text-[#FFFFFF] bg-[#635FC7]'
+                  : 'text-[#828FA3]'}`}
+                onClick={() => { handleClick(board.id) }}
+              >
+                <div className='flex pl-4 gap-3 py-4'>
+                  <IconBoard fill={isActive ? '#FFF' : '#828FA3'} />
+                  <Link href={`/${board.id}`}>{board.name}</Link>
+                </div>
+              </div>
+              )
+            })
           )}
     </>
   )

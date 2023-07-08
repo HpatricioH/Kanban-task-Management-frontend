@@ -1,17 +1,44 @@
 import { Button } from '@/app/core/utils/Button'
 import Image from 'next/image'
+import { useState } from 'react'
 
 interface AddNewTaskProps {
   setAddTaskModal: (value: boolean) => void
 }
 
+const Input = () => {
+  return (
+    <div className='flex gap-4'>
+      <input
+        type="text"
+        className='rounded-[0.25rem] border border-[#828fa340] bg-[#FFF] dark:bg-[#2B2C37] p-2 text-[0.8125rem] placeholder-[#000112] dark:placeholder-[#fff] placeholder-opacity-[0.25] dark:placeholder-opacity-[0.25] focus:outline-none focus:ring-1 focus:ring-[#828fa340] focus:border-transparent w-full'
+        placeholder="e.g. New subtask example"
+      />
+      <div className='flex justify-center items-center '>
+        <Image
+          src={'/icons/icon-cross.svg'}
+          alt="icon-cross"
+          width={14.84896}
+          height={14.84896}
+        />
+      </div>
+    </div>
+  )
+}
+
 export default function AddNewTask ({ setAddTaskModal }: AddNewTaskProps) {
+  const [inputList, setInputList] = useState([])
+
   const handleClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const target = e.target as HTMLDivElement
 
     if (target.id === 'addTaskModal') {
       setAddTaskModal(false)
     }
+  }
+
+  const handleAddSubtask = () => {
+    setInputList(inputList.concat(<Input key={inputList.length} /> as any))
   }
 
   return (
@@ -38,6 +65,7 @@ export default function AddNewTask ({ setAddTaskModal }: AddNewTaskProps) {
             placeholder="e.g. It’s always good to take a break. This 15 minute break will  recharge the batteries a little."
             className="resize-none rounded-[0.25rem] border border-[#828fa340] bg-[#FFF] dark:bg-[#2B2C37] p-2 text-[0.8125rem] placeholder-[#000112] dark:placeholder-[#fff] placeholder-opacity-[0.25] dark:placeholder-opacity-[0.25] focus:outline-none focus:ring-1 focus:ring-[#828fa340] focus:border-transparent"
           />
+
           <label htmlFor="" className="capitalize">Subtasks</label>
           <div className='flex gap-4'>
             <input
@@ -69,11 +97,13 @@ export default function AddNewTask ({ setAddTaskModal }: AddNewTaskProps) {
               />
             </div>
           </div>
+          {inputList}
 
           <Button
             icon='./icons/icon-add-task-mobile.svg'
             buttonStyle={'bg-[#635fc71a] dark:bg-[#fff] w-[100%] h-[2.5rem] flex justify-center items-center rounded-xl text-[#635FC7] font-bold text-[0.8125rem] leading-[1.4375rem]'}
             imageClassName='hidden'
+            onClick={handleAddSubtask}
           >
             + Add New Subtask
           </Button>

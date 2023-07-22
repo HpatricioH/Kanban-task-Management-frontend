@@ -1,9 +1,11 @@
 import { Button } from '@/app/core/utils/Button'
 import Image from 'next/image'
 import { useState } from 'react'
+import { type Column } from '@/app/lib/hooks/useGetBoards'
 
 interface AddNewTaskProps {
   setAddTaskModal: (value: boolean) => void
+  column: Column[]
 }
 
 interface SubTaskInput {
@@ -26,7 +28,7 @@ const subTasksInputs = [
 ]
 
 //  TODO: refactor this component separate the component into smaller components
-export default function AddNewTask ({ setAddTaskModal }: AddNewTaskProps) {
+export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps) {
   const [inputList, setInputList] = useState<SubTaskInput[]>(subTasksInputs)
 
   const handleClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -56,13 +58,24 @@ export default function AddNewTask ({ setAddTaskModal }: AddNewTaskProps) {
     const formData = new FormData(form)
     const formEntries = Array.from(formData.entries())
     const subTasks = formEntries.filter(([key]) => key === 'subtask')
-    const { title, description, status, subtask } = Object.fromEntries(
+    const { title, description, status } = Object.fromEntries(
       new FormData(e.currentTarget)
     )
 
-    console.log(title, description, status, subtask)
+    // to create a new task I need:
+    // title, description, status, columnId
+    const selectedColumn = column.find((column: Column) => column.name === status)
+    console.log(title, description, status)
+    console.log(selectedColumn?.id)
+
+    // to create a new subtask it is needed:
+    // task id, title, isCompleted (default false)
+    const tasks = selectedColumn?.tasks
+    const findTasks = tasks?.find((task) => task.status === status)
+    console.log(findTasks?.id)
+
     console.log(subTasks.map(([_, value]) => value))
-    console.log(formEntries)
+    // console.log(formEntries)
   }
 
   return (
@@ -133,9 +146,13 @@ export default function AddNewTask ({ setAddTaskModal }: AddNewTaskProps) {
 
           <label htmlFor="" className="capitalize">status</label>
           <select name="status" id="status" className="capitalize rounded-[0.25rem] border bg-[#FFF] dark:bg-[#2B2C37] p-2 text-[0.8125rem] placeholder-[#000112] dark:placeholder-[#fff] placeholder-opacity-[0.25] focus:outline-none focus:ring-1 focus:ring-[#828fa340] focus:border-transparent">
-            <option value="todo">todo</option>
-            <option value="doing">doing</option>
-            <option value="done">done</option>
+            {
+              column.map((column: Column) => {
+                return (
+                  <option value={`${column.name}`} key={column.id}>{column.name}</option>
+                )
+              })
+            }
           </select>
           <Button
             icon='./icons/icon-add-task-mobile.svg'

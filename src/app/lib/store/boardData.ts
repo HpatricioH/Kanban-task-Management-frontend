@@ -1,8 +1,10 @@
 import { create } from 'zustand'
+import { type Column } from '../hooks/useGetBoards'
 
 interface Board {
   id: string
   name: string
+  columns: Column[]
 }
 
 interface BoardDataStore {

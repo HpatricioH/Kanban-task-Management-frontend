@@ -15,7 +15,7 @@ interface Props {
 export default function Page ({ params }: Props) {
   const { setBoard } = boardData()
   const boardsData = useGetBoards()
-  const board = boardData() as any
+  const board = boardData()
   const column = board?.board[0]?.columns
   const { id } = params
 
@@ -23,7 +23,7 @@ export default function Page ({ params }: Props) {
   useEffect(() => {
     if (id) {
       const selectedBoard = boardsData.boards?.find((board) => board.id === id)
-      setBoard(selectedBoard ? [selectedBoard] : [])
+      setBoard(selectedBoard ? [selectedBoard] : [] as any)
     }
   }, [setBoard, boardsData.boards, id])
 

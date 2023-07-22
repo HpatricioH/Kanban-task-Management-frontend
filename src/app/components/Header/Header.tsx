@@ -6,8 +6,11 @@ import React, { useState } from 'react'
 import BoardsMenu from '../BoardsMenu/BoardsMenu'
 import AddNewTask from '../AddNewTask/AddNewTask'
 import { usePathname } from 'next/navigation'
+import { boardData } from '@/app/lib/store/boardData'
 
 export default function Header () {
+  const board = boardData()
+  const column = board?.board[0]?.columns
   const [showBoardModal, setShowBoardModal] = useState(false)
   const [showAddTaskModal, setShowAddTaskModal] = useState(false)
   const id = usePathname().slice(1)
@@ -41,8 +44,8 @@ export default function Header () {
         {/* if selected board then show task modal */}
           <Button
             icon='./icons/icon-add-task-mobile.svg'
-            buttonStyle={`bg-[#635FC7] w-10 h-7 flex justify-center items-center rounded-xl ${!getSelectedBoardId ? 'opacity-25' : 'opacity-100'}`}
-            onClick={!getSelectedBoardId ? undefined : handleAddTask}
+            buttonStyle={`bg-[#635FC7] w-10 h-7 flex justify-center items-center rounded-xl ${!getSelectedBoardId || column?.length === 0 ? 'opacity-25' : 'opacity-100'}`}
+            onClick={!getSelectedBoardId || column?.length === 0 ? undefined : handleAddTask}
             />
           <Image
             src='./icons/icon-vertical-ellipsis.svg'
@@ -54,7 +57,7 @@ export default function Header () {
         </div>
       </nav>
       {showBoardModal ? <BoardsMenu setShowModal={setShowBoardModal} /> : null}
-      {showAddTaskModal ? <AddNewTask setAddTaskModal= {setShowAddTaskModal} /> : null}
+      {showAddTaskModal ? <AddNewTask setAddTaskModal= {setShowAddTaskModal} column={column}/> : null}
     </header>
   )
 }

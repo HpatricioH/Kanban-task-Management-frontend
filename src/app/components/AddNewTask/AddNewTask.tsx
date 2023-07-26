@@ -30,34 +30,21 @@ export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps
       new FormData(e.currentTarget)
     )
 
-    // to create a new task I need:
-    // title, description, status, columnId
     const selectedColumn = column.find((column: Column) => column.name === status)
-    console.log(title, description, status)
-    console.log(selectedColumn?.id)
 
+    // TODO: create validations and errors messages for the form
     if (formEntries) {
-      await addTasks({ title, description, status, columnId: selectedColumn?.id })
+      const response = await addTasks({ title, description, status, columnId: selectedColumn?.id })
+
+      // create subtasks if user add a new task
+      subTasks.map(async ([_, value]) => {
+        await addSubTasks({ taskId: response.id, title: value, isCompleted: false })
+      })
+
       form.reset()
     } else {
       console.log('error task')
     }
-
-    // to create a new subtask it is needed:
-    // task id, title, isCompleted (default false)
-    const tasks = selectedColumn?.tasks
-    const findTasks = tasks?.find((task) => task.status === status)
-    console.log(findTasks?.id)
-
-    if (subTasks) {
-      subTasks.map(async ([_, value]) => {
-        await addSubTasks({ taskId: findTasks?.id, title: value, isCompleted: false })
-      })
-    } else {
-      console.log('error subtask')
-    }
-    console.log(subTasks.map(([_, value]) => value))
-    // console.log(formEntries)
   }
 
   return (

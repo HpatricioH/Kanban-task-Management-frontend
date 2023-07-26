@@ -1,6 +1,8 @@
 import { Button } from '@/app/core/utils/Button'
 import { type Column } from '@/app/lib/hooks/useGetBoards'
 import SubtaskSection from './SubtaskSection'
+import addTasks from '@/app/core/services/addTasks'
+import addSubTasks from '@/app/core/services/addSubTasks'
 
 interface AddNewTaskProps {
   setAddTaskModal: (value: boolean) => void
@@ -17,7 +19,7 @@ export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps
     }
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     const form = e.currentTarget
@@ -34,12 +36,26 @@ export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps
     console.log(title, description, status)
     console.log(selectedColumn?.id)
 
+    if (formEntries) {
+      await addTasks({ title, description, status, columnId: selectedColumn?.id })
+      form.reset()
+    } else {
+      console.log('error task')
+    }
+
     // to create a new subtask it is needed:
     // task id, title, isCompleted (default false)
     const tasks = selectedColumn?.tasks
     const findTasks = tasks?.find((task) => task.status === status)
     console.log(findTasks?.id)
 
+    if (subTasks) {
+      subTasks.map(async ([_, value]) => {
+        await addSubTasks({ taskId: findTasks?.id, title: value, isCompleted: false })
+      })
+    } else {
+      console.log('error subtask')
+    }
     console.log(subTasks.map(([_, value]) => value))
     // console.log(formEntries)
   }
@@ -55,7 +71,7 @@ export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps
 
         {/* Form Section */}
         <form
-          onSubmit={handleSubmit}
+          onSubmit={(e) => { handleSubmit(e) }}
           className="flex flex-col gap-3 [&_label]:text-[0.75rem] [&_label]:font-bold [&_label]:leading-normal [&_label]:text-[#828FA3] [&_label]:dark:text-[#FFF]">
 
           {/* Title form section */}

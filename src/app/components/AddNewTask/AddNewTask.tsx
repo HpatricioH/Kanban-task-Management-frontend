@@ -1,6 +1,8 @@
 import { Button } from '@/app/core/utils/Button'
 import { type Column } from '@/app/lib/hooks/useGetBoards'
 import SubtaskSection from './SubtaskSection'
+import addTasks from '@/app/core/services/addTasks'
+import addSubTasks from '@/app/core/services/addSubTasks'
 
 interface AddNewTaskProps {
   setAddTaskModal: (value: boolean) => void
@@ -17,7 +19,7 @@ export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps
     }
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     const form = e.currentTarget
@@ -28,20 +30,21 @@ export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps
       new FormData(e.currentTarget)
     )
 
-    // to create a new task I need:
-    // title, description, status, columnId
     const selectedColumn = column.find((column: Column) => column.name === status)
-    console.log(title, description, status)
-    console.log(selectedColumn?.id)
 
-    // to create a new subtask it is needed:
-    // task id, title, isCompleted (default false)
-    const tasks = selectedColumn?.tasks
-    const findTasks = tasks?.find((task) => task.status === status)
-    console.log(findTasks?.id)
+    // TODO: create validations and errors messages for the form
+    if (formEntries) {
+      const response = await addTasks({ title, description, status, columnId: selectedColumn?.id })
 
-    console.log(subTasks.map(([_, value]) => value))
-    // console.log(formEntries)
+      // create subtasks if user add a new task
+      subTasks.map(async ([_, value]) => {
+        await addSubTasks({ taskId: response.id, title: value, isCompleted: false })
+      })
+
+      form.reset()
+    } else {
+      console.log('error task')
+    }
   }
 
   return (
@@ -55,7 +58,7 @@ export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps
 
         {/* Form Section */}
         <form
-          onSubmit={handleSubmit}
+          onSubmit={(e) => { handleSubmit(e) }}
           className="flex flex-col gap-3 [&_label]:text-[0.75rem] [&_label]:font-bold [&_label]:leading-normal [&_label]:text-[#828FA3] [&_label]:dark:text-[#FFF]">
 
           {/* Title form section */}

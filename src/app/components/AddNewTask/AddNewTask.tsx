@@ -3,6 +3,7 @@ import { type Column } from '@/app/lib/hooks/useGetBoards'
 import SubtaskSection from './SubtaskSection'
 import addTasks from '@/app/core/services/addTasks'
 import addSubTasks from '@/app/core/services/addSubTasks'
+import { useState } from 'react'
 
 interface AddNewTaskProps {
   setAddTaskModal: (value: boolean) => void
@@ -11,6 +12,9 @@ interface AddNewTaskProps {
 
 //  TODO: refactor this component separate the component into smaller components
 export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps) {
+  const [titleFormValidation, setTitleFormValidation] = useState(false)
+  const [descriptionFormValidation, setDescriptionFormValidation] = useState(false)
+
   const handleClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const target = e.target as HTMLDivElement
 
@@ -32,8 +36,20 @@ export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps
 
     const selectedColumn = column.find((column: Column) => column.name === status)
 
+    if (!title) {
+      setTitleFormValidation(true)
+    } else {
+      setTitleFormValidation(false)
+    }
+
+    if (!description) {
+      setDescriptionFormValidation(true)
+    } else {
+      setDescriptionFormValidation(false)
+    }
+
     // TODO: create validations and errors messages for the form
-    if (formEntries) {
+    if (title && description) {
       const response = await addTasks({ title, description, status, columnId: selectedColumn?.id })
 
       // create subtasks if user add a new task
@@ -43,7 +59,7 @@ export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps
 
       form.reset()
     } else {
-      console.log('error task')
+      console.log('error')
     }
   }
 
@@ -65,7 +81,9 @@ export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps
           <label className="capitalize">title</label>
           <input
             type="text"
-            className="rounded-[0.25rem] border border-[#828fa340] bg-[#FFF] dark:bg-[#2B2C37] p-2 text-[0.8125rem] placeholder-[#000112] dark:placeholder-[#fff] placeholder-opacity-[0.25] dark:placeholder-opacity-[0.25] focus:outline-none focus:ring-1 focus:ring-[#828fa340] focus:border-transparent "
+            className={titleFormValidation
+              ? 'rounded-[0.25rem] border border-[red] bg-[#FFF] dark:bg-[#2B2C37] p-2 text-[0.8125rem] placeholder-[#000112] dark:placeholder-[#fff] placeholder-opacity-[0.25] dark:placeholder-opacity-[0.25] focus:outline-none focus:ring-1 focus:ring-[#828fa340] focus:border-transparent '
+              : 'rounded-[0.25rem] border border-[#828fa340] bg-[#FFF] dark:bg-[#2B2C37] p-2 text-[0.8125rem] placeholder-[#000112] dark:placeholder-[#fff] placeholder-opacity-[0.25] dark:placeholder-opacity-[0.25] focus:outline-none focus:ring-1 focus:ring-[#828fa340] focus:border-transparent '}
             placeholder="e.g. Take coffee break"
             id='title'
             name='title'
@@ -79,7 +97,9 @@ export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps
             cols={30}
             rows={5}
             placeholder="e.g. It’s always good to take a break. This 15 minute break will  recharge the batteries a little."
-            className="resize-none rounded-[0.25rem] border border-[#828fa340] bg-[#FFF] dark:bg-[#2B2C37] p-2 text-[0.8125rem] placeholder-[#000112] dark:placeholder-[#fff] placeholder-opacity-[0.25] dark:placeholder-opacity-[0.25] focus:outline-none focus:ring-1 focus:ring-[#828fa340] focus:border-transparent"
+            className={descriptionFormValidation
+              ? 'rounded-[0.25rem] border border-[red] bg-[#FFF] dark:bg-[#2B2C37] p-2 text-[0.8125rem] placeholder-[#000112] dark:placeholder-[#fff] placeholder-opacity-[0.25] dark:placeholder-opacity-[0.25] focus:outline-none focus:ring-1 focus:ring-[#828fa340] focus:border-transparent '
+              : 'rounded-[0.25rem] border border-[#828fa340] bg-[#FFF] dark:bg-[#2B2C37] p-2 text-[0.8125rem] placeholder-[#000112] dark:placeholder-[#fff] placeholder-opacity-[0.25] dark:placeholder-opacity-[0.25] focus:outline-none focus:ring-1 focus:ring-[#828fa340] focus:border-transparent '}
           />
 
           {/* Subtask form section */}

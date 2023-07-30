@@ -14,6 +14,7 @@ interface AddNewTaskProps {
 export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps) {
   const [titleFormValidation, setTitleFormValidation] = useState(false)
   const [descriptionFormValidation, setDescriptionFormValidation] = useState(false)
+  const [subtaskFormValidation, setSubtaskFormValidation] = useState(false)
 
   const handleClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const target = e.target as HTMLDivElement
@@ -35,6 +36,7 @@ export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps
     )
 
     const selectedColumn = column.find((column: Column) => column.name === status)
+    const hasEmptySubtask = subTasks.some(([_, value]) => value === '')
 
     if (!title) {
       setTitleFormValidation(true)
@@ -47,6 +49,8 @@ export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps
     } else {
       setDescriptionFormValidation(false)
     }
+
+    if (hasEmptySubtask) { setSubtaskFormValidation(true) } else { setSubtaskFormValidation(false) }
 
     // TODO: create validations and errors messages for the form
     if (title && description) {
@@ -81,9 +85,7 @@ export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps
           <label className="capitalize">title</label>
           <input
             type="text"
-            className={titleFormValidation
-              ? 'rounded-[0.25rem] border border-[red] bg-[#FFF] dark:bg-[#2B2C37] p-2 text-[0.8125rem] placeholder-[#000112] dark:placeholder-[#fff] placeholder-opacity-[0.25] dark:placeholder-opacity-[0.25] focus:outline-none focus:ring-1 focus:ring-[#828fa340] focus:border-transparent '
-              : 'rounded-[0.25rem] border border-[#828fa340] bg-[#FFF] dark:bg-[#2B2C37] p-2 text-[0.8125rem] placeholder-[#000112] dark:placeholder-[#fff] placeholder-opacity-[0.25] dark:placeholder-opacity-[0.25] focus:outline-none focus:ring-1 focus:ring-[#828fa340] focus:border-transparent '}
+            className={`rounded-[0.25rem] border ${titleFormValidation ? 'border-[red]' : 'border-[#828fa340]'}  bg-[#FFF] dark:bg-[#2B2C37] p-2 text-[0.8125rem] placeholder-[#000112] dark:placeholder-[#fff] placeholder-opacity-[0.25] dark:placeholder-opacity-[0.25] focus:outline-none focus:ring-1 focus:ring-[#828fa340] focus:border-transparent `}
             placeholder="e.g. Take coffee break"
             id='title'
             name='title'
@@ -97,13 +99,11 @@ export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps
             cols={30}
             rows={5}
             placeholder="e.g. It’s always good to take a break. This 15 minute break will  recharge the batteries a little."
-            className={descriptionFormValidation
-              ? 'rounded-[0.25rem] border border-[red] bg-[#FFF] dark:bg-[#2B2C37] p-2 text-[0.8125rem] placeholder-[#000112] dark:placeholder-[#fff] placeholder-opacity-[0.25] dark:placeholder-opacity-[0.25] focus:outline-none focus:ring-1 focus:ring-[#828fa340] focus:border-transparent '
-              : 'rounded-[0.25rem] border border-[#828fa340] bg-[#FFF] dark:bg-[#2B2C37] p-2 text-[0.8125rem] placeholder-[#000112] dark:placeholder-[#fff] placeholder-opacity-[0.25] dark:placeholder-opacity-[0.25] focus:outline-none focus:ring-1 focus:ring-[#828fa340] focus:border-transparent '}
+            className={`rounded-[0.25rem] border ${descriptionFormValidation ? 'border-[red]' : 'border-[#828fa340]'}  bg-[#FFF] dark:bg-[#2B2C37] p-2 text-[0.8125rem] placeholder-[#000112] dark:placeholder-[#fff] placeholder-opacity-[0.25] dark:placeholder-opacity-[0.25] focus:outline-none focus:ring-1 focus:ring-[#828fa340] focus:border-transparent ` }
           />
 
           {/* Subtask form section */}
-          <SubtaskSection />
+          <SubtaskSection subTaskValidation={subtaskFormValidation}/>
 
           {/* Status Form Section */}
           <label className="capitalize">status</label>

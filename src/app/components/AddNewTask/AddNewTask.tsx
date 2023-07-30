@@ -53,7 +53,7 @@ export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps
     if (hasEmptySubtask) { setSubtaskFormValidation(true) } else { setSubtaskFormValidation(false) }
 
     // TODO: create validations and errors messages for the form
-    if (title && description) {
+    if (title && description && !hasEmptySubtask) {
       const response = await addTasks({ title, description, status, columnId: selectedColumn?.id })
 
       // create subtasks if user add a new task
@@ -62,6 +62,7 @@ export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps
       })
 
       form.reset()
+      setAddTaskModal(false)
     } else {
       console.log('error')
     }

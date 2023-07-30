@@ -38,7 +38,6 @@ export interface BoardsData {
 export function useGetBoards (): BoardsData {
   const [boardsData, setBoardsData] = useState<BoardsData>({ boards: null, loading: false })
 
-  // TODO: make the api call only once and when the board menu is open, don't make the call again
   useEffect(() => {
     const fetchData = async () => {
       setBoardsData((prevData) => ({ ...prevData, loading: true }))
@@ -49,7 +48,6 @@ export function useGetBoards (): BoardsData {
         throw new Error(error.message)
       }
     }
-
     fetchData()
   }, [])
 

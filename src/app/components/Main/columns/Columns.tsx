@@ -1,4 +1,3 @@
-import React from 'react'
 import { type Column } from '@/app/lib/hooks/useGetBoards'
 
 export const Columns = ({ column }: any) => {

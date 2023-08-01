@@ -4,6 +4,7 @@ import SubtaskSection from './SubtaskSection'
 import addTasks from '@/app/core/services/addTasks'
 import addSubTasks from '@/app/core/services/addSubTasks'
 import { useState } from 'react'
+import { newTask } from '@/app/lib/store/taskAdded'
 
 interface AddNewTaskProps {
   setAddTaskModal: (value: boolean) => void
@@ -15,6 +16,7 @@ export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps
   const [titleFormValidation, setTitleFormValidation] = useState(false)
   const [descriptionFormValidation, setDescriptionFormValidation] = useState(false)
   const [subtaskFormValidation, setSubtaskFormValidation] = useState(false)
+  const { setTaskAdded } = newTask()
 
   const handleClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const target = e.target as HTMLDivElement
@@ -62,6 +64,7 @@ export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps
       })
 
       form.reset()
+      setTaskAdded(true)
       setAddTaskModal(false)
     } else {
       console.log('error')

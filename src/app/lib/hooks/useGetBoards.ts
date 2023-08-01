@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { getBoards } from '../../core/services/getBoards'
+import { newTask } from '../store/taskAdded'
 
 export interface SubTask {
   id: string
@@ -33,31 +34,29 @@ export interface Board {
 export interface BoardsData {
   boards: Board[] | null
   loading: boolean
-  setTaskAdded?: React.Dispatch<React.SetStateAction<boolean>>
-  taskAdded?: boolean
 }
 
 export function useGetBoards (): BoardsData {
+  const { taskAdded, setTaskAdded } = newTask()
   const [boardsData, setBoardsData] = useState<BoardsData>({ boards: null, loading: false })
-  const [taskAdded, setTaskAdded] = useState(false)
 
   useEffect(() => {
-    console.log('taskAdded:', taskAdded)
     const fetchData = async () => {
       setBoardsData((prevData) => ({ ...prevData, loading: true }))
       try {
         const boards = await getBoards()
         setBoardsData({ boards, loading: false })
+
+        // This makes the store to reset the taskAdded state to false
+        if (taskAdded) {
+          setTaskAdded(false)
+        }
       } catch (error: any) {
         throw new Error(error.message)
       }
     }
     fetchData()
-  }, [taskAdded])
+  }, [taskAdded, setTaskAdded])
 
-  useEffect(() => {
-    console.log('boardsData value:', boardsData)
-  }, [boardsData])
-
-  return { ...boardsData, setTaskAdded, taskAdded }
+  return { ...boardsData }
 }

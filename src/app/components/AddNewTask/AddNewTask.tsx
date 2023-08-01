@@ -4,7 +4,7 @@ import SubtaskSection from './SubtaskSection'
 import addTasks from '@/app/core/services/addTasks'
 import addSubTasks from '@/app/core/services/addSubTasks'
 import { useState } from 'react'
-import { boardData } from '@/app/lib/store/boardData'
+import { newTask } from '@/app/lib/store/taskAdded'
 
 interface AddNewTaskProps {
   setAddTaskModal: (value: boolean) => void
@@ -13,10 +13,10 @@ interface AddNewTaskProps {
 
 //  TODO: refactor this component separate the component into smaller components
 export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps) {
-  const { setTaskAdded } = boardData() ?? {}
   const [titleFormValidation, setTitleFormValidation] = useState(false)
   const [descriptionFormValidation, setDescriptionFormValidation] = useState(false)
   const [subtaskFormValidation, setSubtaskFormValidation] = useState(false)
+  const { setTaskAdded } = newTask()
 
   const handleClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const target = e.target as HTMLDivElement
@@ -63,11 +63,8 @@ export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps
         await addSubTasks({ taskId: response.id, title: value, isCompleted: false })
       })
 
-      if (setTaskAdded) {
-        setTaskAdded(true)
-      }
-
       form.reset()
+      setTaskAdded(true)
       setAddTaskModal(false)
     } else {
       console.log('error')

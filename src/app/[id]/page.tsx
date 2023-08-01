@@ -19,8 +19,6 @@ export default function Page ({ params }: Props) {
   const column = board?.board[0]?.columns
   const { id } = params
 
-  console.log(boardsData.taskAdded)
-
   // TODO: fix this useEffect to maybe use a custom hook or make a single board API call to get the board data
   useEffect(() => {
     if (id) {

@@ -33,12 +33,16 @@ export interface Board {
 export interface BoardsData {
   boards: Board[] | null
   loading: boolean
+  setTaskAdded?: React.Dispatch<React.SetStateAction<boolean>>
+  taskAdded?: boolean
 }
 
 export function useGetBoards (): BoardsData {
   const [boardsData, setBoardsData] = useState<BoardsData>({ boards: null, loading: false })
+  const [taskAdded, setTaskAdded] = useState(false)
 
   useEffect(() => {
+    console.log('taskAdded:', taskAdded)
     const fetchData = async () => {
       setBoardsData((prevData) => ({ ...prevData, loading: true }))
       try {
@@ -49,7 +53,11 @@ export function useGetBoards (): BoardsData {
       }
     }
     fetchData()
-  }, [])
+  }, [taskAdded])
 
-  return boardsData
+  useEffect(() => {
+    console.log('boardsData value:', boardsData)
+  }, [boardsData])
+
+  return { ...boardsData, setTaskAdded, taskAdded }
 }

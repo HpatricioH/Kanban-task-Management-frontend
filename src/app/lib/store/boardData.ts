@@ -10,6 +10,7 @@ interface Board {
 interface BoardDataStore {
   board: Board[]
   setBoard: (board: Board[]) => void
+  setTaskAdded?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const boardData = create<BoardDataStore>((set) => ({

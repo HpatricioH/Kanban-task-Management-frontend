@@ -4,6 +4,7 @@ import SubtaskSection from './SubtaskSection'
 import addTasks from '@/app/core/services/addTasks'
 import addSubTasks from '@/app/core/services/addSubTasks'
 import { useState } from 'react'
+import { boardData } from '@/app/lib/store/boardData'
 
 interface AddNewTaskProps {
   setAddTaskModal: (value: boolean) => void
@@ -12,6 +13,7 @@ interface AddNewTaskProps {
 
 //  TODO: refactor this component separate the component into smaller components
 export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps) {
+  const { setTaskAdded } = boardData() ?? {}
   const [titleFormValidation, setTitleFormValidation] = useState(false)
   const [descriptionFormValidation, setDescriptionFormValidation] = useState(false)
   const [subtaskFormValidation, setSubtaskFormValidation] = useState(false)
@@ -60,6 +62,10 @@ export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps
       subTasks.map(async ([_, value]) => {
         await addSubTasks({ taskId: response.id, title: value, isCompleted: false })
       })
+
+      if (setTaskAdded) {
+        setTaskAdded(true)
+      }
 
       form.reset()
       setAddTaskModal(false)

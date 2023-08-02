@@ -1,12 +1,19 @@
 import { type Column } from '@/app/lib/hooks/useGetBoards'
+import { useState } from 'react'
+import EditTask from '../../EditTask/EditTask'
 
 export const Columns = ({ column }: any) => {
+  const [showEditTaskModal, setShowEditTaskModal] = useState(false)
   const boardColumn = column?.flat()?.map((col: Column) => col)
+
+  const handleEditTask = () => {
+    !showEditTaskModal ? setShowEditTaskModal(true) : setShowEditTaskModal(false)
+  }
 
   return (
     <div className='h-[440px] flex relative gap-6 w-[237vw] '>
       {boardColumn?.map((col: Column) => (
-        <div key={col.id} className='inline-block w-[17.5rem]'>
+        <div key={col.id} className='inline-block w-[17.5rem]' onClick={handleEditTask}>
           <div className='flex'>
             <div className={`rounded-full h-[0.938rem] w-[0.938rem] 
             ${col.name === 'Todo'
@@ -35,6 +42,7 @@ export const Columns = ({ column }: any) => {
           </div>
         </div>
       ))}
+      {showEditTaskModal ? <EditTask setAddTaskModal= {setShowEditTaskModal} column={column}/> : null}
     </div>
   )
 }

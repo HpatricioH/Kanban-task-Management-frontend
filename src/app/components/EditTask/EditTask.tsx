@@ -10,7 +10,7 @@ interface AddNewTaskProps {
   column: Column[]
 }
 
-export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps) {
+export default function EditTask ({ setAddTaskModal, column }: AddNewTaskProps) {
   const [titleFormValidation, setTitleFormValidation] = useState(false)
   const [descriptionFormValidation, setDescriptionFormValidation] = useState(false)
   const [subtaskFormValidation, setSubtaskFormValidation] = useState(false)
@@ -52,6 +52,7 @@ export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps
 
     if (hasEmptySubtask) { setSubtaskFormValidation(true) } else { setSubtaskFormValidation(false) }
 
+    // TODO: create validations and errors messages for the form
     if (title && description && !hasEmptySubtask) {
       const response = await addTasks({ title, description, status, columnId: selectedColumn?.id })
 
@@ -68,6 +69,8 @@ export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps
     }
   }
 
+  console.log(column)
+
   return (
     <div
       className='bg-[#20212C] p-4 z-20 fixed inset-0 bg-opacity-60 flex justify-center items-center transition duration-700 ease-in-out'
@@ -75,7 +78,7 @@ export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps
       onClick={(e) => { handleClose(e) }}>
 
       <div className='bg-[#FFF] dark:bg-[#2B2C37] rounded-md flex flex-col gap-4 shadow-lg shadow-[#364e7e40]/25 absolute w-[18rem] top-[4.7rem] p-4'>
-        <h2 className='capitalize text-[1.125rem] font-bold leading-normal'>add new task</h2>
+        <h2 className='capitalize text-[1.125rem] font-bold leading-normal'>Edit Task</h2>
 
         <Form onSubmit={(e) => { handleSubmit(e) } } titleFormValidation={titleFormValidation} descriptionFormValidation={descriptionFormValidation} subtaskFormValidation={subtaskFormValidation} column={column} />
 

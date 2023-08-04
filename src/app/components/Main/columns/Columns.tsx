@@ -46,9 +46,9 @@ export const Columns = ({ column }: any) => {
   })
 
   return (
-    <div className='h-[440px] flex relative gap-6 w-[237vw] '>
+    <section className='h-[440px] flex relative gap-6 w-[237vw] '>
       {columns}
       {showEditTaskModal && <EditTask setAddTaskModal={setShowEditTaskModal} column={column} />}
-    </div>
+    </section>
   )
 }

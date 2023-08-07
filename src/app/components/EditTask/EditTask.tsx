@@ -5,17 +5,25 @@ import { useState } from 'react'
 import { newTask } from '@/app/lib/store/taskAdded'
 import Form from '../form/Form'
 
-interface AddNewTaskProps {
+interface EditTaskProps {
   setAddTaskModal: (value: boolean) => void
   column: Column[]
+  taskSelected?: {
+    columnId: string
+    description: string
+    id: string
+    status: string
+    subTasks: Array<{ id: string, isCompleted: boolean, taskId: string, title: string }>
+    title: string
+  }
 }
 
-export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps) {
+export default function EditTask ({ setAddTaskModal, column, taskSelected }: EditTaskProps) {
   const [titleFormValidation, setTitleFormValidation] = useState(false)
   const [descriptionFormValidation, setDescriptionFormValidation] = useState(false)
   const [subtaskFormValidation, setSubtaskFormValidation] = useState(false)
   const { setTaskAdded } = newTask()
-  const typeOfForm = 'Add New Task'
+  const typeOfForm = 'Edit Task'
 
   const handleClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const target = e.target as HTMLDivElement
@@ -53,6 +61,7 @@ export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps
 
     if (hasEmptySubtask) { setSubtaskFormValidation(true) } else { setSubtaskFormValidation(false) }
 
+    // TODO: create validations and errors messages for the form
     if (title && description && !hasEmptySubtask) {
       const response = await addTasks({ title, description, status, columnId: selectedColumn?.id })
 
@@ -76,9 +85,9 @@ export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps
       onClick={(e) => { handleClose(e) }}>
 
       <div className='bg-[#FFF] dark:bg-[#2B2C37] rounded-md flex flex-col gap-4 shadow-lg shadow-[#364e7e40]/25 absolute w-[18rem] top-[4.7rem] p-4'>
-        <h2 className='capitalize text-[1.125rem] font-bold leading-normal'>add new task</h2>
+        <h2 className='capitalize text-[1.125rem] font-bold leading-normal'>Edit Task</h2>
 
-        <Form onSubmit={(e) => { handleSubmit(e) } } titleFormValidation={titleFormValidation} descriptionFormValidation={descriptionFormValidation} subtaskFormValidation={subtaskFormValidation} column={column} typeOfForm={typeOfForm}/>
+        <Form onSubmit={(e) => { handleSubmit(e) } } titleFormValidation={titleFormValidation} descriptionFormValidation={descriptionFormValidation} subtaskFormValidation={subtaskFormValidation} column={column} typeOfForm={typeOfForm} taskSelected={taskSelected}/>
 
       </div>
     </div>

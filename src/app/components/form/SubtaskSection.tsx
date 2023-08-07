@@ -8,6 +8,19 @@ interface SubTaskInput {
   placeholder: string
 }
 
+interface SubtaskSectionProps {
+  taskSelected?: {
+    columnId: string
+    description: string
+    id: string
+    status: string
+    subTasks: Array<{ id: string, isCompleted: boolean, taskId: string, title: string }>
+    title: string
+  }
+  subTaskValidation: boolean
+  typeOfForm?: string
+}
+
 const initialSubTasks = [
   {
     id: 'subtask-0',
@@ -21,7 +34,7 @@ const initialSubTasks = [
   }
 ]
 
-export default function SubtaskSection ({ subTaskValidation }: { subTaskValidation: boolean }) {
+export default function SubtaskSection ({ subTaskValidation, taskSelected, typeOfForm }: SubtaskSectionProps) {
   const [inputList, setInputList] = useState<SubTaskInput[]>(initialSubTasks)
   const [subTaskValues, setSubTaskValues] = useState<string[]>(initialSubTasks.map(() => ''))
 
@@ -61,7 +74,8 @@ export default function SubtaskSection ({ subTaskValidation }: { subTaskValidati
       </label>
       {inputList.map((input, index) => {
         // get the value of the subtask at the specified `index` from `subTaskValues`
-        const inputValue = subTaskValues[index]
+        const subtask = taskSelected?.subTasks?.[index]
+        const inputValue = subtask?.title ?? ''
         const isInvalid = subTaskValidation && inputValue === ''
 
         return (
@@ -72,6 +86,7 @@ export default function SubtaskSection ({ subTaskValidation }: { subTaskValidati
             onChange={(value) => { handleSubtaskChange(index, value) }}
             onRemove={() => { handleRemoveSubtask(index) }}
             isInvalid={isInvalid}
+            typeOfForm={typeOfForm}
           />
         )
       })}

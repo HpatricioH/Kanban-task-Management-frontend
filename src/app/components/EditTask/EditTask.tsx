@@ -5,12 +5,20 @@ import { useState } from 'react'
 import { newTask } from '@/app/lib/store/taskAdded'
 import Form from '../form/Form'
 
-interface AddNewTaskProps {
+interface EditTaskProps {
   setAddTaskModal: (value: boolean) => void
   column: Column[]
+  taskSelected?: {
+    columnId: string
+    description: string
+    id: string
+    status: string
+    subTasks: Array<{ id: string, isCompleted: boolean, taskId: string, title: string }>
+    title: string
+  }
 }
 
-export default function EditTask ({ setAddTaskModal, column }: AddNewTaskProps) {
+export default function EditTask ({ setAddTaskModal, column, taskSelected }: EditTaskProps) {
   const [titleFormValidation, setTitleFormValidation] = useState(false)
   const [descriptionFormValidation, setDescriptionFormValidation] = useState(false)
   const [subtaskFormValidation, setSubtaskFormValidation] = useState(false)
@@ -70,8 +78,6 @@ export default function EditTask ({ setAddTaskModal, column }: AddNewTaskProps) 
     }
   }
 
-  console.log(column)
-
   return (
     <div
       className='bg-[#20212C] p-4 z-20 fixed inset-0 bg-opacity-60 flex justify-center items-center transition duration-700 ease-in-out'
@@ -81,7 +87,7 @@ export default function EditTask ({ setAddTaskModal, column }: AddNewTaskProps) 
       <div className='bg-[#FFF] dark:bg-[#2B2C37] rounded-md flex flex-col gap-4 shadow-lg shadow-[#364e7e40]/25 absolute w-[18rem] top-[4.7rem] p-4'>
         <h2 className='capitalize text-[1.125rem] font-bold leading-normal'>Edit Task</h2>
 
-        <Form onSubmit={(e) => { handleSubmit(e) } } titleFormValidation={titleFormValidation} descriptionFormValidation={descriptionFormValidation} subtaskFormValidation={subtaskFormValidation} column={column} typeOfForm={typeOfForm}/>
+        <Form onSubmit={(e) => { handleSubmit(e) } } titleFormValidation={titleFormValidation} descriptionFormValidation={descriptionFormValidation} subtaskFormValidation={subtaskFormValidation} column={column} typeOfForm={typeOfForm} taskSelected={taskSelected}/>
 
       </div>
     </div>

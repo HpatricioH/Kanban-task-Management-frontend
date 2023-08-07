@@ -4,10 +4,16 @@ import EditTask from '../../EditTask/EditTask'
 
 export const Columns = ({ column }: any) => {
   const [showEditTaskModal, setShowEditTaskModal] = useState(false)
+  const [taskSelected, setTaskSelected] = useState()
   const boardColumn = column?.flat()?.map((col: Column) => col)
 
   const handleEditTask = () => {
     !showEditTaskModal ? setShowEditTaskModal(true) : setShowEditTaskModal(false)
+  }
+
+  const handleTaskSelected = (id: string) => {
+    const task = boardColumn?.flatMap((col: Column) => col.tasks).find((task: any) => task.id === id)
+    setTaskSelected(task)
   }
 
   const columns = boardColumn?.map((col: Column) => {
@@ -31,6 +37,7 @@ export const Columns = ({ column }: any) => {
             <div
               key={task.id}
               className='bg-[#FFF] z-50 dark:bg-[#2B2C37] rounded-md h-[5.5rem] mb-5 p-4 flex flex-col justify-center gap-2 shadow-md shadow-[#364e7e2e]/25'
+              onClick={() => { handleTaskSelected(task.id) }}
             >
               <h3 className='text-[#000112] dark:text-white text-[0.9375rem] font-bold leading-normal'>{task.title}</h3>
               <p className='text-[0.75rem] font-bold leading-normal text-[#828FA3]'>
@@ -48,7 +55,7 @@ export const Columns = ({ column }: any) => {
   return (
     <section className='h-[440px] flex relative gap-6 w-[237vw] '>
       {columns}
-      {showEditTaskModal && <EditTask setAddTaskModal={setShowEditTaskModal} column={column} />}
+      {showEditTaskModal && <EditTask setAddTaskModal={setShowEditTaskModal} column={column} taskSelected={taskSelected}/>}
     </section>
   )
 }

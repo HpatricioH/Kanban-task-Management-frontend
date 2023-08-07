@@ -9,6 +9,14 @@ interface FormProps {
   subtaskFormValidation: boolean
   column: Column[]
   typeOfForm?: string
+  taskSelected?: {
+    columnId: string
+    description: string
+    id: string
+    status: string
+    subTasks: Array<{ id: string, isCompleted: boolean, taskId: string, title: string }>
+    title: string
+  }
 }
 
 export default function Form ({
@@ -17,9 +25,10 @@ export default function Form ({
   descriptionFormValidation,
   subtaskFormValidation,
   column,
-  typeOfForm
+  typeOfForm,
+  taskSelected
 }: FormProps) {
-  console.log(typeOfForm)
+  console.log()
 
   return (
     <form
@@ -31,7 +40,8 @@ export default function Form ({
       <input
         type="text"
         className={`rounded-[0.25rem] border ${titleFormValidation ? 'border-[red]' : 'border-[#828fa340]'}  bg-[#FFF] dark:bg-[#2B2C37] p-2 text-[0.8125rem] placeholder-[#000112] dark:placeholder-[#fff] placeholder-opacity-[0.25] dark:placeholder-opacity-[0.25] focus:outline-none focus:ring-1 focus:ring-[#828fa340] focus:border-transparent `}
-        placeholder={typeOfForm === 'Edit Task' ? `${column.tasks[0].title}` : 'e.g. Take coffee break'}
+        placeholder='e.g. Take coffee break'
+        defaultValue={typeOfForm === 'Edit Task' ? `${taskSelected?.title ?? ''}` : ''}
         id='title'
         name='title'
       />
@@ -45,10 +55,11 @@ export default function Form ({
         rows={5}
         placeholder="e.g. It’s always good to take a break. This 15 minute break will  recharge the batteries a little."
         className={`rounded-[0.25rem] border ${descriptionFormValidation ? 'border-[red]' : 'border-[#828fa340]'}  bg-[#FFF] dark:bg-[#2B2C37] p-2 text-[0.8125rem] placeholder-[#000112] dark:placeholder-[#fff] placeholder-opacity-[0.25] dark:placeholder-opacity-[0.25] focus:outline-none focus:ring-1 focus:ring-[#828fa340] focus:border-transparent `}
+        defaultValue={typeOfForm === 'Edit Task' ? `${taskSelected?.description ?? ''}` : ''}
       />
 
       {/* Subtask form section */}
-      <SubtaskSection subTaskValidation={subtaskFormValidation} />
+      <SubtaskSection subTaskValidation={subtaskFormValidation} taskSelected={taskSelected} typeOfForm={typeOfForm}/>
 
       {/* Status Form Section */}
       <label className="capitalize">status</label>

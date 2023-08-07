@@ -10,9 +10,10 @@ interface SubtaskInputProps {
   onChange: (value: string) => void
   onRemove: () => void
   isInvalid: boolean
+  typeOfForm?: string
 }
 
-export default function SubtaskInput ({ input, value, onChange, onRemove, isInvalid }: SubtaskInputProps) {
+export default function SubtaskInput ({ input, value, onChange, onRemove, isInvalid, typeOfForm }: SubtaskInputProps) {
   // handle input change and update the `value` state with the new value
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.value)
@@ -26,7 +27,7 @@ export default function SubtaskInput ({ input, value, onChange, onRemove, isInva
         placeholder={input.placeholder}
         id={input.id}
         name={input.name}
-        value={value}
+        defaultValue={typeOfForm === 'Edit Task' ? value ?? '' : ''}
         onChange={handleInputChange}
       />
       <div className='flex justify-center items-center '>

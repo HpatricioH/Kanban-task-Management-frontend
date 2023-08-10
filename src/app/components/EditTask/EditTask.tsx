@@ -1,9 +1,8 @@
 import { type Column } from '@/app/lib/hooks/useGetBoards'
-import addTasks from '@/app/core/services/addTasks'
-import addSubTasks from '@/app/core/services/addSubTasks'
 import { useState } from 'react'
 import { newTask } from '@/app/lib/store/taskAdded'
 import Form from '../form/Form'
+import { updateTask } from '@/app/core/services/updateTask'
 
 interface EditTaskProps {
   setAddTaskModal: (value: boolean) => void
@@ -44,7 +43,7 @@ export default function EditTask ({ setAddTaskModal, column, taskSelected }: Edi
       new FormData(e.currentTarget)
     )
 
-    const selectedColumn = column.find((column: Column) => column.name === status)
+    const columnIdUpdate = column.find((column) => column.name === status)?.id
     const hasEmptySubtask = subTasks.some(([_, value]) => value === '')
 
     if (!title) {
@@ -63,12 +62,12 @@ export default function EditTask ({ setAddTaskModal, column, taskSelected }: Edi
 
     // TODO: create validations and errors messages for the form
     if (title && description && !hasEmptySubtask) {
-      const response = await addTasks({ title, description, status, columnId: selectedColumn?.id })
+      await updateTask({ title, description, status, id: taskSelected?.id ?? '', columnId: columnIdUpdate })
 
       // create subtasks if user add a new task
-      subTasks.map(async ([_, value]) => {
-        await addSubTasks({ taskId: response.id, title: value, isCompleted: false })
-      })
+      // subTasks.map(async ([_, value]) => {
+      //   await addSubTasks({ taskId: response.id, title: value, isCompleted: false })
+      // })
 
       form.reset()
       setTaskAdded(true)

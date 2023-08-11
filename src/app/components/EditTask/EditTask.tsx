@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { newTask } from '@/app/lib/store/taskAdded'
 import Form from '../form/Form'
 import { updateTask } from '@/app/core/services/updateTask'
+import addSubTasks from '@/app/core/services/addSubTasks'
 
 interface EditTaskProps {
   setAddTaskModal: (value: boolean) => void
@@ -58,6 +59,8 @@ export default function EditTask ({ setAddTaskModal, column, taskSelected }: Edi
       setDescriptionFormValidation(false)
     }
 
+    console.log(subTasks)
+
     if (hasEmptySubtask) { setSubtaskFormValidation(true) } else { setSubtaskFormValidation(false) }
 
     // TODO: create validations and errors messages for the form
@@ -86,8 +89,15 @@ export default function EditTask ({ setAddTaskModal, column, taskSelected }: Edi
       <div className='bg-[#FFF] dark:bg-[#2B2C37] rounded-md flex flex-col gap-4 shadow-lg shadow-[#364e7e40]/25 absolute w-[18rem] top-[4.7rem] p-4'>
         <h2 className='capitalize text-[1.125rem] font-bold leading-normal'>Edit Task</h2>
 
-        <Form onSubmit={(e) => { handleSubmit(e) } } titleFormValidation={titleFormValidation} descriptionFormValidation={descriptionFormValidation} subtaskFormValidation={subtaskFormValidation} column={column} typeOfForm={typeOfForm} taskSelected={taskSelected}/>
-
+        <Form
+          onSubmit={(e) => { handleSubmit(e) } }
+          titleFormValidation={titleFormValidation}
+          descriptionFormValidation={descriptionFormValidation}
+          subtaskFormValidation={subtaskFormValidation}
+          column={column}
+          typeOfForm={typeOfForm}
+          taskSelected={taskSelected}
+        />
       </div>
     </div>
   )

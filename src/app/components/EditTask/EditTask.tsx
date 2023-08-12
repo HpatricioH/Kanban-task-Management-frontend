@@ -45,7 +45,6 @@ export default function EditTask ({ setAddTaskModal, column, taskSelected }: Edi
     )
 
     const columnIdUpdate = column.find((column) => column.name === status)?.id
-    const hasEmptySubtask = subTasks.some(([_, value]) => value === '')
 
     if (!title) {
       setTitleFormValidation(true)
@@ -59,12 +58,7 @@ export default function EditTask ({ setAddTaskModal, column, taskSelected }: Edi
       setDescriptionFormValidation(false)
     }
 
-    console.log(subTasks)
-
-    if (hasEmptySubtask) { setSubtaskFormValidation(true) } else { setSubtaskFormValidation(false) }
-
-    // TODO: create validations and errors messages for the form
-    if (title && description && !hasEmptySubtask) {
+    if (title && description) {
       await updateTask({ title, description, status, id: taskSelected?.id ?? '', columnId: columnIdUpdate })
 
       // create subtasks if user add a new task

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import SubtaskInput from './SubtaskInput'
 import { Button } from '@/app/core/utils/Button'
+import { deleteSubTasks } from '@/app/core/services/deleteSubTasks'
 
 interface SubTaskInput {
   id: string
@@ -58,6 +59,12 @@ export default function SubtaskSection ({ subTaskValidation, taskSelected, typeO
 
     // remove the element at the specified `index` from `subTaskValues`
     setSubTaskValues((prevValues) => prevValues.filter((_, i) => i !== index))
+
+    // delete the subtask at the specified index from taskSelected
+    const selectedSubtaskId = taskSelected?.subTasks?.[index]?.id
+    if (typeOfForm === 'Edit Task' && selectedSubtaskId) {
+      deleteSubTasks(selectedSubtaskId)
+    }
   }
 
   const handleSubtaskChange = (index: number, value: string) => {

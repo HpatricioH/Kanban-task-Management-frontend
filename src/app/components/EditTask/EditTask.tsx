@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { newTask } from '@/app/lib/store/taskAdded'
 import Form from '../form/Form'
 import { updateTask } from '@/app/core/services/updateTask'
+import { updateSubtask } from '@/app/core/services/updateSubtask'
 import addSubTasks from '@/app/core/services/addSubTasks'
 
 interface EditTaskProps {
@@ -40,9 +41,7 @@ export default function EditTask ({ setAddTaskModal, column, taskSelected }: Edi
     const formData = new FormData(form)
     const formEntries = Array.from(formData.entries())
     const subTasks = formEntries.filter(([key]) => key === 'subtask')
-    const { title, description, status } = Object.fromEntries(
-      new FormData(e.currentTarget)
-    )
+    const { title, description, status } = Object.fromEntries(formData)
 
     const columnIdUpdate = column.find((column) => column.name === status)?.id
 
@@ -59,12 +58,16 @@ export default function EditTask ({ setAddTaskModal, column, taskSelected }: Edi
     }
 
     if (title && description) {
-      await updateTask({ title, description, status, id: taskSelected?.id ?? '', columnId: columnIdUpdate })
+      if (taskSelected?.subTasks) {
+      // create a new array of subtasks with their updated titles
+        const updatedSubTasks = taskSelected.subTasks.map(subtask => {
+          const newTitle = subTasks.find(({ id }) => id === subtask.id)?.title ?? subtask.title
+          return { ...subtask, title: newTitle }
+        })
+        await Promise.all(updatedSubTasks.map(async subtask => await updateSubtask(subtask)))
+      }
 
-      // create subtasks if user add a new task
-      // subTasks.map(async ([_, value]) => {
-      //   await addSubTasks({ taskId: response.id, title: value, isCompleted: false })
-      // })
+      // await updateTask({ title, description, status, id: taskSelected?.id ?? '', columnId: columnIdUpdate })
 
       form.reset()
       setTaskAdded(true)

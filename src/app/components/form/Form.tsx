@@ -6,7 +6,7 @@ interface FormProps {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
   titleFormValidation: boolean
   descriptionFormValidation: boolean
-  subtaskFormValidation: boolean
+  subtaskFormValidation?: boolean
   column: Column[]
   typeOfForm?: string
   taskSelected?: {

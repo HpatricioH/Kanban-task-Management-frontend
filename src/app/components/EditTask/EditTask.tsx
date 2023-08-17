@@ -1,31 +1,24 @@
-import { type Column } from '@/app/lib/hooks/useGetBoards'
+import { type Task, type Column } from '@/app/lib/hooks/useGetBoards'
 import { useState } from 'react'
 import { newTask } from '@/app/lib/store/taskAdded'
 import Form from '../form/Form'
 import { updateTask } from '@/app/core/services/updateTask'
 import { updateSubtask } from '@/app/core/services/updateSubtask'
-import addSubTasks from '@/app/core/services/addSubTasks'
 
 interface EditTaskProps {
   setAddTaskModal: (value: boolean) => void
   column: Column[]
-  taskSelected?: {
-    columnId: string
-    description: string
-    id: string
-    status: string
-    subTasks: Array<{ id: string, isCompleted: boolean, taskId: string, title: string }>
-    title: string
-  }
+  taskSelected?: Task
 }
 
 export default function EditTask ({ setAddTaskModal, column, taskSelected }: EditTaskProps) {
   const [titleFormValidation, setTitleFormValidation] = useState(false)
   const [descriptionFormValidation, setDescriptionFormValidation] = useState(false)
-  const [subtaskFormValidation, setSubtaskFormValidation] = useState(false)
   const { setTaskAdded } = newTask()
   const typeOfForm = 'Edit Task'
+  const { id: taskId } = taskSelected ?? {}
 
+  // close modal when clicking outside of modal
   const handleClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const target = e.target as HTMLDivElement
 
@@ -37,6 +30,7 @@ export default function EditTask ({ setAddTaskModal, column, taskSelected }: Edi
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
+    // get all form data
     const form = e.currentTarget
     const formData = new FormData(form)
     const formEntries = Array.from(formData.entries())
@@ -45,6 +39,7 @@ export default function EditTask ({ setAddTaskModal, column, taskSelected }: Edi
 
     const columnIdUpdate = column.find((column) => column.name === status)?.id
 
+    // form validations for title and description
     if (!title) {
       setTitleFormValidation(true)
     } else {
@@ -57,17 +52,26 @@ export default function EditTask ({ setAddTaskModal, column, taskSelected }: Edi
       setDescriptionFormValidation(false)
     }
 
+    // if title and description are not empty, update task
     if (title && description) {
-      if (taskSelected?.subTasks) {
-      // create a new array of subtasks with their updated titles
-        const updatedSubTasks = taskSelected.subTasks.map(subtask => {
-          const newTitle = subTasks.find(({ id }) => id === subtask.id)?.title ?? subtask.title
-          return { ...subtask, title: newTitle }
-        })
-        await Promise.all(updatedSubTasks.map(async subtask => await updateSubtask(subtask)))
-      }
+      const getInputtedSubtasks = subTasks.map(([_, value]) => ({ title: value }))
+      // assign subtasks id to getInputtedSubtasks array
+      const updateSubtasksId = taskSelected?.subTasks.map((subtask) => subtask.id)
 
-      // await updateTask({ title, description, status, id: taskSelected?.id ?? '', columnId: columnIdUpdate })
+      const subtasksToBeUpdated = getInputtedSubtasks.map((subtask, index) => {
+        return {
+          ...subtask,
+          id: updateSubtasksId?.[index]
+        }
+      })
+
+      subtasksToBeUpdated.map(async (subtask) => {
+        if (subtask.title) {
+          await updateSubtask({ taskId: taskId ?? '', title: subtask.title, id: subtask.id ?? '', isCompleted: false })
+        }
+      })
+
+      await updateTask({ title, description, status, id: taskId ?? '', columnId: columnIdUpdate })
 
       form.reset()
       setTaskAdded(true)
@@ -90,7 +94,6 @@ export default function EditTask ({ setAddTaskModal, column, taskSelected }: Edi
           onSubmit={(e) => { handleSubmit(e) } }
           titleFormValidation={titleFormValidation}
           descriptionFormValidation={descriptionFormValidation}
-          subtaskFormValidation={subtaskFormValidation}
           column={column}
           typeOfForm={typeOfForm}
           taskSelected={taskSelected}

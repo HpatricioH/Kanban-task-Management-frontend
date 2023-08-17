@@ -18,7 +18,7 @@ interface SubtaskSectionProps {
     subTasks: Array<{ id: string, isCompleted: boolean, taskId: string, title: string }>
     title: string
   }
-  subTaskValidation: boolean
+  subTaskValidation?: boolean
   typeOfForm?: string
 }
 

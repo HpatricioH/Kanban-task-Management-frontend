@@ -9,7 +9,7 @@ interface SubtaskInputProps {
   value: string
   onChange: (value: string) => void
   onRemove: () => void
-  isInvalid: boolean
+  isInvalid?: boolean
   typeOfForm?: string
 }
 

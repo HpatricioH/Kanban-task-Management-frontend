@@ -1,24 +1,7 @@
 import Image from 'next/image'
+import { type SubtaskInputProps } from '../form/SubtaskInput'
 
-export interface SubtaskInputProps {
-  input: {
-    id: string
-    name: string
-    placeholder: string
-  }
-  value?: string
-  onChange: (value: string) => void
-  onRemove: () => void
-  isInvalid?: boolean
-  typeOfForm?: string
-}
-
-export default function SubtaskInput ({ input, value, onChange, onRemove, isInvalid, typeOfForm }: SubtaskInputProps) {
-  // handle input change and update the `value` state with the new value
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(e.target.value)
-  }
-
+export default function BoardColumnInput ({ input, value, onChange, onRemove, isInvalid, typeOfForm }: SubtaskInputProps) {
   return (
     <div className='flex gap-4'>
       <input
@@ -27,8 +10,8 @@ export default function SubtaskInput ({ input, value, onChange, onRemove, isInva
         placeholder={input.placeholder}
         id={input.id}
         name={input.name}
-        defaultValue={typeOfForm === 'Edit Task' ? value ?? '' : ''}
-        onChange={handleInputChange}
+        // defaultValue={typeOfForm === 'Edit Task' ? value ?? '' : ''}
+        // onChange={handleInputChange}
       />
       <div className='flex justify-center items-center '>
         <Image

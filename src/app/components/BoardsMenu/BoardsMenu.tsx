@@ -7,9 +7,11 @@ import { BoardsData } from './BoardsData'
 
 interface ShowModal {
   setShowModal: (value: boolean) => void
+  showAddNewBoardModal?: boolean
+  setShowAddNewBoardModal?: (value: boolean) => void
 }
 
-export default function BoardsMenu ({ setShowModal }: ShowModal) {
+export default function BoardsMenu ({ setShowModal, setShowAddNewBoardModal, showAddNewBoardModal }: ShowModal) {
   const handleClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const target = e.target as HTMLDivElement
     if (target.id === 'modal') {
@@ -17,11 +19,18 @@ export default function BoardsMenu ({ setShowModal }: ShowModal) {
     }
   }
 
+  const handleAddNewBoard = () => {
+    if (setShowAddNewBoardModal) {
+      !showAddNewBoardModal ? setShowAddNewBoardModal(true) : setShowAddNewBoardModal(false)
+    }
+    setShowModal(false)
+  }
+
   return (
-    <div
+    <section
       className='bg-[#20212C] p-4 z-20 fixed inset-0 bg-opacity-60 flex justify-center items-center transition duration-700 ease-in-out'
       id='modal'
-      onClick={(e) => { handleClose(e) }}>
+      onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => { handleClose(e) }}>
 
       <div className='bg-[#FFF] dark:bg-[#2B2C37] rounded-md flex flex-col gap-4 shadow-lg shadow-[#364e7e40]/25 absolute w-[18rem] top-[4.7rem]'>
 
@@ -31,11 +40,11 @@ export default function BoardsMenu ({ setShowModal }: ShowModal) {
           <div className='pt-[0.20rem]'>
             <IconBoard fill='#635FC7' />
           </div>
-          <p>+ Create New Board</p>
+          <p className='cursor-pointer' onClick={handleAddNewBoard}>+ Create New Board</p>
         </div>
 
         <ThemeToggle />
       </div>
-    </div>
+    </section>
   )
 }

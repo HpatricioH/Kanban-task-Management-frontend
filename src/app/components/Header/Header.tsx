@@ -5,14 +5,17 @@ import Image from 'next/image'
 import React, { useState } from 'react'
 import BoardsMenu from '../BoardsMenu/BoardsMenu'
 import AddNewTask from '../AddNewTask/AddNewTask'
+import AddNewBoardModal from '../AddNewBoard/AddNewBoard'
 import { usePathname } from 'next/navigation'
 import { boardData } from '@/app/lib/store/boardData'
 
 export default function Header () {
   const board = boardData()
   const column = board?.board[0]?.columns
+  const name = board?.board[0]?.name
   const [showBoardModal, setShowBoardModal] = useState(false)
   const [showAddTaskModal, setShowAddTaskModal] = useState(false)
+  const [showAddNewBoardModal, setShowAddNewBoardModal] = useState(false)
   const id = usePathname().slice(1)
   const getSelectedBoardId = id
 
@@ -38,7 +41,7 @@ export default function Header () {
           <Button
             icon={`${showBoardModal ? './icons/icon-chevron-up.svg' : './icons/icon-chevron-down.svg'}`}
             onClick={handleClick}
-            buttonStyle='flex justify-center items-center gap-2 font-bold capitalize'>platform launch</Button>
+            buttonStyle='flex justify-center items-center gap-2 font-bold capitalize'>{getSelectedBoardId ? name : 'Select a Board'}</Button>
         </div>
         <div className='flex justify-center items-center gap-4'>
         {/* if selected board then show task modal */}
@@ -56,8 +59,15 @@ export default function Header () {
           />
         </div>
       </nav>
-      {showBoardModal ? <BoardsMenu setShowModal={setShowBoardModal} /> : null}
+      {showBoardModal
+        ? <BoardsMenu
+        setShowModal={setShowBoardModal}
+        setShowAddNewBoardModal={setShowAddNewBoardModal}
+        showAddNewBoardModal={showAddNewBoardModal} />
+        : null}
       {showAddTaskModal ? <AddNewTask setAddTaskModal= {setShowAddTaskModal} column={column}/> : null}
+      {showAddNewBoardModal ? <AddNewBoardModal setAddTaskModal= {setShowAddNewBoardModal} /> : null}
+
     </header>
   )
 }

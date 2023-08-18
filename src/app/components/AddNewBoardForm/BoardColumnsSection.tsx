@@ -52,8 +52,8 @@ export default function BoardColumnsSection () {
 
   return (
     <>
-    <label htmlFor="" className="capitalize">
-      Subtasks
+    <label htmlFor="" className="capitalize pt-3">
+      Board Columns
     </label>
     {inputList.map((input, index) => {
       // get the value of the subtask at the specified `index` from `subTaskValues`
@@ -81,7 +81,7 @@ export default function BoardColumnsSection () {
       onClick={handleAddSubtask}
       type="button"
     >
-      + Add New Subtask
+      + Add New Column
     </Button>
   </>
   )

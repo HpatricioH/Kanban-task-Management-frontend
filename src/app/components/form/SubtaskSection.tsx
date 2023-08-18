@@ -3,7 +3,7 @@ import SubtaskInput from './SubtaskInput'
 import { Button } from '@/app/core/utils/Button'
 import { deleteSubTasks } from '@/app/core/services/deleteSubTasks'
 
-interface SubTaskInput {
+export interface SubTaskInput {
   id: string
   name: string
   placeholder: string

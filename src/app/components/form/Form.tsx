@@ -1,5 +1,5 @@
 import { Button } from '@/app/core/utils/Button'
-import { type Column } from '@/app/lib/hooks/useGetBoards'
+import { type Task, type Column } from '@/app/lib/hooks/useGetBoards'
 import SubtaskSection from './SubtaskSection'
 
 interface FormProps {
@@ -9,14 +9,7 @@ interface FormProps {
   subtaskFormValidation?: boolean
   column: Column[]
   typeOfForm?: string
-  taskSelected?: {
-    columnId: string
-    description: string
-    id: string
-    status: string
-    subTasks: Array<{ id: string, isCompleted: boolean, taskId: string, title: string }>
-    title: string
-  }
+  taskSelected?: Task
 }
 
 export default function Form ({
@@ -28,8 +21,6 @@ export default function Form ({
   typeOfForm,
   taskSelected
 }: FormProps) {
-  console.log()
-
   return (
     <form
       onSubmit={onSubmit}

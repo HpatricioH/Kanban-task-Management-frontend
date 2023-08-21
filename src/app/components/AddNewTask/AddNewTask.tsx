@@ -58,6 +58,7 @@ export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps
 
       // create subtasks if user add a new task
       subTasks.map(async ([_, value]) => {
+        console.log(value)
         await addSubTasks({ taskId: response.id, title: value, isCompleted: false })
       })
 

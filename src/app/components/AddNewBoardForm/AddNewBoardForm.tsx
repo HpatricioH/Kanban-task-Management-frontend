@@ -26,8 +26,8 @@ export default function AddNewBoardForm ({ onSubmit, typeOfForm, taskSelected, t
       className={`rounded-[0.25rem] border ${titleFormValidation ? 'border-[red]' : 'border-[#828fa340]'}  bg-[#FFF] dark:bg-[#2B2C37] p-2 text-[0.8125rem] placeholder-[#000112] dark:placeholder-[#fff] placeholder-opacity-[0.25] dark:placeholder-opacity-[0.25] focus:outline-none focus:ring-1 focus:ring-[#828fa340] focus:border-transparent `}
       placeholder='e.g. Web Design'
       // defaultValue={typeOfForm === 'Edit Task' ? `${taskSelected?.title ?? ''}` : ''}
-      id='title'
-      name='title'
+      id='name'
+      name='name'
     />
 
     {/* Board Columns form section */}

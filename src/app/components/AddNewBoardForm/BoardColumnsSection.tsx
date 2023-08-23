@@ -3,51 +3,55 @@ import { type SubTaskInput } from '../form/SubtaskSection'
 import { Button } from '@/app/core/utils/Button'
 import BoardColumnInput from './BoardColumnInput'
 
+interface BoardColumnsSectionProps {
+  boardColumnsValues: string[]
+}
+
 const BoardColumns = [
   {
     id: 'boardColumn-0',
-    name: 'Todo',
+    name: 'BoardColumn',
     placeholder: 'e.g. Todo'
   },
   {
     id: 'boardColumn-1',
-    name: 'Doing',
+    name: 'BoardColumn',
     placeholder: 'e.g. Doing'
   }
 
 ]
 
-export default function BoardColumnsSection () {
+export default function BoardColumnsSection ({ boardColumnsValues }: BoardColumnsSectionProps) {
   const [inputList, setInputList] = useState<SubTaskInput[]>(BoardColumns)
-  const [subTaskValues, setSubTaskValues] = useState<string[]>(BoardColumns.map(() => ''))
+  const [boardUpdateColumnsValues, setBoardUpdateColumnsValues] = useState<string[]>(BoardColumns.map(() => ''))
 
-  const handleAddSubtask = () => {
+  const handleAddBoard = () => {
     // add a new element to `inputList` array with a new `id` and `placeholder`
     setInputList((prevList) => [
       ...prevList,
       {
         id: `boardColumn-${prevList.length}`,
-        name: '',
+        name: 'BoardColumn',
         placeholder: 'e.g. Done'
       }
     ])
-    //  add a new empty string to `subTaskValues` array to keep the same length as `inputList`
-    setSubTaskValues((prevValues) => [...prevValues, ''])
+    //  add a new empty string to `boardUpdateColumnsValues` array to keep the same length as `inputList`
+    setBoardUpdateColumnsValues((prevValues) => [...prevValues, ''])
   }
 
   const handleRemoveSubtask = (index: number) => {
     // remove the element at the specified `index` from `inputList`
     setInputList((prevList) => prevList.filter((_, i) => i !== index))
 
-    // remove the element at the specified `index` from `subTaskValues`
-    setSubTaskValues((prevValues) => prevValues.filter((_, i) => i !== index))
+    // remove the element at the specified `index` from `boardUpdateColumnsValues`
+    setBoardUpdateColumnsValues((prevValues) => prevValues.filter((_, i) => i !== index))
   }
 
   const handleSubtaskChange = (index: number, value: string) => {
-    // update the element at the specified `index` from `subTaskValues` with the new `value`
-    const newSubtaskValues = [...subTaskValues]
-    newSubtaskValues[index] = value
-    setSubTaskValues(newSubtaskValues)
+    // update the element at the specified `index` from `boardUpdateColumnsValues` with the new `value`
+    const newBoardColumnValues = [...boardUpdateColumnsValues]
+    newBoardColumnValues[index] = value
+    setBoardUpdateColumnsValues(newBoardColumnValues)
   }
 
   return (
@@ -56,19 +60,18 @@ export default function BoardColumnsSection () {
       Board Columns
     </label>
     {inputList.map((input, index) => {
-      // get the value of the subtask at the specified `index` from `subTaskValues`
-      // const subtask = taskSelected?.subTasks?.[index]
-      // const inputValue = subtask?.title ?? ''
-      // const isInvalid = subTaskValidation && inputValue === ''
+      // get the value of the corresponding input from `boardColumnsValues` to check if it's empty
+      const value = boardUpdateColumnsValues[index]
+      const isInvalid = boardColumnsValues.includes('') && value === ''
 
       return (
         <BoardColumnInput
           key={input.id}
           input={input}
           // value={input.name}
-          onChange={(value) => { handleSubtaskChange(index, value) }}
+          onChange={(e) => { handleSubtaskChange(index, value) }}
           onRemove={() => { handleRemoveSubtask(index) }}
-          // isInvalid={isInvalid}
+          isInvalid={isInvalid}
           // typeOfForm={typeOfForm}
         />
       )
@@ -78,7 +81,7 @@ export default function BoardColumnsSection () {
       icon="./icons/icon-add-task-mobile.svg"
       buttonStyle="bg-[#635fc71a] dark:bg-[#fff] w-[100%] h-[2.5rem] flex justify-center items-center rounded-xl text-[#635FC7] font-bold text-[0.8125rem] leading-[1.4375rem]"
       imageClassName="hidden"
-      onClick={handleAddSubtask}
+      onClick={handleAddBoard}
       type="button"
     >
       + Add New Column

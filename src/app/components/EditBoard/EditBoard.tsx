@@ -1,22 +1,21 @@
-import addNewBoard from '@/app/core/services/addNewBoard'
 import { useState } from 'react'
 import AddNewBoardForm from '../AddNewBoardForm/AddNewBoardForm'
-import addNewBoardColumns from '@/app/core/services/addNewBoardColumns'
-import { useRouter } from 'next/navigation'
+import { boardData } from '@/app/lib/store/boardData'
 
-interface AddNewBoardProps {
-  setAddTaskModal: (value: boolean) => void
+interface EditBoardProps {
+  setEditBoardModal: (value: boolean) => void
 }
 
-export default function AddNewBoard ({ setAddTaskModal }: AddNewBoardProps) {
+export default function EditBoard ({ setEditBoardModal }: EditBoardProps) {
   const [titleFormValidation, setTitleFormValidation] = useState(false)
-  const [boardColumnsValues, setBoardColumnsValues] = useState<string[]>([])
-  const router = useRouter()
+  const { board } = boardData()
+  const { name } = board[0]
+  const typeOfForm = 'Edit Board'
 
   const handleClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const target = e.target as HTMLDivElement
     if (target.id === 'addBoardModal') {
-      setAddTaskModal(false)
+      setEditBoardModal(false)
     }
   }
 
@@ -29,38 +28,26 @@ export default function AddNewBoard ({ setAddTaskModal }: AddNewBoardProps) {
     const boardColumns = formEntries.filter(([key]) => key === 'BoardColumn')
     const { name } = Object.fromEntries(new FormData(e.currentTarget))
 
+    console.log(boardColumns)
+
     if (!name) {
       setTitleFormValidation(true)
     } else {
       setTitleFormValidation(false)
     }
-
-    if (name) {
-      const response = await addNewBoard({ name })
-      boardColumns.map(async ([_, value]) => {
-        if (value !== '') {
-          await addNewBoardColumns({ name: value.toString(), boardId: response.id })
-        }
-      })
-      form.reset()
-      setAddTaskModal(false)
-      router.push(`/${response.id as string}`)
-    }
-
-    setBoardColumnsValues(boardColumns.map(([_, value]) => value.toString()))
   }
 
   return (
     <section
     className='bg-[#20212C] p-4 z-20 fixed inset-0 bg-opacity-60 flex justify-center items-center transition duration-700 ease-in-out'
-    id='addBoardModal'
+    id='EditBoardModal'
     onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => { handleClose(e) }}
     >
 
     <div className='bg-[#FFF] dark:bg-[#2B2C37] rounded-md flex flex-col gap-4 shadow-lg shadow-[#364e7e40]/25 absolute w-[18rem] top-[4.7rem] p-4'>
-      <h2 className='capitalize text-[1.125rem] font-bold leading-normal'>Add New Board</h2>
+      <h2 className='capitalize text-[1.125rem] font-bold leading-normal'>Edit Board</h2>
 
-      <AddNewBoardForm onSubmit={(e) => { handleSubmit(e) }} titleFormValidation={titleFormValidation} boardColumnsValues={boardColumnsValues}/>
+      <AddNewBoardForm onSubmit={(e) => { handleSubmit(e) }} titleFormValidation={titleFormValidation} typeOfForm={typeOfForm} activeBoardName={name}/>
 
     </div>
   </section>

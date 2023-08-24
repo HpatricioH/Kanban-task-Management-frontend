@@ -10,11 +10,12 @@ export default function EditBoard ({ setEditBoardModal }: EditBoardProps) {
   const [titleFormValidation, setTitleFormValidation] = useState(false)
   const { board } = boardData()
   const { name } = board[0]
+  const { columns } = board[0]
   const typeOfForm = 'Edit Board'
 
   const handleClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const target = e.target as HTMLDivElement
-    if (target.id === 'addBoardModal') {
+    if (target.id === 'EditBoardModal') {
       setEditBoardModal(false)
     }
   }
@@ -35,6 +36,8 @@ export default function EditBoard ({ setEditBoardModal }: EditBoardProps) {
     } else {
       setTitleFormValidation(false)
     }
+
+    setEditBoardModal(false)
   }
 
   return (
@@ -47,7 +50,7 @@ export default function EditBoard ({ setEditBoardModal }: EditBoardProps) {
     <div className='bg-[#FFF] dark:bg-[#2B2C37] rounded-md flex flex-col gap-4 shadow-lg shadow-[#364e7e40]/25 absolute w-[18rem] top-[4.7rem] p-4'>
       <h2 className='capitalize text-[1.125rem] font-bold leading-normal'>Edit Board</h2>
 
-      <AddNewBoardForm onSubmit={(e) => { handleSubmit(e) }} titleFormValidation={titleFormValidation} typeOfForm={typeOfForm} activeBoardName={name}/>
+      <AddNewBoardForm onSubmit={(e) => { handleSubmit(e) }} titleFormValidation={titleFormValidation} typeOfForm={typeOfForm} activeBoardName={name} columns={columns}/>
 
     </div>
   </section>

@@ -1,18 +1,19 @@
 import { Button } from '@/app/core/utils/Button'
 import BoardColumnsSection from './BoardColumnsSection'
+import { type Column } from '@/app/lib/hooks/useGetBoards'
 
 interface AddNewBoardFormProps {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void
   titleFormValidation: boolean
   // descriptionFormValidation: boolean
   subtaskFormValidation?: boolean
-  // column: Column[]
+  columns?: Column[]
   typeOfForm?: string
   activeBoardName?: string
   boardColumnsValues?: string[]
 }
 
-export default function AddNewBoardForm ({ onSubmit, typeOfForm, activeBoardName, titleFormValidation, boardColumnsValues = [] }: AddNewBoardFormProps) {
+export default function AddNewBoardForm ({ onSubmit, typeOfForm, activeBoardName, titleFormValidation, boardColumnsValues = [], columns }: AddNewBoardFormProps) {
   return (
     <form
     onSubmit={onSubmit}
@@ -30,7 +31,7 @@ export default function AddNewBoardForm ({ onSubmit, typeOfForm, activeBoardName
     />
 
     {/* Board Columns form section */}
-    <BoardColumnsSection boardColumnsValues={boardColumnsValues}/>
+    <BoardColumnsSection boardColumnsValues={boardColumnsValues} typeOfForm={typeOfForm} columns={columns} />
 
     {/* Create Task Button */}
     <Button
@@ -39,7 +40,7 @@ export default function AddNewBoardForm ({ onSubmit, typeOfForm, activeBoardName
       imageClassName='hidden'
       type='submit'
     >
-      add new board
+      {`${typeOfForm === 'Edit Board' ? 'save changes' : 'add new board'}`}
     </Button>
   </form>
   )

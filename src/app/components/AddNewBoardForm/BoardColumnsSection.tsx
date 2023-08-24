@@ -2,9 +2,12 @@ import { useState } from 'react'
 import { type SubTaskInput } from '../form/SubtaskSection'
 import { Button } from '@/app/core/utils/Button'
 import BoardColumnInput from './BoardColumnInput'
+import { type Column } from '@/app/lib/hooks/useGetBoards'
 
 interface BoardColumnsSectionProps {
   boardColumnsValues: string[]
+  typeOfForm?: string
+  columns?: Column[]
 }
 
 const BoardColumns = [
@@ -21,7 +24,7 @@ const BoardColumns = [
 
 ]
 
-export default function BoardColumnsSection ({ boardColumnsValues }: BoardColumnsSectionProps) {
+export default function BoardColumnsSection ({ boardColumnsValues, typeOfForm, columns }: BoardColumnsSectionProps) {
   const [inputList, setInputList] = useState<SubTaskInput[]>(BoardColumns)
   const [boardUpdateColumnsValues, setBoardUpdateColumnsValues] = useState<string[]>(BoardColumns.map(() => ''))
 
@@ -56,36 +59,54 @@ export default function BoardColumnsSection ({ boardColumnsValues }: BoardColumn
 
   return (
     <>
-    <label htmlFor="" className="capitalize pt-3">
-      Board Columns
-    </label>
-    {inputList.map((input, index) => {
-      // get the value of the corresponding input from `boardColumnsValues` to check if it's empty
-      const value = boardUpdateColumnsValues[index]
-      const isInvalid = boardColumnsValues.includes('') && value === ''
+      <label htmlFor="" className="capitalize pt-3">
+        Board Columns
+      </label>
+      {
+        typeOfForm === 'Edit Board'
+          ? columns?.map((column, index) => {
+            const value = boardUpdateColumnsValues[index]
 
-      return (
-        <BoardColumnInput
-          key={input.id}
-          input={input}
-          // value={input.name}
-          onChange={(e) => { handleSubtaskChange(index, value) }}
-          onRemove={() => { handleRemoveSubtask(index) }}
-          isInvalid={isInvalid}
-          // typeOfForm={typeOfForm}
-        />
-      )
-    })}
+            return (
+            <BoardColumnInput
+              key={column.id}
+              input={inputList[index]}
+              value={column.name}
+              onChange={(e) => { handleSubtaskChange(index, value) }}
+              onRemove={() => { handleRemoveSubtask(index) }}
+              isInvalid={boardColumnsValues.includes('') && column.name === ''}
+              typeOfForm={typeOfForm}
+            />
+            )
+          })
 
-    <Button
-      icon="./icons/icon-add-task-mobile.svg"
-      buttonStyle="bg-[#635fc71a] dark:bg-[#fff] w-[100%] h-[2.5rem] flex justify-center items-center rounded-xl text-[#635FC7] font-bold text-[0.8125rem] leading-[1.4375rem]"
-      imageClassName="hidden"
-      onClick={handleAddBoard}
-      type="button"
-    >
-      + Add New Column
-    </Button>
-  </>
+          : inputList.map((input, index) => {
+            // get the value of the corresponding input from `boardColumnsValues` to check if it's empty
+            const value = boardUpdateColumnsValues[index]
+            const isInvalid = boardColumnsValues.includes('') && value === ''
+
+            return (
+              <BoardColumnInput
+                key={input.id}
+                input={input}
+                value={input.name}
+                onChange={(e) => { handleSubtaskChange(index, value) }}
+                onRemove={() => { handleRemoveSubtask(index) }}
+                isInvalid={isInvalid}
+                typeOfForm={typeOfForm}
+              />
+            )
+          })}
+
+      <Button
+        icon="./icons/icon-add-task-mobile.svg"
+        buttonStyle="bg-[#635fc71a] dark:bg-[#fff] w-[100%] h-[2.5rem] flex justify-center items-center rounded-xl text-[#635FC7] font-bold text-[0.8125rem] leading-[1.4375rem]"
+        imageClassName="hidden"
+        onClick={handleAddBoard}
+        type="button"
+      >
+        + Add New Column
+      </Button>
+    </>
   )
 }

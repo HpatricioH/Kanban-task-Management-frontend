@@ -35,7 +35,7 @@ export default function BoardOptions ({ setBoardSettingsModal, setEditBoardModal
     >
 
       <div className='bg-[#FFF] dark:bg-[#2B2C37] rounded-md flex flex-col gap-4 shadow-lg shadow-[#364e7e40]/25 absolute w-[18rem] top-[4.7rem]'>
-        <h1 className='uppercase px-4 pt-4 text-[#828FA3] font-bold text-xs tracking-[0.15rem] leading-[0.938rem]'>
+        <h1 className='uppercase px-4 pt-4 text-[#828FA3] dark:text-[#FFF] font-bold text-xs tracking-[0.15rem] leading-[0.938rem]'>
           Board Settings
         </h1>
         <div

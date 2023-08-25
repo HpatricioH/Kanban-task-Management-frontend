@@ -11,6 +11,7 @@ export function BoardsData () {
   const router = useRouter()
   const id = pathname.slice(1)
 
+  // TODO: add feature to close modal when select a board
   const handleClick = (boardId: string) => {
     if (id === boardId) {
       router.push('/')

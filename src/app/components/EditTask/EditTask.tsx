@@ -69,6 +69,7 @@ export default function EditTask ({ setAddTaskModal, column, taskSelected }: Edi
         if (subtask.title) {
           await updateSubtask({ taskId: taskId ?? '', title: subtask.title, id: subtask.id ?? '', isCompleted: false })
         }
+        // TODO: add feature to add subtasks when there is a new subtask added used the length of the current subtasks and the length of the subtasks to be updated to know if there is a new subtask added and add it to the database
       })
 
       await updateTask({ title, description, status, id: taskId ?? '', columnId: columnIdUpdate })

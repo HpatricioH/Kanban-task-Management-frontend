@@ -62,6 +62,7 @@ export default function SubtaskSection ({ subTaskValidation, taskSelected, typeO
 
     // delete the subtask at the specified index from taskSelected
     const selectedSubtaskId = taskSelected?.subTasks?.[index]?.id
+
     if (typeOfForm === 'Edit Task' && selectedSubtaskId) {
       deleteSubTasks(selectedSubtaskId)
     }

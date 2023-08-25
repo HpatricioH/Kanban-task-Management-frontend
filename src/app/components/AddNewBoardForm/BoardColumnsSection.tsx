@@ -1,5 +1,4 @@
-
-import { useState, useEffect } from 'react'
+import { useState, useMemo } from 'react'
 import BoardColumnInput from './BoardColumnInput'
 import { Button } from '@/app/core/utils/Button'
 import { type Column } from '@/app/lib/hooks/useGetBoards'
@@ -18,11 +17,11 @@ export default function BoardColumnsSection ({ columns, typeOfForm }: BoardColum
   const [inputList, setInputList] = useState(initialColumns)
   const [columnValues, setColumnValues] = useState<string[]>(initialColumns.map(() => ''))
 
-  useEffect(() => {
-    if (columns) {
-      const newInputList = [...inputList]
-      const newColumnValues = [...columnValues]
+  const computedValues = useMemo(() => {
+    const newInputList = [...inputList]
+    const newColumnValues = [...columnValues]
 
+    if (columns) {
       for (let i = inputList.length; i < columns.length; i++) {
         newInputList.push({
           id: `boardColumn-${i}`,
@@ -31,11 +30,10 @@ export default function BoardColumnsSection ({ columns, typeOfForm }: BoardColum
         })
         newColumnValues.push('')
       }
-
-      setInputList(newInputList)
-      setColumnValues(newColumnValues)
     }
-  }, [columns])
+
+    return { newInputList, newColumnValues }
+  }, [columns, inputList, columnValues])
 
   const handleAddColumn = () => {
     setInputList(prevList => [
@@ -65,9 +63,8 @@ export default function BoardColumnsSection ({ columns, typeOfForm }: BoardColum
       <label htmlFor="" className="capitalize pt-3">
         Board Columns
       </label>
-      {inputList.map((input, index) => {
-        const isInvalid = columnValues.includes('') && columnValues[index] === ''
-        const value = columns ? columns[index]?.name : columnValues[index]
+      {computedValues.newInputList.map((input, index) => {
+        const value = columns ? columns[index]?.name : computedValues.newColumnValues[index]
 
         return (
           <BoardColumnInput
@@ -76,7 +73,6 @@ export default function BoardColumnsSection ({ columns, typeOfForm }: BoardColum
             value={value}
             onChange={value => { handleColumnChange(index, value) }}
             onRemove={() => { handleRemoveColumn(index) }}
-            isInvalid={isInvalid}
             typeOfForm={typeOfForm}
           />
         )

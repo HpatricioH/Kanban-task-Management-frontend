@@ -10,7 +10,6 @@ interface AddNewBoardProps {
 
 export default function AddNewBoard ({ setAddTaskModal }: AddNewBoardProps) {
   const [titleFormValidation, setTitleFormValidation] = useState(false)
-  const [boardColumnsValues, setBoardColumnsValues] = useState<string[]>([])
   const router = useRouter()
 
   const handleClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -46,8 +45,6 @@ export default function AddNewBoard ({ setAddTaskModal }: AddNewBoardProps) {
       setAddTaskModal(false)
       router.push(`/${response.id as string}`)
     }
-
-    setBoardColumnsValues(boardColumns.map(([_, value]) => value.toString()))
   }
 
   return (
@@ -60,7 +57,7 @@ export default function AddNewBoard ({ setAddTaskModal }: AddNewBoardProps) {
     <div className='bg-[#FFF] dark:bg-[#2B2C37] rounded-md flex flex-col gap-4 shadow-lg shadow-[#364e7e40]/25 absolute w-[18rem] top-[4.7rem] p-4'>
       <h2 className='capitalize text-[1.125rem] font-bold leading-normal'>Add New Board</h2>
 
-      <AddNewBoardForm onSubmit={(e) => { handleSubmit(e) }} titleFormValidation={titleFormValidation} boardColumnsValues={boardColumnsValues}/>
+      <AddNewBoardForm onSubmit={(e) => { handleSubmit(e) }} titleFormValidation={titleFormValidation} />
 
     </div>
   </section>

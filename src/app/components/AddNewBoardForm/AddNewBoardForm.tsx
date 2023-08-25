@@ -13,7 +13,7 @@ interface AddNewBoardFormProps {
   boardColumnsValues?: string[]
 }
 
-export default function AddNewBoardForm ({ onSubmit, typeOfForm, activeBoardName, titleFormValidation, boardColumnsValues = [], columns }: AddNewBoardFormProps) {
+export default function AddNewBoardForm ({ onSubmit, typeOfForm, activeBoardName, titleFormValidation, columns }: AddNewBoardFormProps) {
   return (
     <form
     onSubmit={onSubmit}
@@ -31,7 +31,7 @@ export default function AddNewBoardForm ({ onSubmit, typeOfForm, activeBoardName
     />
 
     {/* Board Columns form section */}
-    <BoardColumnsSection boardColumnsValues={boardColumnsValues} typeOfForm={typeOfForm} columns={columns} />
+    <BoardColumnsSection typeOfForm={typeOfForm} columns={columns} />
 
     {/* Create Task Button */}
     <Button

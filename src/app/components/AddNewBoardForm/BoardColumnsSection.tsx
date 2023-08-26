@@ -17,6 +17,8 @@ export default function BoardColumnsSection ({ columns, typeOfForm }: BoardColum
   const [inputList, setInputList] = useState(initialColumns)
   const [columnValues, setColumnValues] = useState<string[]>(initialColumns.map(() => ''))
 
+  console.log(columns)
+
   const computedValues = useMemo(() => {
     const newInputList = [...inputList]
     const newColumnValues = [...columnValues]

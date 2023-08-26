@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import AddNewBoardForm from '../AddNewBoardForm/AddNewBoardForm'
 import { boardData } from '@/app/lib/store/boardData'
+import updateBoard from '@/app/core/services/updateBoard'
 
 interface EditBoardProps {
   setEditBoardModal: (value: boolean) => void
@@ -28,6 +29,7 @@ export default function EditBoard ({ setEditBoardModal }: EditBoardProps) {
     const formEntries = Array.from(formData.entries())
     const boardColumns = formEntries.filter(([key]) => key === 'BoardColumn')
     const { name } = Object.fromEntries(new FormData(e.currentTarget))
+    const { id } = board[0]
 
     console.log(boardColumns)
 
@@ -37,7 +39,18 @@ export default function EditBoard ({ setEditBoardModal }: EditBoardProps) {
       setTitleFormValidation(false)
     }
 
-    setEditBoardModal(false)
+    if (name) {
+      const response = await updateBoard({ id, name })
+      // boardColumns.map(async ([_, value]) => {
+      //   if (value !== '') {
+      //     await updateBoard({ name: value.toString(), boardId: response.id })
+      //   }
+      // }
+      // )
+      console.log(response)
+      form.reset()
+      setEditBoardModal(false)
+    }
   }
 
   return (

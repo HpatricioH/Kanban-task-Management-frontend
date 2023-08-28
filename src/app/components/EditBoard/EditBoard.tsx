@@ -2,6 +2,7 @@ import { useState } from 'react'
 import AddNewBoardForm from '../AddNewBoardForm/AddNewBoardForm'
 import { boardData } from '@/app/lib/store/boardData'
 import updateBoard from '@/app/core/services/updateBoard'
+import { updateBoardStore } from '@/app/lib/store/updateBoardStore'
 
 interface EditBoardProps {
   setEditBoardModal: (value: boolean) => void
@@ -9,6 +10,7 @@ interface EditBoardProps {
 
 export default function EditBoard ({ setEditBoardModal }: EditBoardProps) {
   const [titleFormValidation, setTitleFormValidation] = useState(false)
+  const { setBoardUpdated } = updateBoardStore()
   const { board } = boardData()
   const { name } = board[0]
   const { columns } = board[0]
@@ -31,8 +33,6 @@ export default function EditBoard ({ setEditBoardModal }: EditBoardProps) {
     const { name } = Object.fromEntries(new FormData(e.currentTarget))
     const { id } = board[0]
 
-    console.log(boardColumns)
-
     if (!name) {
       setTitleFormValidation(true)
     } else {
@@ -47,7 +47,8 @@ export default function EditBoard ({ setEditBoardModal }: EditBoardProps) {
       //   }
       // }
       // )
-      console.log(response)
+      // console.log(response)
+      setBoardUpdated(true)
       form.reset()
       setEditBoardModal(false)
     }

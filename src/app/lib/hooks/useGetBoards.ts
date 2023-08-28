@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { getBoards } from '../../core/services/getBoards'
 import { newTask } from '../store/taskAdded'
+import { updateBoardStore } from '../store/updateBoardStore'
 
 export interface SubTask {
   id: string
@@ -38,6 +39,7 @@ export interface BoardsData {
 
 export function useGetBoards (): BoardsData {
   const { taskAdded, setTaskAdded } = newTask()
+  const { boardUpdated, setBoardUpdated } = updateBoardStore()
   const [boardsData, setBoardsData] = useState<BoardsData>({ boards: null, loading: false })
 
   useEffect(() => {
@@ -51,12 +53,16 @@ export function useGetBoards (): BoardsData {
         if (taskAdded) {
           setTaskAdded(false)
         }
+
+        if (boardUpdated) {
+          setBoardUpdated(false)
+        }
       } catch (error: any) {
         throw new Error(error.message)
       }
     }
     fetchData()
-  }, [taskAdded, setTaskAdded])
+  }, [taskAdded, setTaskAdded, boardUpdated, setBoardUpdated])
 
   return { ...boardsData }
 }

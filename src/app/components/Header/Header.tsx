@@ -23,8 +23,6 @@ export default function Header () {
   const id = usePathname().slice(1)
   const getSelectedBoardId = id
 
-  console.log(name)
-
   const handleClick = () => {
     !showBoardModal ? setShowBoardModal(true) : setShowBoardModal(false)
   }

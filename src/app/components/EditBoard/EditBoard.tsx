@@ -3,6 +3,7 @@ import AddNewBoardForm from '../AddNewBoardForm/AddNewBoardForm'
 import { boardData } from '@/app/lib/store/boardData'
 import updateBoard from '@/app/core/services/updateBoard'
 import { updateBoardStore } from '@/app/lib/store/updateBoardStore'
+import updateColumn from '@/app/core/services/updateColumn'
 
 interface EditBoardProps {
   setEditBoardModal: (value: boolean) => void
@@ -40,14 +41,23 @@ export default function EditBoard ({ setEditBoardModal }: EditBoardProps) {
     }
 
     if (name) {
-      const response = await updateBoard({ id, name })
-      // boardColumns.map(async ([_, value]) => {
-      //   if (value !== '') {
-      //     await updateBoard({ name: value.toString(), boardId: response.id })
-      //   }
-      // }
-      // )
-      // console.log(response)
+      await updateBoard({ id, name })
+      const getInputtedColumns = boardColumns.map(([_, value]) => ({ name: value }))
+      const updateColumnsId = board[0].columns.map((column) => column.id)
+
+      const columnsToBeUpdated = getInputtedColumns.map((column, index) => {
+        return {
+          ...column,
+          id: updateColumnsId[index]
+        }
+      })
+
+      columnsToBeUpdated.map(async (column) => {
+        if (column.name) {
+          await updateColumn({ id: column.id, name: column.name })
+        }
+      })
+
       setBoardUpdated(true)
       form.reset()
       setEditBoardModal(false)

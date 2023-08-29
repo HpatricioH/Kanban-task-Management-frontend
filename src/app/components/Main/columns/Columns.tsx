@@ -36,7 +36,7 @@ export const Columns = ({ column }: any) => {
           {col.tasks.flatMap((task: any) => (
             <div
               key={task.id}
-              className='bg-[#FFF] z-50 dark:bg-[#2B2C37] rounded-md h-[5.5rem] mb-5 p-4 flex flex-col justify-center gap-2 shadow-md shadow-[#364e7e2e]/25'
+              className='bg-[#FFF] z-50 dark:bg-[#2B2C37] rounded-md h-[5.5rem] mb-5 p-4 flex flex-col justify-center gap-2 shadow-md shadow-[#364e7e2e]/25 cursor-pointer'
               onClick={() => { handleTaskSelected(task.id) }}
             >
               <h3 className='text-[#000112] dark:text-white text-[0.9375rem] font-bold leading-normal'>{task.title}</h3>

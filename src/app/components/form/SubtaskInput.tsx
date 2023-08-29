@@ -37,6 +37,7 @@ export default function SubtaskInput ({ input, value, onChange, onRemove, isInva
           width={14.84896}
           height={14.84896}
           onClick={onRemove}
+          className='cursor-pointer'
         />
       </div>
     </div>

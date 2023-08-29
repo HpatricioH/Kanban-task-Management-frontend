@@ -8,6 +8,8 @@ import AddNewTask from '../AddNewTask/AddNewTask'
 import AddNewBoardModal from '../AddNewBoard/AddNewBoard'
 import { usePathname } from 'next/navigation'
 import { boardData } from '@/app/lib/store/boardData'
+import BoardOptions from '../BoardOptions/BoardOptions'
+import EditBoard from '../EditBoard/EditBoard'
 
 export default function Header () {
   const board = boardData()
@@ -16,6 +18,8 @@ export default function Header () {
   const [showBoardModal, setShowBoardModal] = useState(false)
   const [showAddTaskModal, setShowAddTaskModal] = useState(false)
   const [showAddNewBoardModal, setShowAddNewBoardModal] = useState(false)
+  const [boardSettingsModal, setBoardSettingsModal] = useState(false)
+  const [editBoardModal, setEditBoardModal] = useState(false)
   const id = usePathname().slice(1)
   const getSelectedBoardId = id
 
@@ -25,6 +29,10 @@ export default function Header () {
 
   const handleAddTask = () => {
     !showAddTaskModal ? setShowAddTaskModal(true) : setShowAddTaskModal(false)
+  }
+
+  const handleShowBoardMenu = () => {
+    !boardSettingsModal ? setBoardSettingsModal(true) : setBoardSettingsModal(false)
   }
 
   return (
@@ -55,7 +63,8 @@ export default function Header () {
             alt='ellipsis icon'
             width={0}
             height={0}
-            className='h-[1.1rem] w-[0.22rem]'
+            className='h-[1.1rem] w-[0.22rem] cursor-pointer'
+            onClick={handleShowBoardMenu}
           />
         </div>
       </nav>
@@ -67,6 +76,8 @@ export default function Header () {
         : null}
       {showAddTaskModal ? <AddNewTask setAddTaskModal= {setShowAddTaskModal} column={column}/> : null}
       {showAddNewBoardModal ? <AddNewBoardModal setAddTaskModal= {setShowAddNewBoardModal} /> : null}
+      {boardSettingsModal ? <BoardOptions setBoardSettingsModal={setBoardSettingsModal} setEditBoardModal={setEditBoardModal} editBoardModal={editBoardModal}/> : null}
+      {editBoardModal ? <EditBoard setEditBoardModal={setEditBoardModal}/> : null}
 
     </header>
   )

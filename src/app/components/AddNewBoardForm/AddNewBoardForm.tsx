@@ -1,19 +1,19 @@
 import { Button } from '@/app/core/utils/Button'
 import BoardColumnsSection from './BoardColumnsSection'
-import { type Task } from '@/app/lib/hooks/useGetBoards'
+import { type Column } from '@/app/lib/hooks/useGetBoards'
 
 interface AddNewBoardFormProps {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void
   titleFormValidation: boolean
   // descriptionFormValidation: boolean
   subtaskFormValidation?: boolean
-  // column: Column[]
+  columns?: Column[]
   typeOfForm?: string
-  taskSelected?: Task
+  activeBoardName?: string
   boardColumnsValues?: string[]
 }
 
-export default function AddNewBoardForm ({ onSubmit, typeOfForm, taskSelected, titleFormValidation, boardColumnsValues = [] }: AddNewBoardFormProps) {
+export default function AddNewBoardForm ({ onSubmit, typeOfForm, activeBoardName, titleFormValidation, columns }: AddNewBoardFormProps) {
   return (
     <form
     onSubmit={onSubmit}
@@ -25,13 +25,13 @@ export default function AddNewBoardForm ({ onSubmit, typeOfForm, taskSelected, t
       type="text"
       className={`rounded-[0.25rem] border ${titleFormValidation ? 'border-[red]' : 'border-[#828fa340]'}  bg-[#FFF] dark:bg-[#2B2C37] p-2 text-[0.8125rem] placeholder-[#000112] dark:placeholder-[#fff] placeholder-opacity-[0.25] dark:placeholder-opacity-[0.25] focus:outline-none focus:ring-1 focus:ring-[#828fa340] focus:border-transparent `}
       placeholder='e.g. Web Design'
-      // defaultValue={typeOfForm === 'Edit Task' ? `${taskSelected?.title ?? ''}` : ''}
+      defaultValue={typeOfForm === 'Edit Board' ? `${activeBoardName ?? ''}` : ''}
       id='name'
       name='name'
     />
 
     {/* Board Columns form section */}
-    <BoardColumnsSection boardColumnsValues={boardColumnsValues}/>
+    <BoardColumnsSection typeOfForm={typeOfForm} columns={columns} />
 
     {/* Create Task Button */}
     <Button
@@ -40,7 +40,7 @@ export default function AddNewBoardForm ({ onSubmit, typeOfForm, taskSelected, t
       imageClassName='hidden'
       type='submit'
     >
-      add new board
+      {`${typeOfForm === 'Edit Board' ? 'save changes' : 'add new board'}`}
     </Button>
   </form>
   )

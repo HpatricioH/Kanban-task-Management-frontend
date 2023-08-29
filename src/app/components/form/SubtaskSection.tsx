@@ -23,16 +23,8 @@ interface SubtaskSectionProps {
 }
 
 const initialSubTasks = [
-  {
-    id: 'subtask-0',
-    name: 'subtask',
-    placeholder: 'e.g. Make coffee'
-  },
-  {
-    id: 'subtask-1',
-    name: 'subtask',
-    placeholder: 'e.g. Drink a coffee & smile'
-  }
+  { id: 'subtask-0', name: 'subtask', placeholder: 'e.g. Make coffee' },
+  { id: 'subtask-1', name: 'subtask', placeholder: 'e.g. Drink a coffee & smile' }
 ]
 
 export default function SubtaskSection ({ subTaskValidation, taskSelected, typeOfForm }: SubtaskSectionProps) {
@@ -62,6 +54,7 @@ export default function SubtaskSection ({ subTaskValidation, taskSelected, typeO
 
     // delete the subtask at the specified index from taskSelected
     const selectedSubtaskId = taskSelected?.subTasks?.[index]?.id
+
     if (typeOfForm === 'Edit Task' && selectedSubtaskId) {
       deleteSubTasks(selectedSubtaskId)
     }

@@ -10,6 +10,7 @@ import { usePathname } from 'next/navigation'
 import { boardData } from '@/app/lib/store/boardData'
 import BoardOptions from '../BoardOptions/BoardOptions'
 import EditBoard from '../EditBoard/EditBoard'
+import DeleteModal from '../DeleteModal/DeleteModal'
 
 export default function Header () {
   const board = boardData()
@@ -20,6 +21,7 @@ export default function Header () {
   const [showAddNewBoardModal, setShowAddNewBoardModal] = useState(false)
   const [boardSettingsModal, setBoardSettingsModal] = useState(false)
   const [editBoardModal, setEditBoardModal] = useState(false)
+  const [deleteBoardModal, setDeleteBoardModal] = useState(false)
   const id = usePathname().slice(1)
   const getSelectedBoardId = id
 
@@ -76,8 +78,9 @@ export default function Header () {
         : null}
       {showAddTaskModal ? <AddNewTask setAddTaskModal= {setShowAddTaskModal} column={column}/> : null}
       {showAddNewBoardModal ? <AddNewBoardModal setAddTaskModal= {setShowAddNewBoardModal} /> : null}
-      {boardSettingsModal ? <BoardOptions setBoardSettingsModal={setBoardSettingsModal} setEditBoardModal={setEditBoardModal} editBoardModal={editBoardModal}/> : null}
+      {boardSettingsModal ? <BoardOptions setBoardSettingsModal={setBoardSettingsModal} setEditBoardModal={setEditBoardModal} editBoardModal={editBoardModal} setDeleteBoardModal={setDeleteBoardModal}/> : null}
       {editBoardModal ? <EditBoard setEditBoardModal={setEditBoardModal}/> : null}
+      {deleteBoardModal ? <DeleteModal setDeleteBoardModal={setDeleteBoardModal}/> : null}
 
     </header>
   )

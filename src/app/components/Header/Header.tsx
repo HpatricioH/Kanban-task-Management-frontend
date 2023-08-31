@@ -10,6 +10,7 @@ import { usePathname } from 'next/navigation'
 import { boardData } from '@/app/lib/store/boardData'
 import BoardOptions from '../BoardOptions/BoardOptions'
 import EditBoard from '../EditBoard/EditBoard'
+import DeleteModal from '../DeleteModal/DeleteModal'
 
 export default function Header () {
   const board = boardData()
@@ -20,6 +21,7 @@ export default function Header () {
   const [showAddNewBoardModal, setShowAddNewBoardModal] = useState(false)
   const [boardSettingsModal, setBoardSettingsModal] = useState(false)
   const [editBoardModal, setEditBoardModal] = useState(false)
+  const [deleteBoardModal, setDeleteBoardModal] = useState(false)
   const id = usePathname().slice(1)
   const getSelectedBoardId = id
 
@@ -39,46 +41,65 @@ export default function Header () {
     <header>
       <nav className='bg-[#FFF] dark:bg-[#2B2C37] p-4 flex justify-between static'>
         <div className='flex items-center gap-2'>
-        <Image
-          src='./logos/logo-mobile.svg'
-          alt='kanban logo'
-          width={0}
-          height={0}
-          className='h-[1.60rem] w-[1.25rem]'
-        />
+          <Image
+            src='./logos/logo-mobile.svg'
+            alt='kanban logo'
+            width={0}
+            height={0}
+            className='h-[1.60rem] w-[1.25rem]'
+          />
           <Button
             icon={`${showBoardModal ? './icons/icon-chevron-up.svg' : './icons/icon-chevron-down.svg'}`}
             onClick={handleClick}
             buttonStyle='flex justify-center items-center gap-2 font-bold capitalize'>{getSelectedBoardId ? name : 'Select a Board'}</Button>
         </div>
         <div className='flex justify-center items-center gap-4'>
-        {/* if selected board then show task modal */}
+          {/* if selected board then show task modal */}
           <Button
             icon='./icons/icon-add-task-mobile.svg'
             buttonStyle={`bg-[#635FC7] w-10 h-7 flex justify-center items-center rounded-xl ${!getSelectedBoardId || column?.length === 0 ? 'opacity-25' : 'opacity-100'}`}
             onClick={!getSelectedBoardId || column?.length === 0 ? undefined : handleAddTask}
-            />
+          />
           <Image
             src='./icons/icon-vertical-ellipsis.svg'
             alt='ellipsis icon'
             width={0}
             height={0}
-            className='h-[1.1rem] w-[0.22rem] cursor-pointer'
-            onClick={handleShowBoardMenu}
+            className={`h-[1.1rem] w-[0.22rem] cursor-pointer ${!getSelectedBoardId || column?.length === 0 ? 'opacity-25' : 'opacity-100'}`}
+            onClick={!getSelectedBoardId || column?.length === 0 ? undefined : handleShowBoardMenu}
           />
         </div>
       </nav>
-      {showBoardModal
-        ? <BoardsMenu
-        setShowModal={setShowBoardModal}
-        setShowAddNewBoardModal={setShowAddNewBoardModal}
-        showAddNewBoardModal={showAddNewBoardModal} />
-        : null}
-      {showAddTaskModal ? <AddNewTask setAddTaskModal= {setShowAddTaskModal} column={column}/> : null}
-      {showAddNewBoardModal ? <AddNewBoardModal setAddTaskModal= {setShowAddNewBoardModal} /> : null}
-      {boardSettingsModal ? <BoardOptions setBoardSettingsModal={setBoardSettingsModal} setEditBoardModal={setEditBoardModal} editBoardModal={editBoardModal}/> : null}
-      {editBoardModal ? <EditBoard setEditBoardModal={setEditBoardModal}/> : null}
-
+      {showBoardModal && (
+        <BoardsMenu
+          setShowModal={setShowBoardModal}
+          setShowAddNewBoardModal={setShowAddNewBoardModal}
+          showAddNewBoardModal={showAddNewBoardModal} />
+      )}
+      {showAddTaskModal && (
+        <AddNewTask
+          setAddTaskModal={setShowAddTaskModal}
+          column={column} />
+      )}
+      {showAddNewBoardModal && (
+        <AddNewBoardModal
+          setAddTaskModal={setShowAddNewBoardModal} />
+      )}
+      {boardSettingsModal && (
+        <BoardOptions
+          setBoardSettingsModal={setBoardSettingsModal}
+          setEditBoardModal={setEditBoardModal}
+          editBoardModal={editBoardModal}
+          setDeleteBoardModal={setDeleteBoardModal} />
+      )}
+      {editBoardModal && (
+        <EditBoard
+          setEditBoardModal={setEditBoardModal} />
+      )}
+      {deleteBoardModal && (
+        <DeleteModal
+          setDeleteBoardModal={setDeleteBoardModal} />
+      )}
     </header>
   )
 }

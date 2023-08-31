@@ -2,6 +2,7 @@
 interface BoardSettings {
   setBoardSettingsModal: (value: boolean) => void
   setEditBoardModal: (value: boolean) => void
+  setDeleteBoardModal: (value: boolean) => void
   editBoardModal: boolean
 }
 
@@ -14,7 +15,7 @@ const boardSettings = [
   }
 ]
 
-export default function BoardOptions ({ setBoardSettingsModal, setEditBoardModal, editBoardModal }: BoardSettings) {
+export default function BoardOptions ({ setBoardSettingsModal, setEditBoardModal, editBoardModal, setDeleteBoardModal }: BoardSettings) {
   const handleClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const target = e.target as HTMLDivElement
     if (target.id === 'modal') {
@@ -24,6 +25,11 @@ export default function BoardOptions ({ setBoardSettingsModal, setEditBoardModal
 
   const handleEditBoard = () => {
     !editBoardModal ? setEditBoardModal(true) : setEditBoardModal(false)
+    setBoardSettingsModal(false)
+  }
+
+  const handleDeleteBoard = () => {
+    !editBoardModal ? setDeleteBoardModal(true) : setDeleteBoardModal(false)
     setBoardSettingsModal(false)
   }
 
@@ -47,7 +53,7 @@ export default function BoardOptions ({ setBoardSettingsModal, setEditBoardModal
                   <div
                     key={i}
                     className='flex gap-3 pl-4 font-semibold text-[0.938rem] leading-[1.188rem] dark:hover:text-[#FFFFFF] hover:text-[#2B2C37]'>
-                    <p onClick={setting.name === 'Edit Board' ? handleEditBoard : undefined}>{setting.name}</p>
+                    <p onClick={setting.name === 'Edit Board' ? handleEditBoard : handleDeleteBoard}>{setting.name}</p>
                   </div>
                 )
               })

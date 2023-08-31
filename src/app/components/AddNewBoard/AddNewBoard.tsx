@@ -34,6 +34,7 @@ export default function AddNewBoard ({ setAddTaskModal }: AddNewBoardProps) {
       setTitleFormValidation(false)
     }
 
+    // TODO: fix the order of the columns when adding a new board and columns
     if (name) {
       const response = await addNewBoard({ name })
       boardColumns.map(async ([_, value]) => {

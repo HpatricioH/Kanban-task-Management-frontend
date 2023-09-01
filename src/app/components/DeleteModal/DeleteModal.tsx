@@ -3,9 +3,11 @@ import { Button } from '@/app/core/utils/Button'
 import { usePathname, useRouter } from 'next/navigation'
 interface DeleteBoardProps {
   setDeleteBoardModal: (value: boolean) => void
+  subTaskId?: string
+  typeOfForm?: string
 }
 
-export default function DeleteModal ({ setDeleteBoardModal }: DeleteBoardProps) {
+export default function DeleteModal ({ setDeleteBoardModal, subTaskId, typeOfForm }: DeleteBoardProps) {
   const id = usePathname().slice(1)
   const router = useRouter()
 

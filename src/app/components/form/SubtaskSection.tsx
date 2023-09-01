@@ -1,12 +1,13 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import SubtaskInput from './SubtaskInput'
 import { Button } from '@/app/core/utils/Button'
 import { deleteSubTasks } from '@/app/core/services/deleteSubTasks'
 
-export interface SubTaskInput {
+export interface SubTask {
   id: string
-  name: string
-  placeholder: string
+  isCompleted: boolean
+  taskId: string
+  title: string
 }
 
 interface SubtaskSectionProps {
@@ -15,7 +16,7 @@ interface SubtaskSectionProps {
     description: string
     id: string
     status: string
-    subTasks: Array<{ id: string, isCompleted: boolean, taskId: string, title: string }>
+    subTasks: SubTask[]
     title: string
   }
   subTaskValidation?: boolean
@@ -28,12 +29,29 @@ const initialSubTasks = [
 ]
 
 export default function SubtaskSection ({ subTaskValidation, taskSelected, typeOfForm }: SubtaskSectionProps) {
-  const [inputList, setInputList] = useState<SubTaskInput[]>(initialSubTasks)
+  const [inputList, setInputList] = useState(initialSubTasks)
   const [subTaskValues, setSubTaskValues] = useState<string[]>(initialSubTasks.map(() => ''))
 
-  const handleAddSubtask = () => {
-    // add a new element to `inputList` array with a new `id` and `placeholder`
-    setInputList((prevList) => [
+  const computedValues = useMemo(() => {
+    const newInputList = [...inputList]
+    const newSubTaskValues = [...subTaskValues]
+
+    if (taskSelected) {
+      for (let i = inputList.length; i < taskSelected.subTasks.length; i++) {
+        newInputList.push({
+          id: `subtask-${i}`,
+          name: 'subtask',
+          placeholder: 'e.g. Keep working and smiling :)'
+        })
+        newSubTaskValues.push('')
+      }
+    }
+
+    return { newInputList, newSubTaskValues }
+  }, [taskSelected, inputList, subTaskValues])
+
+  const addSubtask = () => {
+    setInputList(prevList => [
       ...prevList,
       {
         id: `subtask-${prevList.length}`,
@@ -41,27 +59,29 @@ export default function SubtaskSection ({ subTaskValidation, taskSelected, typeO
         placeholder: 'e.g. Keep working and smiling :)'
       }
     ])
-    //  add a new empty string to `subTaskValues` array to keep the same length as `inputList`
-    setSubTaskValues((prevValues) => [...prevValues, ''])
+    setSubTaskValues(prevValues => [...prevValues, ''])
+  }
+
+  const removeSubtask = (index: number) => {
+    setInputList(prevList => prevList.filter((_, i) => i !== index))
+    setSubTaskValues(prevValues => prevValues.filter((_, i) => i !== index))
+  }
+
+  const handleAddSubtask = () => {
+    addSubtask()
   }
 
   const handleRemoveSubtask = (index: number) => {
-    // remove the element at the specified `index` from `inputList`
-    setInputList((prevList) => prevList.filter((_, i) => i !== index))
+    const selectedSubtask = taskSelected?.subTasks?.[index]
 
-    // remove the element at the specified `index` from `subTaskValues`
-    setSubTaskValues((prevValues) => prevValues.filter((_, i) => i !== index))
-
-    // delete the subtask at the specified index from taskSelected
-    const selectedSubtaskId = taskSelected?.subTasks?.[index]?.id
-
-    if (typeOfForm === 'Edit Task' && selectedSubtaskId) {
-      deleteSubTasks(selectedSubtaskId)
+    if (typeOfForm === 'Edit Task' && selectedSubtask) {
+      deleteSubTasks(selectedSubtask.id)
+    } else {
+      removeSubtask(index)
     }
   }
 
   const handleSubtaskChange = (index: number, value: string) => {
-    // update the element at the specified `index` from `subTaskValues` with the new `value`
     const newSubtaskValues = [...subTaskValues]
     newSubtaskValues[index] = value
     setSubTaskValues(newSubtaskValues)
@@ -72,8 +92,7 @@ export default function SubtaskSection ({ subTaskValidation, taskSelected, typeO
       <label htmlFor="" className="capitalize">
         Subtasks
       </label>
-      {inputList.map((input, index) => {
-        // get the value of the subtask at the specified `index` from `subTaskValues`
+      {computedValues.newInputList.map((input, index) => {
         const subtask = taskSelected?.subTasks?.[index]
         const inputValue = subtask?.title ?? ''
         const isInvalid = subTaskValidation && inputValue === ''
@@ -83,7 +102,7 @@ export default function SubtaskSection ({ subTaskValidation, taskSelected, typeO
             key={input.id}
             input={input}
             value={inputValue}
-            onChange={(value) => { handleSubtaskChange(index, value) }}
+            onChange={value => { handleSubtaskChange(index, value) }}
             onRemove={() => { handleRemoveSubtask(index) }}
             isInvalid={isInvalid}
             typeOfForm={typeOfForm}

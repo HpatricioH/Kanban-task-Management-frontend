@@ -21,16 +21,16 @@ export function Subtask ({ subtask }: SubtaskProps) {
 
   return (
     <div
-      className={`flex items-center gap-3 p-4 rounded h-[3.6875rem] bg-[#20212c] ${isCompleted ? '' : 'hover:bg-[#635FC7] font-bold'}`}
+      className={`flex items-center gap-3 p-4 rounded h-[3.6875rem] text-[#000112] bg-[#F4F7FD] dark:bg-[#20212c] ${isCompleted ? '' : 'dark:hover:bg-[#635FC7] font-bold'}`}
     >
       <input
         type='checkbox'
-        className={`w-4 h-4 border rounded-[0.125rem] ${isCompleted ? 'checked:bg-[#635FC7]' : 'bg-[#2B2C37] border border-[#828fa340]'}`}
+        className={`w-4 h-4 border rounded-[0.125rem] ${isCompleted ? 'checked:bg-[#635FC7]' : 'dark:bg-[#2B2C37] border border-[#828fa340]'}`}
         checked={isCompleted}
         onChange={toggleCheckbox}
       />
       <label
-        className={`text-[0.75rem] font-bold leading-normal ${isCompleted ? 'text-[#fff] opacity-50 line-through font-bold ' : 'text-[#fff] font-bold'}`}
+        className={`text-[0.75rem] font-bold leading-normal ${isCompleted ? 'dark:text-[#fff] opacity-50 line-through font-bold ' : 'dark:text-[#fff] font-bold'}`}
       >
         {subtask.title}
       </label>

@@ -1,6 +1,8 @@
 import { type Column, type Task } from '@/app/lib/hooks/useGetBoards'
 import Image from 'next/image'
 import { Subtask } from './Subtask'
+import { useState } from 'react'
+import TaskDetailsMenuModal from './TaskDetailsMenuModal'
 
 interface TaskDetailsProps {
   setTaskDetailsModal: (value: boolean) => void
@@ -9,8 +11,14 @@ interface TaskDetailsProps {
 }
 
 export default function TaskDetails ({ setTaskDetailsModal, column, taskSelected }: TaskDetailsProps) {
+  const [taskMenuModal, setTaskMenuModal] = useState(false)
+
   const task = column?.map((column) => column.tasks).flat().find((task) => task.id === taskSelected?.id)
   const subtasks = task?.subTasks
+
+  const handleTaskMenuModal = () => {
+    !taskMenuModal ? setTaskMenuModal(true) : setTaskMenuModal(false)
+  }
 
   const handleClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const target = e.target as HTMLDivElement
@@ -37,7 +45,7 @@ export default function TaskDetails ({ setTaskDetailsModal, column, taskSelected
             width={0}
             height={0}
             className={'h-[1.1rem] w-[0.22rem] cursor-pointer'}
-            // onClick={!getSelectedBoardId || column?.length === 0 ? undefined : handleShowBoardMenu}
+            onClick={() => { handleTaskMenuModal() }}
           />
         </div>
         <p className='text-[0.8125rem] leading-[1.4375rem] text-[#828FA3] font-medium'>
@@ -68,6 +76,7 @@ export default function TaskDetails ({ setTaskDetailsModal, column, taskSelected
           </select>
         </form>
       </div>
+      {taskMenuModal && (<TaskDetailsMenuModal setTaskMenuModal={setTaskMenuModal}/>)}
     </section>
   )
 }

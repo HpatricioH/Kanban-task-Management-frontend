@@ -1,13 +1,19 @@
-import { type Column } from '@/app/lib/hooks/useGetBoards'
+import { type Column, type Task } from '@/app/lib/hooks/useGetBoards'
 import { useState } from 'react'
 // import EditTask from '../../EditTask/EditTask'
 import TaskDetails from '../../TaskDetails/TaskDetails'
+import EditTask from '../../EditTask/EditTask'
+import DeleteModal from '../../DeleteModal/DeleteModal'
 
+// refactor this component maybe separate the board column and the Columns component to make it more readable
 export const Columns = ({ column }: any) => {
-  // const [showEditTaskModal, setShowEditTaskModal] = useState(false)
   const [taskDetailsModal, setTaskDetailsModal] = useState(false)
-  const [taskSelected, setTaskSelected] = useState()
+  const [taskSelected, setTaskSelected] = useState<Task | undefined>()
+  const [editTaskModal, setEditTaskModal] = useState(false)
+  const [deleteTaskModal, setDeleteTaskModal] = useState(false)
   const boardColumn = column?.flat()?.map((col: Column) => col)
+  const taskName = taskSelected?.title
+  const taskId = taskSelected?.id
 
   const handleTaskDetailModal = () => {
     !taskDetailsModal ? setTaskDetailsModal(true) : setTaskDetailsModal(false)
@@ -16,6 +22,17 @@ export const Columns = ({ column }: any) => {
   const handleTaskSelected = (id: string) => {
     const task = boardColumn?.flatMap((col: Column) => col.tasks).find((task: any) => task.id === id)
     setTaskSelected(task)
+  }
+
+  // handle edit task and delete task modals this is used and controlled in the task details menu modal
+  const handleEditTask = () => {
+    !editTaskModal ? setEditTaskModal(true) : setEditTaskModal(false)
+    setTaskDetailsModal(false)
+  }
+
+  const handleDeleteTask = () => {
+    !deleteTaskModal ? setDeleteTaskModal(true) : setDeleteTaskModal(false)
+    setTaskDetailsModal(false)
   }
 
   const columns = boardColumn?.map((col: Column) => {
@@ -57,8 +74,25 @@ export const Columns = ({ column }: any) => {
   return (
     <section className='h-[440px] flex relative gap-6 w-[237vw] '>
       {columns}
-      {/* {showEditTaskModal && <EditTask setAddTaskModal={setShowEditTaskModal} column={column} taskSelected={taskSelected}/>} */}
-      {taskDetailsModal && <TaskDetails setTaskDetailsModal={setTaskDetailsModal} column={column} taskSelected={taskSelected}/>}
+      {taskDetailsModal && (
+        <TaskDetails
+          setTaskDetailsModal={setTaskDetailsModal}
+          column={column}
+          taskSelected={taskSelected}
+          handleEditTask={handleEditTask}
+          handleDeleteTask={handleDeleteTask}/>)}
+      {editTaskModal && (
+        <EditTask
+          setAddTaskModal={setEditTaskModal}
+          column={column}
+          taskSelected={taskSelected}/>)}
+      {deleteTaskModal && (
+        <DeleteModal
+          setDeleteTaskModal={setDeleteTaskModal}
+          typeOfForm="Delete Task"
+          taskName={taskName}
+          taskId={taskId}/>
+      )}
     </section>
   )
 }

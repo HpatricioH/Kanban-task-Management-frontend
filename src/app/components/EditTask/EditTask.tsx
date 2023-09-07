@@ -27,6 +27,8 @@ export default function EditTask ({ setAddTaskModal, column, taskSelected }: Edi
     }
   }
 
+  console.log('showing')
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 

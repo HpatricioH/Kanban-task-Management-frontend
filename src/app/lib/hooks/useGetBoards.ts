@@ -3,6 +3,7 @@ import { getBoards } from '../../core/services/getBoards'
 import { newTask } from '../store/taskAdded'
 import { updateBoardStore } from '../store/updateBoardStore'
 import { subtaskUpdated } from '../store/subtaskUpdatedStore'
+import { taskUpdatedStore } from '../store/taskUpdatedStore'
 
 export interface SubTask {
   id: string
@@ -40,6 +41,7 @@ export interface BoardsData {
 
 export function useGetBoards (): BoardsData {
   const { taskAdded, setTaskAdded } = newTask()
+  const { taskUpdated, setTaskUpdated } = taskUpdatedStore()
   const { subtaskUpdate, setSubtaskUpdate } = subtaskUpdated()
   const { boardUpdated, setBoardUpdated } = updateBoardStore()
   const [boardsData, setBoardsData] = useState<BoardsData>({ boards: null, loading: false })
@@ -63,12 +65,15 @@ export function useGetBoards (): BoardsData {
         if (subtaskUpdate) {
           setSubtaskUpdate(false)
         }
+        if (taskUpdated) {
+          setTaskUpdated(false)
+        }
       } catch (error: any) {
         throw new Error(error.message)
       }
     }
     fetchData()
-  }, [taskAdded, setTaskAdded, boardUpdated, setBoardUpdated, subtaskUpdate, setSubtaskUpdate])
+  }, [taskAdded, setTaskAdded, boardUpdated, setBoardUpdated, subtaskUpdate, setSubtaskUpdate, taskUpdated, setTaskUpdated])
 
   return { ...boardsData }
 }

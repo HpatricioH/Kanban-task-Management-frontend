@@ -14,14 +14,15 @@ import DeleteModal from '../DeleteModal/DeleteModal'
 
 export default function Header () {
   const board = boardData()
-  const column = board?.board[0]?.columns
-  const name = board?.board[0]?.name
   const [showBoardModal, setShowBoardModal] = useState(false)
   const [showAddTaskModal, setShowAddTaskModal] = useState(false)
   const [showAddNewBoardModal, setShowAddNewBoardModal] = useState(false)
   const [boardSettingsModal, setBoardSettingsModal] = useState(false)
   const [editBoardModal, setEditBoardModal] = useState(false)
   const [deleteBoardModal, setDeleteBoardModal] = useState(false)
+  const column = board?.board[0]?.columns
+  const name = board?.board[0]?.name
+  const boardName = board?.board[0]?.name
   const id = usePathname().slice(1)
   const getSelectedBoardId = id
 
@@ -98,7 +99,8 @@ export default function Header () {
       )}
       {deleteBoardModal && (
         <DeleteModal
-          setDeleteBoardModal={setDeleteBoardModal} />
+          setDeleteBoardModal={setDeleteBoardModal}
+          boardName={boardName} />
       )}
     </header>
   )

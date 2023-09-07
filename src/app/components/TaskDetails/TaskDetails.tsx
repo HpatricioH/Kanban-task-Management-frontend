@@ -8,9 +8,11 @@ interface TaskDetailsProps {
   setTaskDetailsModal: (value: boolean) => void
   column: Column[]
   taskSelected?: Task
+  handleDeleteTask: () => void
+  handleEditTask: () => void
 }
 
-export default function TaskDetails ({ setTaskDetailsModal, column, taskSelected }: TaskDetailsProps) {
+export default function TaskDetails ({ setTaskDetailsModal, column, taskSelected, handleDeleteTask, handleEditTask }: TaskDetailsProps) {
   const [taskMenuModal, setTaskMenuModal] = useState(false)
 
   const task = column?.map((column) => column.tasks).flat().find((task) => task.id === taskSelected?.id)
@@ -76,7 +78,7 @@ export default function TaskDetails ({ setTaskDetailsModal, column, taskSelected
           </select>
         </form>
       </div>
-      {taskMenuModal && (<TaskDetailsMenuModal setTaskMenuModal={setTaskMenuModal}/>)}
+      {taskMenuModal && (<TaskDetailsMenuModal setTaskMenuModal={setTaskMenuModal} handleDeleteTask={handleDeleteTask} handleEditTask={handleEditTask} />)}
     </section>
   )
 }

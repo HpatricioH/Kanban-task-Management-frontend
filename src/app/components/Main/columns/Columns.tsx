@@ -3,6 +3,8 @@ import { useState } from 'react'
 import TaskDetails from '../../TaskDetails/TaskDetails'
 import EditTask from '../../EditTask/EditTask'
 import DeleteModal from '../../DeleteModal/DeleteModal'
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 
 // refactor this component maybe separate the board column and the Columns component to make it more readable
 export const Columns = ({ column }: any) => {
@@ -13,6 +15,21 @@ export const Columns = ({ column }: any) => {
   const boardColumn = column?.flat()?.map((col: Column) => col)
   const taskName = taskSelected?.title
   const taskId = taskSelected?.id
+
+  const { setNodeRef, attributes, listeners, transform, transition } = useSortable({
+    id: taskId ?? '',
+    data: {
+      type: 'task',
+      column
+    }
+  })
+
+  console.log(taskId)
+
+  const style = {
+    transition,
+    transform: CSS.Transform.toString(transform)
+  }
 
   const handleTaskDetailModal = () => {
     !taskDetailsModal ? setTaskDetailsModal(true) : setTaskDetailsModal(false)
@@ -54,10 +71,12 @@ export const Columns = ({ column }: any) => {
             {col.tasks.flatMap((task: any) => (
               <div
                 key={task.id}
+                ref={setNodeRef}
+                style={style}
                 className='bg-[#FFF] z-50 dark:bg-[#2B2C37] rounded-md h-[5.5rem] mb-5 p-4 flex flex-col justify-center gap-2 shadow-md shadow-[#364e7e2e]/25 cursor-pointer'
                 onClick={() => { handleTaskSelected(task.id); handleTaskDetailModal() } }
               >
-                <h3 className='text-[#000112] dark:text-white text-[0.9375rem] font-bold leading-normal'>{task.title}</h3>
+                <h3 className='text-[#000112] dark:text-white text-[0.9375rem] font-bold leading-normal' {...attributes} {...listeners}>{task.title}</h3>
                 <p className='text-[0.75rem] font-bold leading-normal text-[#828FA3]'>
                   <span>
                     {task.subTasks.flatMap((subtask: any) => subtask.isCompleted ? subtask : []).length}

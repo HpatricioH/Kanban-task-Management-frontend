@@ -1,5 +1,5 @@
 'use client'
-
+import { DndContext } from '@dnd-kit/core'
 import { boardData } from '@/app/lib/store/boardData'
 import { Columns } from '../components/Main/columns/Columns'
 import { useGetBoards } from '../lib/hooks/useGetBoards'
@@ -35,7 +35,9 @@ export default function Page ({ params }: Props) {
         </div>
 
         : <div className="z-10 text-sm ">
-          <Columns column={column} />
+          <DndContext>
+            <Columns column={column} />
+          </DndContext>
         </div>
       }
     </section>

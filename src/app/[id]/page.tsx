@@ -1,10 +1,8 @@
 'use client'
-import { DndContext } from '@dnd-kit/core'
-import { SortableContext } from '@dnd-kit/sortable'
 import { boardData } from '@/app/lib/store/boardData'
 import { Columns } from '../components/Main/columns/Columns'
 import { useGetBoards } from '../lib/hooks/useGetBoards'
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import AddNewColumn from '../components/Main/columns/AddNewColumn'
 
 interface Props {
@@ -19,7 +17,6 @@ export default function Page ({ params }: Props) {
   const board = boardData()
   const column = board?.board[0]?.columns
   const { id } = params
-  const columnId = useMemo(() => column?.map((col: any) => col.id), [column])
 
   // TODO: fix this useEffect to maybe use a custom hook or make a single board API call to get the board data
   useEffect(() => {
@@ -37,11 +34,7 @@ export default function Page ({ params }: Props) {
         </div>
 
         : <div className="z-10 text-sm ">
-          <DndContext>
-            <SortableContext items={columnId}>
-              <Columns column={column} />
-            </SortableContext>
-          </DndContext>
+          <Columns column={column} />
         </div>
       }
     </section>

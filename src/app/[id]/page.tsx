@@ -1,5 +1,4 @@
 'use client'
-
 import { boardData } from '@/app/lib/store/boardData'
 import { Columns } from '../components/Main/columns/Columns'
 import { useGetBoards } from '../lib/hooks/useGetBoards'

@@ -1,6 +1,5 @@
 import { type Column, type Task } from '@/app/lib/hooks/useGetBoards'
 import { useState } from 'react'
-// import EditTask from '../../EditTask/EditTask'
 import TaskDetails from '../../TaskDetails/TaskDetails'
 import EditTask from '../../EditTask/EditTask'
 import DeleteModal from '../../DeleteModal/DeleteModal'
@@ -56,7 +55,7 @@ export const Columns = ({ column }: any) => {
             <div
               key={task.id}
               className='bg-[#FFF] z-50 dark:bg-[#2B2C37] rounded-md h-[5.5rem] mb-5 p-4 flex flex-col justify-center gap-2 shadow-md shadow-[#364e7e2e]/25 cursor-pointer'
-              onClick={() => { handleTaskSelected(task.id); handleTaskDetailModal() } }
+              onClick={() => { handleTaskSelected(task.id); handleTaskDetailModal() }}
             >
               <h3 className='text-[#000112] dark:text-white text-[0.9375rem] font-bold leading-normal'>{task.title}</h3>
               <p className='text-[0.75rem] font-bold leading-normal text-[#828FA3]'>
@@ -80,18 +79,18 @@ export const Columns = ({ column }: any) => {
           column={column}
           taskSelected={taskSelected}
           handleEditTask={handleEditTask}
-          handleDeleteTask={handleDeleteTask}/>)}
+          handleDeleteTask={handleDeleteTask} />)}
       {editTaskModal && (
         <EditTask
           setAddTaskModal={setEditTaskModal}
           column={column}
-          taskSelected={taskSelected}/>)}
+          taskSelected={taskSelected} />)}
       {deleteTaskModal && (
         <DeleteModal
           setDeleteTaskModal={setDeleteTaskModal}
           typeOfForm="Delete Task"
           taskName={taskName}
-          taskId={taskId}/>
+          taskId={taskId} />
       )}
     </section>
   )

@@ -27,7 +27,7 @@ export default function Page ({ params }: Props) {
   }, [setBoard, boardsData.boards, id])
 
   return (
-    <section className={'min-h-screen p-4 bg-[#F4F7FD] dark:bg-[#20212C] overflow-x-scroll'}>
+    <section className={'min-h-screen bg-[#F4F7FD] dark:bg-[#20212C] overflow-x-scroll'}>
       {column?.length === 0
         ? <div className="z-10 text-sm flex justify-center items-center min-h-screen">
           <AddNewColumn />

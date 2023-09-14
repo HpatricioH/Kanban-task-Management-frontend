@@ -6,7 +6,7 @@ import { ThemeToggle } from './ThemeToggle'
 import { BoardsData } from './BoardsData'
 
 interface ShowModal {
-  setShowModal: (value: boolean) => void
+  setShowModal?: (value: boolean) => void
   showAddNewBoardModal?: boolean
   setShowAddNewBoardModal?: (value: boolean) => void
 }
@@ -15,7 +15,7 @@ export default function BoardsMenu ({ setShowModal, setShowAddNewBoardModal, sho
   const handleClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const target = e.target as HTMLDivElement
     if (target.id === 'modal') {
-      setShowModal(false)
+      setShowModal?.(false)
     }
   }
 
@@ -23,7 +23,7 @@ export default function BoardsMenu ({ setShowModal, setShowAddNewBoardModal, sho
     if (setShowAddNewBoardModal) {
       !showAddNewBoardModal ? setShowAddNewBoardModal(true) : setShowAddNewBoardModal(false)
     }
-    setShowModal(false)
+    setShowModal?.(false)
   }
 
   return (

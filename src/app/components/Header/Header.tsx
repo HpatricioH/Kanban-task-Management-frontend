@@ -11,8 +11,10 @@ import { boardData } from '@/app/lib/store/boardData'
 import BoardOptions from '../BoardOptions/BoardOptions'
 import EditBoard from '../EditBoard/EditBoard'
 import DeleteModal from '../DeleteModal/DeleteModal'
+import { useTheme } from 'next-themes'
 
 export default function Header () {
+  const { theme } = useTheme()
   const board = boardData()
   const [showBoardModal, setShowBoardModal] = useState(false)
   const [showAddTaskModal, setShowAddTaskModal] = useState(false)
@@ -40,10 +42,10 @@ export default function Header () {
 
   return (
     <header>
-      <nav className='bg-[#FFF] dark:bg-[#2B2C37] p-4 flex justify-between static md:h-[5rem] md:p-0 md:px-4'>
+      <nav className='bg-[#FFF] dark:bg-[#2B2C37] p-4 flex justify-between static md:h-[5rem] md:p-0 md:px-4 md:border-b md:border-[#3E3F4E]'>
         <div className='max-[767px]:hidden border-r border-[#3E3F4E] flex justify-center items-center pr-4'>
             <Image
-             src='./logos/logo-light.svg'
+             src={theme === 'light' || theme === undefined ? './logos/logo-dark.svg' : './logos/logo-light.svg'}
              alt='kanban logo'
              width={0}
               height={0}

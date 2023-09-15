@@ -12,11 +12,15 @@ export default function SideBar ({ setShowSidebar }: SideBarProps) {
   }
 
   return (
-    <aside className='max-[767px]:hidden'>
-        <div className='w-[11.60rem] h-[100vh] dark:bg-[#2B2C37] bg-[#fff] pt-1'>
-          <BoardsData />
-          <ThemeToggle />
-          <div className='flex gap-2 cursor-pointer' onClick={handleCloseSideBar}>
+    <aside className='max-[767px]:hidden sticky'>
+        <div className='w-[16.25rem] h-[100vh] dark:bg-[#2B2C37] bg-[#fff] pt-1 flex flex-col justify-between'>
+          <div className='flex-[1]'>
+            <BoardsData />
+          </div>
+          <div >
+            <ThemeToggle />
+          </div>
+          <footer className='flex gap-2 cursor-pointer p-4 mb-[1rem]' onClick={handleCloseSideBar}>
             <Image
               src={'./icons/icon-hide-sidebar.svg'}
               alt='hide sidebar icon'
@@ -27,7 +31,7 @@ export default function SideBar ({ setShowSidebar }: SideBarProps) {
             <p>
               Hide Sidebar
             </p>
-          </div>
+          </footer>
         </div>
       </aside>
   )

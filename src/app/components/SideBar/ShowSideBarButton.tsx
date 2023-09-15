@@ -11,7 +11,7 @@ export default function ShowSideBarButton ({ setShowSidebar, showSidebar }: Show
   }
 
   return (
-    <div className='max-[767px]:hidden absolute top-[43rem] w-[3.5rem] h-[3rem] bg-[#635FC7] rounded-r-3xl flex justify-center items-center cursor-pointer'>
+    <div className={`max-[767px]:hidden absolute top-[43rem] w-[3.5rem] h-[3rem] bg-[#635FC7] rounded-r-3xl flex justify-center items-center cursor-pointer ${showSidebar ? 'hidden' : ''}`}>
       <Image
         src='./icons/icon-show-sidebar.svg'
         alt='show sidebar icon'

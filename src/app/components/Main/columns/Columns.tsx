@@ -5,14 +5,15 @@ import EditTask from '../../EditTask/EditTask'
 import DeleteModal from '../../DeleteModal/DeleteModal'
 import SideBar from '../../SideBar/SideBar'
 import ShowSideBarButton from '../../SideBar/ShowSideBarButton'
+import { type showModalSideBarState, sideBarStateModal } from '@/app/lib/store/sideBarStateModal'
 
 // refactor this component maybe separate the board column and the Columns component to make it more readable
 export const Columns = ({ column }: any) => {
+  const { showSidebar, setShowSidebar } = sideBarStateModal() as showModalSideBarState
   const [taskDetailsModal, setTaskDetailsModal] = useState(false)
   const [taskSelected, setTaskSelected] = useState<Task | undefined>()
   const [editTaskModal, setEditTaskModal] = useState(false)
   const [deleteTaskModal, setDeleteTaskModal] = useState(false)
-  const [showSidebar, setShowSidebar] = useState(false)
   const boardColumn = column?.flat()?.map((col: Column) => col)
   const taskName = taskSelected?.title
   const taskId = taskSelected?.id

@@ -12,13 +12,14 @@ import BoardOptions from '../BoardOptions/BoardOptions'
 import EditBoard from '../EditBoard/EditBoard'
 import DeleteModal from '../DeleteModal/DeleteModal'
 import { useTheme } from 'next-themes'
+import { createBoardStateModal, type showModalBoardState } from '@/app/lib/store/createBoardStateModal'
 
 export default function Header () {
   const { theme } = useTheme()
   const board = boardData()
+  const { showAddNewBoardModal, setShowAddNewBoardModal } = createBoardStateModal() as showModalBoardState
   const [showBoardModal, setShowBoardModal] = useState(false)
   const [showAddTaskModal, setShowAddTaskModal] = useState(false)
-  const [showAddNewBoardModal, setShowAddNewBoardModal] = useState(false)
   const [boardSettingsModal, setBoardSettingsModal] = useState(false)
   const [editBoardModal, setEditBoardModal] = useState(false)
   const [deleteBoardModal, setDeleteBoardModal] = useState(false)

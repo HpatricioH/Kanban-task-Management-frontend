@@ -20,7 +20,7 @@ export function BoardsData () {
 
   return (
     <>
-      <h1 className='uppercase px-4 pt-4 text-[#828FA3] font-bold text-xs tracking-[0.15rem] leading-[0.938rem]'>
+      <h1 className='uppercase px-4 pt-4 text-[#828FA3] font-bold text-xs tracking-[0.15rem] leading-[0.938rem] md:pb-4'>
         All Boards {!loading ? `(${boardsData.boards?.length ?? 0})` : '(0)'}
       </h1>
       {loading
@@ -36,7 +36,7 @@ export function BoardsData () {
               return (
               <div
                 key={board.id}
-                className={`w-[15rem] rounded-r-3xl  font-semibold  text-[0.938rem] leading-[1.188rem] 
+                className={`w-[15rem] rounded-r-3xl  font-semibold  text-[0.938rem] leading-[1.188rem] h-[3rem]
                 ${isActive
                   ? 'text-[#FFFFFF] bg-[#635FC7]'
                   : 'text-[#828FA3]'}`}

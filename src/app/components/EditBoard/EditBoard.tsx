@@ -71,7 +71,7 @@ export default function EditBoard ({ setEditBoardModal }: EditBoardProps) {
     onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => { handleClose(e) }}
     >
 
-    <div className='bg-[#FFF] dark:bg-[#2B2C37] rounded-md flex flex-col gap-4 shadow-lg shadow-[#364e7e40]/25 absolute w-[18rem] top-[4.7rem] p-4'>
+    <div className='bg-[#FFF] dark:bg-[#2B2C37] rounded-md flex flex-col gap-4 shadow-lg shadow-[#364e7e40]/25 absolute w-[18rem] top-[4.7rem] p-4 md:w-[30rem] md:p-6'>
       <h2 className='capitalize text-[1.125rem] font-bold leading-normal'>Edit Board</h2>
 
       <AddNewBoardForm onSubmit={(e) => { handleSubmit(e) }} titleFormValidation={titleFormValidation} typeOfForm={typeOfForm} activeBoardName={name} columns={columns}/>

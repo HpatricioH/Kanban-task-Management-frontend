@@ -9,7 +9,7 @@ export const ThemeToggle = () => {
   }
 
   return (
-    <div className='flex bg-[#F4F7FD] dark:bg-[#20212C] m-4 p-4 rounded-md justify-center items-center gap-6'>
+    <div className='flex bg-[#F4F7FD] dark:bg-[#20212C] m-4  h-[3rem] rounded-md justify-center items-center gap-6'>
       <Image
         src='./icons/icon-light-theme.svg'
         alt='board icon'

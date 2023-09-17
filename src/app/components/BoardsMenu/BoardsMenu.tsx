@@ -1,12 +1,12 @@
 'use client'
 
 import React from 'react'
-import IconBoard from '@/app/core/utils/svgIcons'
 import { ThemeToggle } from './ThemeToggle'
 import { BoardsData } from './BoardsData'
+import CreateNewBoard from './CreateNewBoard'
 
 interface ShowModal {
-  setShowModal: (value: boolean) => void
+  setShowModal?: (value: boolean) => void
   showAddNewBoardModal?: boolean
   setShowAddNewBoardModal?: (value: boolean) => void
 }
@@ -15,15 +15,8 @@ export default function BoardsMenu ({ setShowModal, setShowAddNewBoardModal, sho
   const handleClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const target = e.target as HTMLDivElement
     if (target.id === 'modal') {
-      setShowModal(false)
+      setShowModal?.(false)
     }
-  }
-
-  const handleAddNewBoard = () => {
-    if (setShowAddNewBoardModal) {
-      !showAddNewBoardModal ? setShowAddNewBoardModal(true) : setShowAddNewBoardModal(false)
-    }
-    setShowModal(false)
   }
 
   return (
@@ -36,12 +29,7 @@ export default function BoardsMenu ({ setShowModal, setShowAddNewBoardModal, sho
 
        <BoardsData/>
 
-        <div className='flex gap-3 pl-4 text-[#635FC7] font-semibold text-[0.938rem] leading-[1.188rem]'>
-          <div className='pt-[0.20rem]'>
-            <IconBoard fill='#635FC7' />
-          </div>
-          <p className='cursor-pointer' onClick={handleAddNewBoard}>+ Create New Board</p>
-        </div>
+        <CreateNewBoard setShowModal={setShowModal} setShowAddNewBoardModal={setShowAddNewBoardModal} showAddNewBoardModal={showAddNewBoardModal}/>
 
         <ThemeToggle />
       </div>

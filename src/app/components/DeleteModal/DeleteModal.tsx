@@ -40,7 +40,7 @@ export default function DeleteModal ({ setDeleteBoardModal, taskId, typeOfForm, 
   return (
     <section id="deleteModal" className='bg-[#20212C] p-4 z-20 fixed inset-0 bg-opacity-60 flex justify-center items-center transition duration-700 ease-in-out'
       onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => { handleClose(e) }}>
-      <div className='bg-[#FFF] dark:bg-[#2B2C37] rounded-md flex flex-col gap-4 shadow-lg shadow-[#364e7e40]/25 absolute w-[18rem] top-[4.7rem] p-4'>
+      <div className='bg-[#FFF] dark:bg-[#2B2C37] rounded-md flex flex-col gap-4 shadow-lg shadow-[#364e7e40]/25 absolute w-[18rem] top-[4.7rem] p-4 md:w-[30rem] md:p-6 md:top-[17rem]'>
         <h1 className='uppercase text-[#EA5555] font-bold text-xs tracking-[0.15rem] leading-[0.938rem]'>
           {typeOfForm === 'Delete Task' ? 'Delete this task?' : 'Delete this board?'}
         </h1>
@@ -50,24 +50,26 @@ export default function DeleteModal ({ setDeleteBoardModal, taskId, typeOfForm, 
               ? `Are you sure you want to delete the '${taskName ?? ''}' task and its subtasks? This action cannot be reversed.`
               : `Are you sure you want to delete the '${boardName ?? ''}' board? This action will remove all columns and tasks and cannot be reversed.`}
           </p>
-          <Button
-            icon='./icons/icon-add-task-mobile.svg'
-            buttonStyle={'bg-[#EA5555] w-[100%] h-[2.5rem] flex justify-center items-center rounded-xl text-[#fff] font-bold text-[0.8125rem] leading-[1.4375rem] capitalize mt-3 hover:bg-[#FF9898]'}
-            imageClassName='hidden'
-            type='submit'
-            onClick={handleDelete}
-          >
-            Delete
-          </Button>
-          <Button
-            icon='./icons/icon-add-task-mobile.svg'
-            buttonStyle={'dark:bg-[#FFF] bg-[#635FC71A] hover:bg-[#635FC740] w-[100%] h-[2.5rem] flex justify-center items-center rounded-xl text-[#635FC7] font-bold text-[0.8125rem] leading-[1.4375rem] capitalize mt-3'}
-            imageClassName='hidden'
-            type='submit'
-            onClick={() => setDeleteBoardModal?.(false) ?? setDeleteTaskModal?.(false)}
-          >
-            Cancel
-          </Button>
+          <div className='md:flex md:gap-4'>
+            <Button
+              icon='./icons/icon-add-task-mobile.svg'
+              buttonStyle={'bg-[#EA5555] w-[100%] md:w-[12.5rem] h-[2.5rem] flex justify-center items-center rounded-[1.25rem] text-[#fff] font-bold text-[0.8125rem] leading-[1.4375rem] capitalize mt-3 hover:bg-[#FF9898]'}
+              imageClassName='hidden'
+              type='submit'
+              onClick={handleDelete}
+            >
+              Delete
+            </Button>
+            <Button
+              icon='./icons/icon-add-task-mobile.svg'
+              buttonStyle={'dark:bg-[#FFF] bg-[#635FC71A] hover:bg-[#635FC740] w-[100%] md:w-[12.5rem] h-[2.5rem] flex justify-center items-center rounded-[1.25rem] text-[#635FC7] font-bold text-[0.8125rem] leading-[1.4375rem] capitalize mt-3'}
+              imageClassName='hidden'
+              type='submit'
+              onClick={() => setDeleteBoardModal?.(false) ?? setDeleteTaskModal?.(false)}
+            >
+              Cancel
+            </Button>
+          </div>
         </div>
       </div>
     </section>

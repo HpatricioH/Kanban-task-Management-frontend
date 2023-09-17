@@ -3,9 +3,13 @@ import { useState } from 'react'
 import TaskDetails from '../../TaskDetails/TaskDetails'
 import EditTask from '../../EditTask/EditTask'
 import DeleteModal from '../../DeleteModal/DeleteModal'
+import SideBar from '../../SideBar/SideBar'
+import ShowSideBarButton from '../../SideBar/ShowSideBarButton'
+import { type showModalSideBarState, sideBarStateModal } from '@/app/lib/store/sideBarStateModal'
 
 // refactor this component maybe separate the board column and the Columns component to make it more readable
 export const Columns = ({ column }: any) => {
+  const { showSidebar, setShowSidebar } = sideBarStateModal() as showModalSideBarState
   const [taskDetailsModal, setTaskDetailsModal] = useState(false)
   const [taskSelected, setTaskSelected] = useState<Task | undefined>()
   const [editTaskModal, setEditTaskModal] = useState(false)
@@ -43,7 +47,7 @@ export const Columns = ({ column }: any) => {
     const columnColor = columnColors[col.name] || columnColors.Default
 
     return (
-      <div key={col.id} className='inline-block w-[17.5rem] '>
+      <div key={col.id} className='inline-block w-[17.5rem]'>
         <div className='flex'>
           <div className={`rounded-full h-[0.938rem] w-[0.938rem] ${columnColor}`} />
           <p className='uppercase pl-2 pb-5 text-[#828FA3] font-bold text-[0.75rem] tracking-[0.15rem] leading-normal'>
@@ -71,27 +75,33 @@ export const Columns = ({ column }: any) => {
   })
 
   return (
-    <section className='h-[440px] flex relative gap-6 w-[237vw] '>
-      {columns}
-      {taskDetailsModal && (
-        <TaskDetails
-          setTaskDetailsModal={setTaskDetailsModal}
-          column={column}
-          taskSelected={taskSelected}
-          handleEditTask={handleEditTask}
-          handleDeleteTask={handleDeleteTask} />)}
-      {editTaskModal && (
-        <EditTask
-          setAddTaskModal={setEditTaskModal}
-          column={column}
-          taskSelected={taskSelected} />)}
-      {deleteTaskModal && (
-        <DeleteModal
-          setDeleteTaskModal={setDeleteTaskModal}
-          typeOfForm="Delete Task"
-          taskName={taskName}
-          taskId={taskId} />
-      )}
+    <>
+    <ShowSideBarButton setShowSidebar={setShowSidebar} showSidebar={showSidebar}/>
+    <section className='h-[440px] flex relative'>
+      {showSidebar && <SideBar setShowSidebar={setShowSidebar}/>}
+      <div className='flex relative gap-6 p-4 w-[237vw] '>
+        {columns}
+        {taskDetailsModal && (
+          <TaskDetails
+            setTaskDetailsModal={setTaskDetailsModal}
+            column={column}
+            taskSelected={taskSelected}
+            handleEditTask={handleEditTask}
+            handleDeleteTask={handleDeleteTask} />)}
+        {editTaskModal && (
+          <EditTask
+            setAddTaskModal={setEditTaskModal}
+            column={column}
+            taskSelected={taskSelected} />)}
+        {deleteTaskModal && (
+          <DeleteModal
+            setDeleteTaskModal={setDeleteTaskModal}
+            typeOfForm="Delete Task"
+            taskName={taskName}
+            taskId={taskId} />
+        )}
+      </div>
     </section>
+    </>
   )
 }

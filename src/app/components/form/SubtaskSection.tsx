@@ -112,7 +112,7 @@ export default function SubtaskSection ({ subTaskValidation, taskSelected, typeO
 
       <Button
         icon="./icons/icon-add-task-mobile.svg"
-        buttonStyle="bg-[#635fc71a] dark:bg-[#fff] w-[100%] h-[2.5rem] flex justify-center items-center rounded-xl text-[#635FC7] font-bold text-[0.8125rem] leading-[1.4375rem]"
+        buttonStyle="bg-[#635fc71a] dark:bg-[#fff] w-[100%] h-[2.5rem] flex justify-center items-center rounded-[1.25rem] text-[#635FC7] font-bold text-[0.8125rem] leading-[1.4375rem]"
         imageClassName="hidden"
         onClick={handleAddSubtask}
         type="button"

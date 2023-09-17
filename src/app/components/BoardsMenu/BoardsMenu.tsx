@@ -35,7 +35,7 @@ export default function BoardsMenu ({ setShowModal, setShowAddNewBoardModal, sho
       <div className='bg-[#FFF] dark:bg-[#2B2C37] rounded-md flex flex-col gap-4 shadow-lg shadow-[#364e7e40]/25 absolute w-[18rem] top-[4.7rem]'>
 
        <BoardsData/>
-
+        {/* TODO: Create a separate component for Crate new Board functionality */}
         <div className='flex gap-3 pl-4 text-[#635FC7] font-semibold text-[0.938rem] leading-[1.188rem]'>
           <div className='pt-[0.20rem]'>
             <IconBoard fill='#635FC7' />

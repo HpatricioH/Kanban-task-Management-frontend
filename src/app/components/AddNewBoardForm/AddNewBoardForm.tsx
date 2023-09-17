@@ -36,7 +36,7 @@ export default function AddNewBoardForm ({ onSubmit, typeOfForm, activeBoardName
     {/* Create Task Button */}
     <Button
       icon='./icons/icon-add-task-mobile.svg'
-      buttonStyle={'bg-[#635FC7] w-[100%] h-[2.5rem] flex justify-center items-center rounded-xl text-[#fff] font-bold text-[0.8125rem] leading-[1.4375rem] capitalize mt-3'}
+      buttonStyle={'bg-[#635FC7] w-[100%] h-[2.5rem] flex justify-center items-center rounded-[1.25rem] text-[#fff] font-bold text-[0.8125rem] leading-[1.4375rem] capitalize mt-3'}
       imageClassName='hidden'
       type='submit'
     >

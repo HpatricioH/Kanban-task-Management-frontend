@@ -15,6 +15,8 @@ export default function SideBar ({ setShowSidebar }: SideBarProps) {
     setShowSidebar(false)
   }
 
+  console.log('side  bar')
+
   return (
     <aside className='max-[767px]:hidden sticky z-40'>
         <div className='w-[16.25rem] h-[100vh] dark:bg-[#2B2C37] bg-[#fff] pt-1 flex flex-col justify-between'>

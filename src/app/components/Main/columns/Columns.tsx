@@ -9,7 +9,7 @@ import { type showModalSideBarState, sideBarStateModal } from '@/app/lib/store/s
 
 // refactor this component maybe separate the board column and the Columns component to make it more readable
 export const Columns = ({ column }: any) => {
-  const { showSidebar, setShowSidebar } = sideBarStateModal() as showModalSideBarState
+  // const { showSidebar, setShowSidebar } = sideBarStateModal() as showModalSideBarState
   const [taskDetailsModal, setTaskDetailsModal] = useState(false)
   const [taskSelected, setTaskSelected] = useState<Task | undefined>()
   const [editTaskModal, setEditTaskModal] = useState(false)
@@ -76,9 +76,9 @@ export const Columns = ({ column }: any) => {
 
   return (
     <>
-    <ShowSideBarButton setShowSidebar={setShowSidebar} showSidebar={showSidebar}/>
+    {/* <ShowSideBarButton setShowSidebar={setShowSidebar} showSidebar={showSidebar}/> */}
     <section className='h-[440px] flex relative'>
-      {showSidebar && <SideBar setShowSidebar={setShowSidebar}/>}
+      {/* {showSidebar && <SideBar setShowSidebar={setShowSidebar}/>} */}
       <div className='flex relative gap-6 p-4 w-[237vw] '>
         {columns}
         {taskDetailsModal && (

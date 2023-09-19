@@ -42,6 +42,7 @@ export default function Page ({ params }: Props) {
           <Columns column={column} />
         </div>
       }
+      {showSidebar && <SideBar setShowSidebar={setShowSidebar}/>}
     </section>
   )
 }

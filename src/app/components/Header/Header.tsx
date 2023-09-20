@@ -45,13 +45,13 @@ export default function Header () {
     <header>
       <nav className='bg-[#FFF] dark:bg-[#2B2C37] p-4 flex justify-between static md:h-[5rem] md:p-0 md:px-4 md:border-b md:border-[#3E3F4E]'>
         <div className='max-[767px]:hidden border-r border-[#3E3F4E] flex justify-start items-center w-[15.25rem]'>
-            <Image
-             src={theme === 'light' ? './logos/logo-dark.svg' : './logos/logo-light.svg'}
-             alt='kanban logo'
-             width={0}
-              height={0}
-              className='w-[9.533rem] h-[1.25rem]'
-            />
+          <Image
+            src={theme === 'light' ? './logos/logo-dark.svg' : './logos/logo-light.svg'}
+            alt='kanban logo'
+            width={0}
+            height={0}
+            className='w-[9.533rem] h-[1.25rem]'
+          />
         </div>
         <div className='flex items-center gap-2 md:flex-[1] md:pl-4'>
           <Image
@@ -62,12 +62,14 @@ export default function Header () {
             className='h-[1.60rem] w-[1.25rem] md:hidden'
           />
 
-          <Button
-            icon={`${showBoardModal ? './icons/icon-chevron-up.svg' : './icons/icon-chevron-down.svg'}`}
-            onClick={handleClick}
-            imageClassName='md:hidden'
-            buttonStyle='flex justify-center items-center gap-2 font-bold capitalize'>{getSelectedBoardId ? name : 'Select a Board'}
-            </Button>
+          <div className='flex flex-row-reverse gap-2 font-bold capitalize'>
+            <Button
+              icon={`${showBoardModal ? './icons/icon-chevron-up.svg' : './icons/icon-chevron-down.svg'}`}
+              onClick={handleClick}
+              imageClassName='md:hidden'
+              />
+            <p>{getSelectedBoardId ? name : 'Select a Board'}</p>
+          </div>
         </div>
         <div className='flex justify-center items-center gap-4'>
           {/* if selected board then show task modal */}

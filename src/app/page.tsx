@@ -1,6 +1,5 @@
 'use client'
 import AddNewColumn from './components/Main/columns/AddNewColumn'
-import ShowSideBarButton from './components/SideBar/ShowSideBarButton'
 import SideBar from './components/SideBar/SideBar'
 import { type showModalSideBarState, sideBarStateModal } from './lib/store/sideBarStateModal'
 
@@ -15,7 +14,6 @@ export default function Home () {
           <div>{showSidebar && <SideBar setShowSidebar={setShowSidebar}/>}</div>
           <AddNewColumn />
         </div>
-        <ShowSideBarButton setShowSidebar={setShowSidebar} showSidebar={showSidebar}/>
       </main>
 
     </>

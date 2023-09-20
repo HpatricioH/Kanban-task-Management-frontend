@@ -28,7 +28,6 @@ export default function Header () {
   const boardName = board?.board[0]?.name
   const id = usePathname().slice(1)
   const getSelectedBoardId = id
-  const mobileDevice = window.innerWidth <= 767
 
   const handleClick = () => {
     !showBoardModal ? setShowBoardModal(true) : setShowBoardModal(false)

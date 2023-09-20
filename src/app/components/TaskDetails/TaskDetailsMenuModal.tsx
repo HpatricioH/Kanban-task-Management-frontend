@@ -28,7 +28,7 @@ export default function TaskDetailsMenuModal ({ setTaskMenuModal, handleDeleteTa
     onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => { handleClose(e) }}
   >
 
-    <div className='bg-[#FFF] dark:bg-[#20212C] rounded-md flex flex-col gap-4 shadow-lg shadow-[#364e7e40]/25 absolute w-[10rem] top-[7.5rem] left-[8.9rem]'>
+    <div className='bg-[#FFF] dark:bg-[#20212C] rounded-md flex flex-col gap-4 shadow-lg shadow-[#364e7e40]/25 absolute w-[10rem] top-[7.5rem] left-[8.9rem] md:w-[12rem] md:left-[31rem] md:top-[8.2rem]'>
       <div
         className='w-[15rem] rounded-r-3xl  font-semibold  text-[0.8125rem] leading-[1.188rem]'>
         <div className='flex flex-col gap-5 py-4 text-[#828FA3] cursor-pointer'>

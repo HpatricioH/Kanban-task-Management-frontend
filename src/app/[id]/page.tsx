@@ -32,10 +32,10 @@ export default function Page ({ params }: Props) {
 
   return (
     <section className={'min-h-screen bg-[#F4F7FD] dark:bg-[#20212C] overflow-x-scroll'}>
-      <div className='flex gap-4'>
+      <div className='flex'>
         {showSidebar && <SideBar setShowSidebar={setShowSidebar}/>}
         {column?.length === 0
-          ? <div className="z-10 text-sm flex justify-center items-center min-h-screen gap-5 w-full relative">
+          ? <div className="z-10 text-sm flex justify-center items-center min-h-screen w-full relative">
             <AddNewColumn />
           </div>
           : <div className="z-10 text-sm ">

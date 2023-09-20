@@ -32,7 +32,7 @@ export default function TaskDetails ({ setTaskDetailsModal, column, taskSelected
 
   return (
     <section
-      className='bg-[#20212C] p-4 z-20 fixed inset-0 bg-opacity-60 flex justify-center items-center transition duration-700 ease-in-out'
+      className='bg-[#20212C] p-4 z-10 fixed inset-0 bg-opacity-60 flex justify-center items-center transition duration-700 ease-in-out'
       id='task-details'
       onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         handleClose(e)

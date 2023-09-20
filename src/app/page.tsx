@@ -10,9 +10,11 @@ export default function Home () {
   return (
     <>
       <main className={'min-h-screen bg-[#F4F7FD] dark:bg-[#20212C] overflow-x-scroll relative'}>
-        <div className="z-10 text-sm flex justify-center items-center min-h-screen gap-5 ">
+        <div className="z-10 text-sm flex justify-justify-between items-center min-h-screen">
           <div>{showSidebar && <SideBar setShowSidebar={setShowSidebar}/>}</div>
-          <AddNewColumn />
+          <div className='flex-[1]'>
+            <AddNewColumn />
+          </div>
         </div>
       </main>
 

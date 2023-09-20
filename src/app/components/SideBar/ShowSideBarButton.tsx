@@ -8,7 +8,6 @@ interface ShowSideBarButtonProps {
 export default function ShowSideBarButton ({ setShowSidebar, showSidebar }: ShowSideBarButtonProps) {
   const handleShowSidebar = () => {
     !showSidebar ? setShowSidebar(true) : setShowSidebar(false)
-    console.log('clicked')
   }
 
   return (

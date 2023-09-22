@@ -67,7 +67,7 @@ export default function Header () {
               icon={`${showBoardModal ? './icons/icon-chevron-up.svg' : './icons/icon-chevron-down.svg'}`}
               onClick={handleClick}
               imageClassName='md:hidden'
-              />
+            />
             <p>{getSelectedBoardId ? name : 'Select a Board'}</p>
           </div>
         </div>
@@ -75,7 +75,7 @@ export default function Header () {
           {/* if selected board then show task modal */}
           <Button
             icon='./icons/icon-add-task-mobile.svg'
-            buttonStyle={`bg-[#635FC7] hover:bg-[#A8A4FF] w-[3rem] h-[2rem] flex justify-center items-center rounded-[1.5rem] md:w-[10.25rem] md:flex-row-reverse md:h-[3rem] md:gap-2 ${!getSelectedBoardId || column?.length === 0 ? 'opacity-25' : 'opacity-100'}`}
+            buttonStyle={`bg-[#635FC7] w-[3rem] h-[2rem] flex justify-center items-center rounded-[1.5rem] md:w-[10.25rem] md:flex-row-reverse md:h-[3rem] md:gap-2 ${!getSelectedBoardId || column?.length === 0 ? 'opacity-25' : 'opacity-100 hover:bg-[#A8A4FF]'}`}
             onClick={!getSelectedBoardId || column?.length === 0 ? undefined : handleAddTask}
           >
             <p className='hidden md:block text-[#FFF] font-bold text-[0.9375rem] leading-[0.938rem]'>Add Task</p>

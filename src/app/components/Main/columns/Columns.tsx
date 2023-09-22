@@ -3,9 +3,11 @@ import { useState } from 'react'
 import TaskDetails from '../../TaskDetails/TaskDetails'
 import EditTask from '../../EditTask/EditTask'
 import DeleteModal from '../../DeleteModal/DeleteModal'
+import { usePathname } from 'next/navigation'
 
 // TODO: refactor this component maybe separate the board column and the Columns component to make it more readable
 export const Columns = ({ column }: any) => {
+  const pathname = usePathname()
   const [taskDetailsModal, setTaskDetailsModal] = useState(false)
   const [taskSelected, setTaskSelected] = useState<Task | undefined>()
   const [editTaskModal, setEditTaskModal] = useState(false)
@@ -13,6 +15,7 @@ export const Columns = ({ column }: any) => {
   const boardColumn = column?.flat()?.map((col: Column) => col)
   const taskName = taskSelected?.title
   const taskId = taskSelected?.id
+  const id = pathname.slice(1)
 
   const handleTaskDetailModal = () => {
     !taskDetailsModal ? setTaskDetailsModal(true) : setTaskDetailsModal(false)
@@ -75,7 +78,7 @@ export const Columns = ({ column }: any) => {
     <section className='h-[440px] flex relative'>
       <div className='flex relative gap-6 p-4 w-[100%] '>
         {columns}
-        <div className='bg-[#FFF] z-10 w-[17.5rem] mt-[2.41rem] dark:bg-[#2B2C37] rounded-md min-h-full p-4 flex flex-col justify-center items-center gap-2 shadow-md shadow-[#364e7e2e]/25 cursor-pointer [&_h3]:hover:text-[#635FC7]'>
+        <div className={`bg-[#FFF] z-10 w-[17.5rem] mt-[2.41rem] dark:bg-[#2B2C37] rounded-md min-h-full p-4 flex flex-col justify-center items-center gap-2 shadow-md shadow-[#364e7e2e]/25 cursor-pointer [&_h3]:hover:text-[#635FC7] ${!id || !boardColumn ? 'hidden' : ''}`}>
           <h3>+ New Column</h3>
         </div>
         {taskDetailsModal && (

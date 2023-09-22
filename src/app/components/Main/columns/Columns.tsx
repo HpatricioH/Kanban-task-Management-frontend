@@ -4,9 +4,8 @@ import TaskDetails from '../../TaskDetails/TaskDetails'
 import EditTask from '../../EditTask/EditTask'
 import DeleteModal from '../../DeleteModal/DeleteModal'
 
-// refactor this component maybe separate the board column and the Columns component to make it more readable
+// TODO: refactor this component maybe separate the board column and the Columns component to make it more readable
 export const Columns = ({ column }: any) => {
-  // const { showSidebar, setShowSidebar } = sideBarStateModal() as showModalSideBarState
   const [taskDetailsModal, setTaskDetailsModal] = useState(false)
   const [taskSelected, setTaskSelected] = useState<Task | undefined>()
   const [editTaskModal, setEditTaskModal] = useState(false)
@@ -55,7 +54,7 @@ export const Columns = ({ column }: any) => {
           {col.tasks.flatMap((task: any) => (
             <div
               key={task.id}
-              className='bg-[#FFF] z-50 dark:bg-[#2B2C37] rounded-md h-[5.5rem] mb-5 p-4 flex flex-col justify-center gap-2 shadow-md shadow-[#364e7e2e]/25 cursor-pointer'
+              className='bg-[#FFF] z-50 dark:bg-[#2B2C37] rounded-md h-[5.5rem] mb-5 p-4 flex flex-col justify-center gap-2 shadow-md shadow-[#364e7e2e]/25 cursor-pointer [&_h3]:hover:text-[#635FC7]'
               onClick={() => { handleTaskSelected(task.id); handleTaskDetailModal() }}
             >
               <h3 className='text-[#000112] dark:text-white text-[0.9375rem] font-bold leading-normal'>{task.title}</h3>
@@ -76,6 +75,9 @@ export const Columns = ({ column }: any) => {
     <section className='h-[440px] flex relative'>
       <div className='flex relative gap-6 p-4 w-[100%] '>
         {columns}
+        <div className='bg-[#FFF] z-10 w-[17.5rem] mt-[2.41rem] dark:bg-[#2B2C37] rounded-md min-h-full p-4 flex flex-col justify-center items-center gap-2 shadow-md shadow-[#364e7e2e]/25 cursor-pointer [&_h3]:hover:text-[#635FC7]'>
+          <h3>+ New Column</h3>
+        </div>
         {taskDetailsModal && (
           <TaskDetails
             setTaskDetailsModal={setTaskDetailsModal}

@@ -34,14 +34,15 @@ export default function AddNewBoard ({ setAddTaskModal }: AddNewBoardProps) {
       setTitleFormValidation(false)
     }
 
-    // TODO: fix the order of the columns when adding a new board and columns
     if (name) {
       const response = await addNewBoard({ name })
-      boardColumns.map(async ([_, value]) => {
+      for (let i = 0; i < boardColumns.length; i++) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const [_, value] = boardColumns[i]
         if (value !== '') {
           await addNewBoardColumns({ name: value.toString(), boardId: response.id })
         }
-      })
+      }
       form.reset()
       setAddTaskModal(false)
       router.push(`/${response.id as string}`)

@@ -70,11 +70,14 @@ export default function TaskDetails ({ setTaskDetailsModal, column, taskSelected
             id='status'
             className='capitalize rounded-[0.25rem] border bg-[#FFF] dark:bg-[#2B2C37] p-2 text-[0.8125rem] placeholder-[#000112] dark:placeholder-[#fff] placeholder-opacity-[0.25] focus:outline-none focus:ring-1 focus:ring-[#828fa340] focus:border-transparent'
           >
-            {column.map((column: Column) => (
-              <option value={`${column.name}`} key={column.id}>
-                {column.name}
-              </option>
-            ))}
+            {column.map((column: Column) => {
+              const isSelected = column.id === taskSelected?.columnId
+              return (
+                <option value={`${column.name}`} key={column.id} selected={isSelected}>
+                  {column.name}
+                </option>
+              )
+            })}
           </select>
         </form>
       </div>

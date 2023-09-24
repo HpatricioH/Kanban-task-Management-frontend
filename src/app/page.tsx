@@ -5,7 +5,6 @@ import { type showModalSideBarState, sideBarStateModal } from './lib/store/sideB
 
 export default function Home () {
   const { showSidebar, setShowSidebar } = sideBarStateModal() as showModalSideBarState
-  // TODO: add a button to create a new board if the board is not selected or the board is empty
 
   return (
     <>

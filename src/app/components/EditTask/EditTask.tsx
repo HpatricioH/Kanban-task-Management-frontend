@@ -27,8 +27,6 @@ export default function EditTask ({ setAddTaskModal, column, taskSelected }: Edi
     }
   }
 
-  console.log('showing')
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
@@ -68,10 +66,22 @@ export default function EditTask ({ setAddTaskModal, column, taskSelected }: Edi
       })
 
       subtasksToBeUpdated.map(async (subtask) => {
-        if (subtask.title) {
+        const tasksAddedCount = subtasksToBeUpdated.length - (taskSelected?.subTasks?.length ?? 0)
+
+        if (subtask.title && subtasksToBeUpdated.length === taskSelected?.subTasks?.length) {
           await updateSubtask({ taskId: taskId ?? '', title: subtask.title, id: subtask.id ?? '', isCompleted: false })
+        } else if (subtask.title && subtasksToBeUpdated?.length > (taskSelected?.subTasks?.length ?? 0) && (taskSelected?.subTasks?.length ?? 0) > 0) {
+          // add new subtasks function here
+          console.log(subtasksToBeUpdated.slice(-tasksAddedCount).map((subtask) => subtask.title))
+          // update subtasks function here
+          console.log(subtasksToBeUpdated.slice(0, taskSelected?.subTasks?.length ?? 0).map((subtask) => subtask.title))
+        } else if (subtask.title && (taskSelected?.subTasks?.length ?? 0) === 0 && subtasksToBeUpdated.length > 0) {
+          // add new subtasks function here
+          console.log(subtask.title)
         }
+
         // TODO: add feature to add subtasks when there is a new subtask added used the length of the current subtasks and the length of the subtasks to be updated to know if there is a new subtask added and add it to the database
+        // console.log(subtask.title, tasksAddedCount)
       })
 
       await updateTask({ title, description, status, id: taskId ?? '', columnId: columnIdUpdate })

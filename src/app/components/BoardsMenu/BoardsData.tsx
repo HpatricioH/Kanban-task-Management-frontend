@@ -11,7 +11,6 @@ export function BoardsData () {
   const router = useRouter()
   const id = pathname.slice(1)
 
-  // TODO: add feature to close modal when select a board
   const handleClick = (boardId: string) => {
     if (id === boardId) {
       router.push('/')
@@ -36,13 +35,13 @@ export function BoardsData () {
               return (
               <div
                 key={board.id}
-                className={`w-[15rem] rounded-r-3xl  font-semibold  text-[0.938rem] leading-[1.188rem] h-[3rem]
+                className={`w-[15rem] rounded-r-3xl  font-semibold  text-[0.938rem] leading-[1.188rem] h-[3rem] cursor-pointer
                 ${isActive
                   ? 'text-[#FFFFFF] bg-[#635FC7]'
-                  : 'text-[#828FA3]'}`}
+                  : 'text-[#828FA3] hover:dark:bg-white hover:text-[#635FC7] hover:bg-[#635FC7] hover:bg-opacity-10 h-[3rem] '}`}
                 onClick={() => { handleClick(board.id) }}
               >
-                <div className='flex pl-4 gap-3 py-4'>
+                <div className='flex pl-4 gap-3 py-4 '>
                   <IconBoard fill={isActive ? '#FFF' : '#828FA3'} />
                   <Link href={`/${board.id}`}>{board.name}</Link>
                 </div>

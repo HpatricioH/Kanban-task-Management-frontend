@@ -25,7 +25,7 @@ export default function SideBar ({ setShowSidebar }: SideBarProps) {
           <div >
             <ThemeToggle />
           </div>
-          <footer className='flex gap-2 cursor-pointer p-4 mb-[1rem]' onClick={handleCloseSideBar}>
+          <footer className='flex items-baseline gap-2 cursor-pointer p-4 mb-[1rem] hover:dark:bg-white hover:text-[#635FC7] hover:bg-[#635FC7] hover:bg-opacity-10 w-[15rem] rounded-r-[6.25rem] h-[3rem]' onClick={handleCloseSideBar}>
             <Image
               src={'./icons/icon-hide-sidebar.svg'}
               alt='hide sidebar icon'

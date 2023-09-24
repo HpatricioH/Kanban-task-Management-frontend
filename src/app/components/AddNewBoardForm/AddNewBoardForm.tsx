@@ -5,7 +5,6 @@ import { type Column } from '@/app/lib/hooks/useGetBoards'
 interface AddNewBoardFormProps {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void
   titleFormValidation: boolean
-  // descriptionFormValidation: boolean
   subtaskFormValidation?: boolean
   columns?: Column[]
   typeOfForm?: string

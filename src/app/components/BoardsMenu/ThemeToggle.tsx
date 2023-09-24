@@ -25,7 +25,7 @@ export const ThemeToggle = () => {
             onChange={handleToggle}
           />
           <div
-            className={'box bg-[#635FC7] block h-6 w-12 rounded-full transition '}
+            className={'box bg-[#635FC7] block h-6 w-12 rounded-full transition hover:bg-[#A8A4FF] '}
           ></div>
           <div
             className={`dot absolute ${theme === 'light' ? 'left-1' : 'right-1'

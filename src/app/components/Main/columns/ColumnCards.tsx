@@ -1,5 +1,6 @@
 import { type Column } from '@/app/lib/hooks/useGetBoards'
 import TaskCards from './TaskCards'
+import { memo } from 'react'
 
 interface ColumnCardsProps {
   boardColumn: Column[]
@@ -8,7 +9,7 @@ interface ColumnCardsProps {
   setTaskSelected: (value: any) => void
 }
 
-export default function ColumnCards ({ boardColumn, taskDetailsModal, setTaskDetailsModal, setTaskSelected }: ColumnCardsProps) {
+function ColumnCards ({ boardColumn, taskDetailsModal, setTaskDetailsModal, setTaskSelected }: ColumnCardsProps) {
   return (
     boardColumn?.map((col: Column) => {
       const columnColors: Record<string, string> = {
@@ -26,9 +27,11 @@ export default function ColumnCards ({ boardColumn, taskDetailsModal, setTaskDet
               {col.name} ({col.tasks.length})
             </p>
           </div>
-          <TaskCards col={col} taskDetailsModal={taskDetailsModal} setTaskDetailsModal={setTaskDetailsModal} setTaskSelected={setTaskSelected} boardColumn={boardColumn}/>
+          <TaskCards col={col} taskDetailsModal={taskDetailsModal} setTaskDetailsModal={setTaskDetailsModal} setTaskSelected={setTaskSelected} boardColumn={boardColumn} />
         </div>
       )
     })
   )
 }
+
+export default memo(ColumnCards)

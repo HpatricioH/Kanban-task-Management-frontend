@@ -4,6 +4,7 @@ import { newTask } from '@/app/lib/store/taskAdded'
 import Form from '../form/Form'
 import { updateTask } from '@/app/core/services/updateTask'
 import { updateSubtask } from '@/app/core/services/updateSubtask'
+import addSubTasks from '@/app/core/services/addSubTasks'
 
 interface EditTaskProps {
   setAddTaskModal: (value: boolean) => void
@@ -26,8 +27,6 @@ export default function EditTask ({ setAddTaskModal, column, taskSelected }: Edi
       setAddTaskModal(false)
     }
   }
-
-  console.log('showing')
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -67,12 +66,24 @@ export default function EditTask ({ setAddTaskModal, column, taskSelected }: Edi
         }
       })
 
-      subtasksToBeUpdated.map(async (subtask) => {
-        if (subtask.title) {
-          await updateSubtask({ taskId: taskId ?? '', title: subtask.title, id: subtask.id ?? '', isCompleted: false })
+      if (subtasksToBeUpdated.length === 1) {
+        // update or add single subtask
+        const subtask = subtasksToBeUpdated[0]
+        if (subtask.id) {
+          await updateSubtask({ taskId: taskId ?? '', title: subtask.title, id: subtask.id, isCompleted: false })
+        } else {
+          await addSubTasks({ taskId: taskId ?? '', title: subtask.title, isCompleted: false })
         }
-        // TODO: add feature to add subtasks when there is a new subtask added used the length of the current subtasks and the length of the subtasks to be updated to know if there is a new subtask added and add it to the database
-      })
+      } else if (subtasksToBeUpdated.length > 1) {
+        // update or add multiple subtasks
+        subtasksToBeUpdated.map(async (subtask) => {
+          if (subtask.title && subtask.id) {
+            await updateSubtask({ taskId: taskId ?? '', title: subtask.title, id: subtask.id, isCompleted: false })
+          } else if (subtask.title && !subtask.id) {
+            await addSubTasks({ taskId: taskId ?? '', title: subtask.title, isCompleted: false })
+          }
+        })
+      }
 
       await updateTask({ title, description, status, id: taskId ?? '', columnId: columnIdUpdate })
 

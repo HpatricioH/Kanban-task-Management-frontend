@@ -3,12 +3,13 @@ import { ThemeToggle } from '../BoardsMenu/ThemeToggle'
 import { BoardsData } from '../BoardsMenu/BoardsData'
 import CreateNewBoard from '../BoardsMenu/CreateNewBoard'
 import { createBoardStateModal, type showModalBoardState } from '@/app/lib/store/createBoardStateModal'
+import { memo } from 'react'
 
 interface SideBarProps {
   setShowSidebar: (showSidebar: boolean) => void
 }
 
-export default function SideBar ({ setShowSidebar }: SideBarProps) {
+function SideBar ({ setShowSidebar }: SideBarProps) {
   const { showAddNewBoardModal, setShowAddNewBoardModal } = createBoardStateModal() as showModalBoardState
 
   const handleCloseSideBar = () => {
@@ -41,3 +42,5 @@ export default function SideBar ({ setShowSidebar }: SideBarProps) {
       </aside>
   )
 }
+
+export default memo(SideBar)

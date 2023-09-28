@@ -2,26 +2,7 @@ import { useMemo, useState } from 'react'
 import SubtaskInput from './SubtaskInput'
 import { Button } from '@/app/core/utils/Button'
 import { deleteSubTasks } from '@/app/core/services/deleteSubTasks'
-
-export interface SubTask {
-  id: string
-  isCompleted: boolean
-  taskId: string
-  title: string
-}
-
-interface SubtaskSectionProps {
-  taskSelected?: {
-    columnId: string
-    description: string
-    id: string
-    status: string
-    subTasks: SubTask[]
-    title: string
-  }
-  subTaskValidation?: boolean
-  typeOfForm?: string
-}
+import { type SubtaskSectionProps } from '@/app/lib/types/subtasks'
 
 const initialSubTasks = [
   { id: 'subtask-0', name: 'subtask', placeholder: 'e.g. Make coffee' },

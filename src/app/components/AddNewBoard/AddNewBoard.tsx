@@ -3,10 +3,7 @@ import { useState } from 'react'
 import AddNewBoardForm from '../AddNewBoardForm/AddNewBoardForm'
 import addNewBoardColumns from '@/app/core/services/addNewBoardColumns'
 import { useRouter } from 'next/navigation'
-
-interface AddNewBoardProps {
-  setAddTaskModal: (value: boolean) => void
-}
+import { type AddNewBoardProps } from '@/app/lib/types/board'
 
 export default function AddNewBoard ({ setAddTaskModal }: AddNewBoardProps) {
   const [titleFormValidation, setTitleFormValidation] = useState(false)

@@ -1,13 +1,5 @@
 import Image from 'next/image'
-
-interface ButtonType {
-  children?: React.ReactNode
-  icon: string
-  buttonStyle?: string
-  imageClassName?: string
-  type?: 'button' | 'submit' | 'reset'
-  onClick?: () => void
-}
+import { type ButtonType } from '@/app/lib/types/button'
 
 export const Button = ({ children, icon, buttonStyle, onClick, imageClassName, type }: ButtonType) => {
   return (

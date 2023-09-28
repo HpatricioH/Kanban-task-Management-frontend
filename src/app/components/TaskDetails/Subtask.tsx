@@ -1,11 +1,7 @@
-import { type SubTask } from '../form/SubtaskSection'
+import { type SubtaskProps } from '@/app/lib/types/subtasks'
 import { updateSubtask } from '@/app/core/services/updateSubtask'
 import { subtaskUpdated } from '@/app/lib/store/subtaskUpdatedStore'
 import { useCallback, useState } from 'react'
-
-interface SubtaskProps {
-  subtask: SubTask
-}
 
 export function Subtask ({ subtask }: SubtaskProps) {
   const [isCompleted, setIsCompleted] = useState(subtask.isCompleted)

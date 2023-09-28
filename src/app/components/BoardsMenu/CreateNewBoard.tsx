@@ -1,12 +1,7 @@
 import IconBoard from '@/app/core/utils/svgIcons'
+import { type ShowModal } from '@/app/lib/types/board'
 
-interface CrateNewBoardProps {
-  setShowModal?: (value: boolean) => void
-  setShowAddNewBoardModal?: (value: boolean) => void
-  showAddNewBoardModal?: boolean
-}
-
-export default function CreateNewBoard ({ setShowModal, setShowAddNewBoardModal, showAddNewBoardModal }: CrateNewBoardProps) {
+export default function CreateNewBoard ({ setShowModal, setShowAddNewBoardModal, showAddNewBoardModal }: ShowModal) {
   const handleAddNewBoard = () => {
     if (setShowAddNewBoardModal) {
       !showAddNewBoardModal ? setShowAddNewBoardModal(true) : setShowAddNewBoardModal(false)

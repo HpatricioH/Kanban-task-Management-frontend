@@ -1,13 +1,7 @@
-import { type Column } from '@/app/lib/hooks/useGetBoards'
+import { type ColumnCardsProps } from '@/app/lib/types/column'
+import { type Column } from '@/app/lib/types/api'
 import TaskCards from './TaskCards'
 import { memo } from 'react'
-
-interface ColumnCardsProps {
-  boardColumn: Column[]
-  taskDetailsModal: boolean
-  setTaskDetailsModal: (value: boolean) => void
-  setTaskSelected: (value: any) => void
-}
 
 function ColumnCards ({ boardColumn, taskDetailsModal, setTaskDetailsModal, setTaskSelected }: ColumnCardsProps) {
   return (

@@ -4,10 +4,7 @@ import { boardData } from '@/app/lib/store/boardData'
 import updateBoard from '@/app/core/services/updateBoard'
 import { updateBoardStore } from '@/app/lib/store/updateBoardStore'
 import updateColumn from '@/app/core/services/updateColumn'
-
-interface EditBoardProps {
-  setEditBoardModal: (value: boolean) => void
-}
+import { type EditBoardProps } from '@/app/lib/types/board'
 
 export default function EditBoard ({ setEditBoardModal }: EditBoardProps) {
   const [titleFormValidation, setTitleFormValidation] = useState(false)

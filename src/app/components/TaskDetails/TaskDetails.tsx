@@ -1,16 +1,9 @@
-import { type Column, type Task } from '@/app/lib/hooks/useGetBoards'
+import { type Column } from '@/app/lib/types/api'
+import { type TaskDetailsProps } from '@/app/lib/types/tasks'
 import Image from 'next/image'
 import { Subtask } from './Subtask'
 import { useState } from 'react'
 import TaskDetailsMenuModal from './TaskDetailsMenuModal'
-
-interface TaskDetailsProps {
-  setTaskDetailsModal: (value: boolean) => void
-  column: Column[]
-  taskSelected?: Task
-  handleDeleteTask: () => void
-  handleEditTask: () => void
-}
 
 export default function TaskDetails ({ setTaskDetailsModal, column, taskSelected, handleDeleteTask, handleEditTask }: TaskDetailsProps) {
   const [taskMenuModal, setTaskMenuModal] = useState(false)

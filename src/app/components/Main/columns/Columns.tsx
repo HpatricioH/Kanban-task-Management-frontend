@@ -1,4 +1,4 @@
-import { type Column, type Task } from '@/app/lib/hooks/useGetBoards'
+import { type Column, type Task } from '@/app/lib/types/api'
 import { useState } from 'react'
 import TaskDetails from '../../TaskDetails/TaskDetails'
 import EditTask from '../../EditTask/EditTask'

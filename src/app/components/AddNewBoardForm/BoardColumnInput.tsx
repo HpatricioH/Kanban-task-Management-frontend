@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { type SubtaskInputProps } from '../form/SubtaskInput'
+import { type SubtaskInputProps } from '@/app/lib/types/subtasks'
 
 export default function BoardColumnInput ({ input, value, onChange, onRemove, typeOfForm }: SubtaskInputProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

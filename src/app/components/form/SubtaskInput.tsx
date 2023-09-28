@@ -1,17 +1,5 @@
 import Image from 'next/image'
-
-export interface SubtaskInputProps {
-  input: {
-    id: string
-    name: string
-    placeholder: string
-  }
-  value?: string
-  onChange: (value: string) => void
-  onRemove: () => void
-  isInvalid?: boolean
-  typeOfForm?: string
-}
+import { type SubtaskInputProps } from '@/app/lib/types/subtasks'
 
 export default function SubtaskInput ({ input, value, onChange, onRemove, isInvalid, typeOfForm }: SubtaskInputProps) {
   // handle input change and update the `value` state with the new value

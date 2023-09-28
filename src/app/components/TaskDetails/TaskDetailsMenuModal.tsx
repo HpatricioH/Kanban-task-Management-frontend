@@ -1,8 +1,4 @@
-interface TaskDetailsProps {
-  setTaskMenuModal: (value: boolean) => void
-  handleDeleteTask: () => void
-  handleEditTask: () => void
-}
+import { type TaskDetailsMenuModalProps } from '@/app/lib/types/tasks'
 
 const taskSettings = [
   {
@@ -13,7 +9,7 @@ const taskSettings = [
   }
 ]
 
-export default function TaskDetailsMenuModal ({ setTaskMenuModal, handleDeleteTask, handleEditTask }: TaskDetailsProps) {
+export default function TaskDetailsMenuModal ({ setTaskMenuModal, handleDeleteTask, handleEditTask }: TaskDetailsMenuModalProps) {
   const handleClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const target = e.target as HTMLDivElement
     if (target.id === 'modal') {

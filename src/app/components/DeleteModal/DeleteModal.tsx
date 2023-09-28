@@ -3,14 +3,7 @@ import { deleteTasks } from '@/app/core/services/deleteTaks'
 import { Button } from '@/app/core/utils/Button'
 import { taskUpdatedStore } from '@/app/lib/store/taskUpdatedStore'
 import { usePathname, useRouter } from 'next/navigation'
-interface DeleteBoardProps {
-  setDeleteBoardModal?: (value: boolean) => void
-  setDeleteTaskModal?: (value: boolean) => void
-  taskId?: string
-  typeOfForm?: string
-  boardName?: string
-  taskName?: string
-}
+import { type DeleteBoardProps } from '@/app/lib/types/board'
 
 export default function DeleteModal ({ setDeleteBoardModal, taskId, typeOfForm, setDeleteTaskModal, boardName, taskName }: DeleteBoardProps) {
   const { setTaskUpdated } = taskUpdatedStore()

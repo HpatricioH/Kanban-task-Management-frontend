@@ -1,16 +1,10 @@
-import { type Task, type Column } from '@/app/lib/hooks/useGetBoards'
+import { type EditTaskProps } from '@/app/lib/types/tasks'
 import { useState } from 'react'
 import { newTask } from '@/app/lib/store/taskAdded'
 import Form from '../form/Form'
 import { updateTask } from '@/app/core/services/updateTask'
 import { updateSubtask } from '@/app/core/services/updateSubtask'
 import addSubTasks from '@/app/core/services/addSubTasks'
-
-interface EditTaskProps {
-  setAddTaskModal: (value: boolean) => void
-  column: Column[]
-  taskSelected?: Task
-}
 
 export default function EditTask ({ setAddTaskModal, column, taskSelected }: EditTaskProps) {
   const [titleFormValidation, setTitleFormValidation] = useState(false)

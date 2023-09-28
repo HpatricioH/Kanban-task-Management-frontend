@@ -2,8 +2,9 @@ import Image from 'next/image'
 import { ThemeToggle } from '../BoardsMenu/ThemeToggle'
 import { BoardsData } from '../BoardsMenu/BoardsData'
 import CreateNewBoard from '../BoardsMenu/CreateNewBoard'
-import { createBoardStateModal, type showModalBoardState } from '@/app/lib/store/createBoardStateModal'
+import { createBoardStateModal } from '@/app/lib/store/createBoardStateModal'
 import { memo } from 'react'
+import { type showModalBoardState } from '@/app/lib/types/board'
 
 interface SideBarProps {
   setShowSidebar: (showSidebar: boolean) => void

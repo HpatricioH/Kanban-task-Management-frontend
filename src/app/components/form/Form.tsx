@@ -1,16 +1,7 @@
 import { Button } from '@/app/core/utils/Button'
-import { type Task, type Column } from '@/app/lib/hooks/useGetBoards'
 import SubtaskSection from './SubtaskSection'
-
-interface FormProps {
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
-  titleFormValidation: boolean
-  descriptionFormValidation: boolean
-  subtaskFormValidation?: boolean
-  column: Column[]
-  typeOfForm?: string
-  taskSelected?: Task
-}
+import { type FormProps } from '@/app/lib/types/subtasks'
+import { type Column } from '@/app/lib/types/api'
 
 export default function Form ({
   onSubmit,

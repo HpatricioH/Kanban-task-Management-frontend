@@ -1,16 +1,6 @@
 import { Button } from '@/app/core/utils/Button'
 import BoardColumnsSection from './BoardColumnsSection'
-import { type Column } from '@/app/lib/hooks/useGetBoards'
-
-interface AddNewBoardFormProps {
-  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void
-  titleFormValidation: boolean
-  subtaskFormValidation?: boolean
-  columns?: Column[]
-  typeOfForm?: string
-  activeBoardName?: string
-  boardColumnsValues?: string[]
-}
+import { type AddNewBoardFormProps } from '@/app/lib/types/board'
 
 export default function AddNewBoardForm ({ onSubmit, typeOfForm, activeBoardName, titleFormValidation, columns }: AddNewBoardFormProps) {
   return (

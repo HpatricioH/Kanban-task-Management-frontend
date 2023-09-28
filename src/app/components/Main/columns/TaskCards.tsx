@@ -1,14 +1,7 @@
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import { type Column, type Task } from '@/app/lib/hooks/useGetBoards'
 import { useEffect, useState } from 'react'
-
-interface TaskCardsProps {
-  col: Column
-  taskDetailsModal: boolean
-  setTaskDetailsModal: (value: boolean) => void
-  setTaskSelected: (value: any) => void
-  boardColumn: Column[]
-}
+import { type Column, type Task } from '@/app/lib/types/api'
+import { type TaskCardsProps } from '@/app/lib/types/tasks'
 
 export default function TaskCards ({ col, taskDetailsModal, setTaskDetailsModal, setTaskSelected, boardColumn }: TaskCardsProps) {
   const [tasks, updateTasks] = useState<Task[]>(col.tasks)

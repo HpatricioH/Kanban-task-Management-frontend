@@ -1,12 +1,7 @@
 import { useState, useMemo } from 'react'
 import BoardColumnInput from './BoardColumnInput'
 import { Button } from '@/app/core/utils/Button'
-import { type Column } from '@/app/lib/hooks/useGetBoards'
-
-interface BoardColumnsSectionProps {
-  columns?: Column[]
-  typeOfForm?: string
-}
+import { type BoardColumnsSectionProps } from '@/app/lib/types/board'
 
 const initialColumns = [
   { id: 'boardColumn-0', name: 'BoardColumn', placeholder: 'e.g. Todo' },

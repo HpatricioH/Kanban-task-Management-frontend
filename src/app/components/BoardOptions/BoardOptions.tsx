@@ -1,10 +1,4 @@
-
-interface BoardSettings {
-  setBoardSettingsModal: (value: boolean) => void
-  setEditBoardModal: (value: boolean) => void
-  setDeleteBoardModal: (value: boolean) => void
-  editBoardModal: boolean
-}
+import { type BoardSettings } from '@/app/lib/types/board'
 
 const boardSettings = [
   {

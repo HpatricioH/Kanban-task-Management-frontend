@@ -1,14 +1,10 @@
-import { type Column } from '@/app/lib/hooks/useGetBoards'
+import { type Column } from '@/app/lib/types/api'
+import { type AddNewTaskProps } from '@/app/lib/types/tasks'
 import addTasks from '@/app/core/services/addTasks'
 import addSubTasks from '@/app/core/services/addSubTasks'
 import { useState } from 'react'
 import { newTask } from '@/app/lib/store/taskAdded'
 import Form from '../form/Form'
-
-interface AddNewTaskProps {
-  setAddTaskModal: (value: boolean) => void
-  column: Column[]
-}
 
 export default function AddNewTask ({ setAddTaskModal, column }: AddNewTaskProps) {
   const [titleFormValidation, setTitleFormValidation] = useState(false)

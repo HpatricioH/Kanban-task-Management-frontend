@@ -4,12 +4,7 @@ import React from 'react'
 import { ThemeToggle } from './ThemeToggle'
 import { BoardsData } from './BoardsData'
 import CreateNewBoard from './CreateNewBoard'
-
-interface ShowModal {
-  setShowModal?: (value: boolean) => void
-  showAddNewBoardModal?: boolean
-  setShowAddNewBoardModal?: (value: boolean) => void
-}
+import { type ShowModal } from '@/app/lib/types/board'
 
 export default function BoardsMenu ({ setShowModal, setShowAddNewBoardModal, showAddNewBoardModal }: ShowModal) {
   const handleClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {

@@ -4,10 +4,8 @@ import { boardData } from '@/app/lib/store/boardData'
 import updateBoard from '@/app/core/services/updateBoard'
 import { updateBoardStore } from '@/app/lib/store/updateBoardStore'
 import updateColumn from '@/app/core/services/updateColumn'
-
-interface EditBoardProps {
-  setEditBoardModal: (value: boolean) => void
-}
+import { type EditBoardProps } from '@/app/lib/types/board'
+import addNewBoardColumns from '@/app/core/services/addNewBoardColumns'
 
 export default function EditBoard ({ setEditBoardModal }: EditBoardProps) {
   const [titleFormValidation, setTitleFormValidation] = useState(false)
@@ -52,11 +50,22 @@ export default function EditBoard ({ setEditBoardModal }: EditBoardProps) {
         }
       })
 
-      columnsToBeUpdated.map(async (column) => {
-        if (column.name) {
+      if (columnsToBeUpdated.length === 1) {
+        const column = columnsToBeUpdated[0]
+        if (column.id) {
           await updateColumn({ id: column.id, name: column.name })
+        } else {
+          await addNewBoardColumns({ name: column.name.toString(), boardId: id })
         }
-      })
+      } else if (columnsToBeUpdated.length > 1) {
+        columnsToBeUpdated.map(async (column) => {
+          if (column.name && column.id) {
+            await updateColumn({ id: column.id, name: column.name })
+          } else {
+            await addNewBoardColumns({ name: column.name.toString(), boardId: id })
+          }
+        })
+      }
 
       setBoardUpdated(true)
       form.reset()

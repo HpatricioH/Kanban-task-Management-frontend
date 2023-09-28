@@ -12,7 +12,8 @@ import BoardOptions from '../BoardOptions/BoardOptions'
 import EditBoard from '../EditBoard/EditBoard'
 import DeleteModal from '../DeleteModal/DeleteModal'
 import { useTheme } from 'next-themes'
-import { createBoardStateModal, type showModalBoardState } from '@/app/lib/store/createBoardStateModal'
+import { createBoardStateModal } from '@/app/lib/store/createBoardStateModal'
+import { type showModalBoardState } from '@/app/lib/types/board'
 
 export default function Header () {
   const { theme } = useTheme()

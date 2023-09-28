@@ -1,9 +1,5 @@
 import Image from 'next/image'
-
-interface ShowSideBarButtonProps {
-  setShowSidebar: (showSidebar: boolean) => void
-  showSidebar: boolean
-}
+import { type ShowSideBarButtonProps } from '@/app/lib/types/sidebar'
 
 export default function ShowSideBarButton ({ setShowSidebar, showSidebar }: ShowSideBarButtonProps) {
   const handleShowSidebar = () => {

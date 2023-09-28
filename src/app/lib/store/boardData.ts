@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { type Column } from '../hooks/useGetBoards'
+import { type Column } from '@/app/lib/types/api'
 
 interface Board {
   id: string

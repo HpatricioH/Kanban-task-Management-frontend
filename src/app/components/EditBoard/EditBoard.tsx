@@ -65,11 +65,11 @@ export default function EditBoard ({ setEditBoardModal }: EditBoardProps) {
             await addNewBoardColumns({ name: column.name.toString(), boardId: id })
           }
         })
+        setEditBoardModal(false)
       }
 
       setBoardUpdated(true)
       form.reset()
-      setEditBoardModal(false)
     }
   }
 

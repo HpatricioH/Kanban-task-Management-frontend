@@ -2,6 +2,8 @@ import { useState, useMemo } from 'react'
 import BoardColumnInput from './BoardColumnInput'
 import { Button } from '@/app/core/utils/Button'
 import { type BoardColumnsSectionProps } from '@/app/lib/types/board'
+import { deleteColumn } from '@/app/core/services/deteleColumn'
+import { updateBoardStore } from '@/app/lib/store/updateBoardStore'
 
 const initialColumns = [
   { id: 'boardColumn-0', name: 'BoardColumn', placeholder: 'e.g. Todo' },
@@ -9,8 +11,11 @@ const initialColumns = [
 ]
 
 export default function BoardColumnsSection ({ columns, typeOfForm }: BoardColumnsSectionProps) {
+  const { boardUpdated, setBoardUpdated } = updateBoardStore()
   const [inputList, setInputList] = useState(initialColumns)
   const [columnValues, setColumnValues] = useState<string[]>(initialColumns.map(() => ''))
+
+  console.log(boardUpdated)
 
   const computedValues = useMemo(() => {
     const newInputList = [...inputList]
@@ -42,9 +47,20 @@ export default function BoardColumnsSection ({ columns, typeOfForm }: BoardColum
     setColumnValues(prevValues => [...prevValues, ''])
   }
 
-  const handleRemoveColumn = (index: number) => {
+  const removeColumn = (index: number) => {
     setInputList(prevList => prevList.filter((_, i) => i !== index))
     setColumnValues(prevValues => prevValues.filter((_, i) => i !== index))
+  }
+
+  const handleRemoveColumn = (index: number) => {
+    const columnSelected = columns?.[index]
+
+    if (typeOfForm === 'Edit Board' && columnSelected) {
+      deleteColumn(columnSelected.id)
+      setBoardUpdated(!boardUpdated)
+    } else {
+      removeColumn(index)
+    }
   }
 
   const handleColumnChange = (index: number, value: string) => {

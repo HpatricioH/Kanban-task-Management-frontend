@@ -2,14 +2,17 @@ import { Button } from '@/app/core/utils/Button'
 import ShowSideBarButton from '../../SideBar/ShowSideBarButton'
 import { type showModalSideBarState, sideBarStateModal } from '@/app/lib/store/sideBarStateModal'
 import { usePathname } from 'next/navigation'
+import { useState } from 'react'
+import EditBoard from '../../EditBoard/EditBoard'
 
 export default function AddNewColumn () {
   const pathname = usePathname()
+  const [editBoardModal, setEditBoardModal] = useState(false)
   const { showSidebar, setShowSidebar } = sideBarStateModal() as showModalSideBarState
   const id = pathname.slice(1)
 
   const handleAddNewColumn = () => {
-    console.log('add new column')
+    !editBoardModal ? setEditBoardModal(true) : setEditBoardModal(false)
   }
 
   return (
@@ -28,6 +31,10 @@ export default function AddNewColumn () {
         >
           Add New Column
         </Button>
+        {editBoardModal && (
+          <EditBoard
+            setEditBoardModal={setEditBoardModal}
+          />)}
       </div>
     </>
   )

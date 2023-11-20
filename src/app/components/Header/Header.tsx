@@ -44,7 +44,7 @@ export default function Header () {
 
   return (
     <header>
-      <nav className='bg-[#FFF] dark:bg-[#2B2C37] p-4 flex justify-between static md:h-[5rem] md:p-0 md:px-4 md:border-b md:border-[#3E3F4E]'>
+      <nav className='bg-[#FFF] dark:bg-[#2B2C37] p-4 flex justify-between md:h-[5rem] md:p-0 md:px-4 md:border-b md:border-[#3E3F4E]'>
         <div className='max-[767px]:hidden border-r border-[#3E3F4E] flex justify-start items-center w-[15.25rem]'>
           <Image
             src={theme === 'light' ? './logos/logo-dark.svg' : './logos/logo-light.svg'}
